@@ -1,0 +1,278 @@
+﻿
+
+@font-face {
+    font-family: 'yekan';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../font/yekan/yekan.eot') format('embedded-opentype'),url('../font/yekan/yekan.ttf') format('truetype'),url('../font/yekan/yekan.woff') format('woff');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+body {
+    font-family:yekan,tahoma !important;
+    background-color: rgb(251,251,251);
+}
+
+
+a {
+    text-align: center;
+    color: black;
+}
+
+    a:hover {
+        text-decoration: none;
+        color: green;
+    }
+
+.list-list {
+    list-style: none;
+    line-height: 25px;
+    padding-top: 8px;
+}
+
+    .list-list a {
+        font-size: 12px;
+    }
+
+.ul-title-tabs-color {
+    color: #ff6a00;
+}
+
+
+#header {
+    color: brown;
+}
+
+.advers div img {
+    border-radius: 3px;
+}
+
+.news-header {
+    color: #ff6a00;
+    margin-right: 10px;
+}
+
+.hr-divider {
+    color: green;
+    border: 1px solid;
+    margin-top: 8px;
+    border-radius: 15px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.last-info {
+    border-radius: 2px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-left: 3px;
+    margin-bottom: 10px;
+}
+.last-info>ul>li{
+    font-size:14px;
+}
+
+#newspapers {
+    border-radius: 2px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding:8px 6px 10px  6px;
+    /*padding-top: 8px 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-bottom: 10px;*/
+    margin-bottom: 10px;
+}
+
+h6 {
+    color: rgb(248, 248, 248);
+}
+
+#poll {
+    border-radius: 2px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding-top: 8px;
+    padding-right: 6px;
+    padding-left: 6px;
+    /*padding-bottom: 10px;*/
+    margin-bottom: 10px;
+}
+
+#poll-statement {
+    padding-right: 12px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+#poll-content {
+    padding-top: 15px;
+    /*font-size: 13px;*/
+}
+
+    #poll-content td {
+        height: 10px;
+        padding: 5px;
+    }
+
+#main-carousel {
+    border: 1px solid rgb(200,200,200);
+    border-radius: 2px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+    #main-carousel img + div {
+        background-color: white;
+        line-height: 1.5;
+        padding: 5px 5px 20px 5px;
+        font-size: 12px;
+        height: 100px; /*برای اینکه دیو اصلی
+            main-carousel
+          با تغیرر تعداد خطوط نوشته هاو کپشن ها تغییر ارتفاع ندهد.*/
+    }
+
+    #main-carousel img {
+        width: 100%; /*برای اینکه سایز تصویر فیت شود با سایز دیو پدرش */
+        height: 250px; /*برای اینکه ارتفاع دیو اصلی پدر از نطر ارتفاعی تغییر سایز ندهد در عکس های سایز مختلف*/
+        border-radius: 2px;
+    }
+
+.advers-main-content img {
+    width: 100%;
+    border-radius: 2px;
+    margin-bottom: 12px;
+}
+
+
+.advers>div>img {
+/*تبلیغات ست چپ-هم راستا کردن با منو بار*/
+    width:100%;
+} 
+
+.special-news {
+    border-radius: 2px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding: 8px 6px 10px 6px;
+    /*padding-top: 8px;
+    padding-right: 6px;
+    padding-left: 6px;*/
+    /*padding-bottom: 10px;*/
+    margin-bottom: 10px;
+}
+
+.special-content {
+    text-align: right;
+    padding-right: 5px;
+    line-height: 1.5;
+    font-size: 13px;
+    color: rgb(60,60,60);
+}
+
+#last-video {
+    border-radius: 2px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding-top: 8px;
+    padding-right: 10px;
+    padding-left: 3px;
+    /*padding-bottom: 10px;*/
+    margin-bottom: 10px;
+}
+
+    #last-video img {
+        width: 100%;
+        border-radius: 4px;
+    }
+
+.fontawsome-transition {
+    position: relative;
+    transition-duration: .4s;
+}
+
+    .fontawsome-transition:hover {
+        box-shadow: 2px 2px 9px 1px black;
+        transition-duration: .4s;
+        border-radius: 4px;
+    }
+
+    .fontawsome-transition .fa {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 34px;
+        margin-top: -17px; /*برای اینکه فونت را دو تا 17تا بزرگ کردیم یعنی 34 باید به اندازه دوتا 17 تا
+                              از بالا و چپ دوباره فاصله را کم کنیم تا وسط قرار بگیرد ایکون*/
+        margin-left: -17px;
+        opacity: .75;
+        color: rgb(220,220,220);
+        transition-duration: .3s;
+    }
+
+    .fontawsome-transition:hover .fa {
+        opacity: 1;
+        transition-duration: 1s;
+    }
+
+.video-caption {
+    font-size: 11px;
+    padding: 3px 0;
+    line-height: 2;
+    color: #333;
+    text-align: justify;
+    text-justify: trim;
+}
+
+#video-content {
+    padding: 3px;
+}
+
+.btn-more-video {
+    border: 1px solid rgb(180,180,180);
+    background-color: rgb(180,180,180);
+    padding: 10px;
+}
+
+#footer {
+    background-color: #333;
+    color: #fff;
+}
+
+.footer-text {
+    font-size: 12px;
+    line-height: 1.5;
+    padding-top: 12px;
+    padding-bottom: 10px;
+}
+
+#footer-icon {
+    padding-top: 12px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+    #footer-icon img {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+
+/*div.row + div*/
+.asd{
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.div-line-white {
+    padding: 12px;
+    border-top: 1px solid #ccc;
+    font-size: 13px;
+}
