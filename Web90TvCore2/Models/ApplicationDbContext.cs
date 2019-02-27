@@ -13,5 +13,9 @@ namespace Web90TvCore2.Models
         {
 
         }
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<News> News { get; set; }
+
     }
 }

@@ -11,9 +11,10 @@ using Web90TvCore2.Models;
 namespace Web90TvCore2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190227140515_Mig2-creating_News_adnd_Category_Tables")]
+    partial class Mig2creating_News_adnd_Category_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
