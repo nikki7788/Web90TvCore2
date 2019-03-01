@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -338,6 +339,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\AminPanel\Controllers\" />
+    <Folder Include="Areas\AminPanel\Data\" />
+    <Folder Include="Areas\AminPanel\Models\" />
+    <Folder Include="Areas\AminPanel\Views\" />
     <Folder Include="wwwroot\font\" />
   </ItemGroup>
 
