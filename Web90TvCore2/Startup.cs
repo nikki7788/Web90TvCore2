@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.Repository;
+using Web90TvCore2.Models.Service;
 
 namespace Web90TvCore2
 {
@@ -32,7 +34,7 @@ namespace Web90TvCore2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //--------------------------------------------------------
+            //------------------------ set the database and its identity setting--------------------------------
             //verify Connection String To app
             services.AddDbContext<ApplicationDbContext>(option =>
             option.UseSqlServer(Configuration.GetConnectionString("MyConnectionString")));
@@ -41,6 +43,10 @@ namespace Web90TvCore2
             services.AddIdentity<ApplicationUsers, ApplicationRoles>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders(); //به هرکاربردر هنگام لاگین بودن یک توکن اختصاص میدهد  باتغیرر توکن لاگ وت میشود
+            //-----------------------------------------------------------------------
+
+            //-------------------------- set the ervices and repository setting ---------------------------------------------
+            services.AddScoped<ICategoryService, CategoryRepo>();
             //-----------------------------------------------------------------------
 
             services.AddMvc();
@@ -66,7 +72,13 @@ namespace Web90TvCore2
             }
      
             app.UseStaticFiles();
-
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
