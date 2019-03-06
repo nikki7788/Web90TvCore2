@@ -11,8 +11,8 @@ using Web90TvCore2.Models;
 namespace Web90TvCore2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190227140515_Mig2-creating_News_adnd_Category_Tables")]
-    partial class Mig2creating_News_adnd_Category_Tables
+    [Migration("20190306092016_Mig2_Creating_News_CategoryTable")]
+    partial class Mig2_Creating_News_CategoryTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -182,7 +182,7 @@ namespace Web90TvCore2.Migrations
 
             modelBuilder.Entity("Web90TvCore2.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
@@ -193,7 +193,7 @@ namespace Web90TvCore2.Migrations
                         .IsRequired()
                         .HasMaxLength(150);
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Category");
                 });

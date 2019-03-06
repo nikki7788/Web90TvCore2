@@ -181,7 +181,7 @@ namespace Web90TvCore2.Migrations
 
             modelBuilder.Entity("Web90TvCore2.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
@@ -192,7 +192,7 @@ namespace Web90TvCore2.Migrations
                         .IsRequired()
                         .HasMaxLength(150);
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Category");
                 });

@@ -13,6 +13,7 @@ using Microsoft.Extensions.FileProviders;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.Repository;
 using Web90TvCore2.Models.Service;
+using Web90TvCore2.Models.UnitOfWork;
 
 namespace Web90TvCore2
 {
@@ -45,8 +46,10 @@ namespace Web90TvCore2
                 .AddDefaultTokenProviders(); //به هرکاربردر هنگام لاگین بودن یک توکن اختصاص میدهد  باتغیرر توکن لاگ وت میشود
             //-----------------------------------------------------------------------
 
-            //-------------------------- set the ervices and repository setting ---------------------------------------------
-            services.AddScoped<ICategoryService, CategoryRepo>();
+            //-------------------------- set the services and Unit of work and repository setting ---------------------------------------------
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             //-----------------------------------------------------------------------
 
             services.AddMvc();

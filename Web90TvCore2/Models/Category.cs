@@ -26,7 +26,7 @@ namespace Web90TvCore2.Models
         #region######################### Properties ########################################
 
         [Key]
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// عنوان دسته بندی

@@ -12,7 +12,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="~/adminpanelfiles/dist/css/bootstrap-theme.css">
+    <link href="~/adminpanelfiles/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <!-- Bootstrap rtl -->
+    @*<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/bootstrap-rtl-moosavi.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/adminpanelfiles/dist/css/rtl.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/adminpanelfiles/bower_components/font-awesome/css/font-awesome.min.css">
@@ -81,10 +84,9 @@ desired effect
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    عنوان صفحه
-                    <small>توضیحات</small>
-                </h1>
+                <h4>
+                   @ViewBag.viewTitle
+                </h4>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
                     <li class="active">صفحه</li>

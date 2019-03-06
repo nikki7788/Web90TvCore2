@@ -9,8 +9,8 @@ using Web90TvCore2.Models.Service;
 namespace Web90TvCore2.Models.Repository
 {
     /// <summary>
-    /// CRUD
-    ///  در پروژه و استفاده از ان در سرتاسر پروژه CRUD کلاس جنریک برای یکبار نوشتن متد های تکراری    
+    /// نوع ورودی جدول و کلاس  CRUD 
+    ///در پروژه و استفاده از ان در سرتاسر پروژه Create,Read,Update,Delete کلاس جنریک برای یکبار نوشتن متد های تکراری    
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public class CrudRepGeneric<TEntity> where TEntity : class
@@ -20,7 +20,7 @@ namespace Web90TvCore2.Models.Repository
         private readonly ApplicationDbContext _context;
 
         private readonly DbSet<TEntity> _table;    //e.g. _context.categories....
-       
+
         public CrudRepGeneric(ApplicationDbContext context)
         {
             _context = context;
@@ -34,10 +34,16 @@ namespace Web90TvCore2.Models.Repository
         /// ایجاد یک رکورد
         /// </summary>
         /// <param name="entity"></param>
-        public virtual async void Create(TEntity entity)
+        public async Task Create(TEntity entity)
         {
-            await _table.AddAsync(entity);
+           await _table.AddAsync(entity);
+
         }
+
+        //public virtual  void Create(TEntity entity)
+        //{
+        //     _table.Add(entity);
+        //}
 
 
         /// <summary>

@@ -12,7 +12,10 @@
 html,
 body {
   height: 100%;
+  
 }
+
+
 .layout-boxed html,
 .layout-boxed body {
   height: 100%;
