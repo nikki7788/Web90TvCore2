@@ -19,7 +19,7 @@ namespace Web90TvCore2.Models.Repository
 
         private readonly ApplicationDbContext _context;
 
-        private readonly DbSet<TEntity> _table;    //e.g. _context.categories....
+        private DbSet<TEntity> _table;    //e.g. _context.categories....
 
         public CrudRepGeneric(ApplicationDbContext context)
         {
@@ -36,7 +36,7 @@ namespace Web90TvCore2.Models.Repository
         /// <param name="entity"></param>
         public async Task Create(TEntity entity)
         {
-           await _table.AddAsync(entity);
+            await _table.AddAsync(entity);
 
         }
 
@@ -112,7 +112,10 @@ namespace Web90TvCore2.Models.Repository
         /// <param name="entity"></param>
         public virtual void Delete(TEntity entity)
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
+            //var entry = _context.Entry(entity);
+
+            //if (entry.State == EntityState.Detached)
+            if (_context.Entry(entity).State==EntityState.Detached)
             {
                 _table.Attach(entity);
             }
@@ -124,7 +127,7 @@ namespace Web90TvCore2.Models.Repository
         /// حذف یک رکورد براساس آیدی
         /// </summary>
         /// <param name="id"></param>
-        public virtual async void DeletById(object id)
+        public virtual async Task DeletById(object id)
         {
             var entity = await GetById(id);
             Delete(entity);
@@ -137,9 +140,13 @@ namespace Web90TvCore2.Models.Repository
         /// <summary>
         /// ذخیره اطلاعات و تغییرات در دیتابیس
         /// </summary>
-        public virtual async void Save()
+        public virtual async Task Save()
         {
             await _context.SaveChangesAsync();
         }
+        //public virtual async void Save()
+        //{
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

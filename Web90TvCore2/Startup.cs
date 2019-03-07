@@ -62,19 +62,26 @@ namespace Web90TvCore2
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
-                //برای آپدیت کردن کتابخانه های کلاینت مانند بوت استرپ جی کویری و ..
+
+                //------------برای آپدیت کردن کتابخانه های کلاینت مانند بوت استرپ جی کویری و ..------------------
                 app.UseStaticFiles(new StaticFileOptions
                 {
                     FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules")),
                     RequestPath = "/" + "node_modules"
                 });
+                //--------------------------------------------------=-------
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-     
+
             app.UseStaticFiles();
+
+            //------------خودم اضافه کردم todo: --------------------
+            //app.UseStatusCodePages();
+            //----------------------------------------------
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

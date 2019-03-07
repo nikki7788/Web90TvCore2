@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 
@@ -65,11 +66,29 @@ namespace Web90TvCore2.Areas.AminPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _iUintOfWork.CategoryRepUW.Create(model);
-                await _iUintOfWork.Save();
+                //todo: به صورت اصولی catch درست کردن قسمت
+                try
+                {
+                    await _iUintOfWork.CategoryRepUW.Create(model);
+                    await _iUintOfWork.Save();
 
-                ViewBag.viewTitle = " ایجاد دسته بندی";
-                ViewBag.SuccessMessage = "اطلاعات با موفقیت ثبت شد";
+                    ViewBag.viewTitle = " ایجاد دسته بندی";
+                    ViewBag.SuccessMessage = "اطلاعات با موفقیت ثبت شد";
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+
+                    throw ex;
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
             }
 
             return View(model);
@@ -100,7 +119,7 @@ namespace Web90TvCore2.Areas.AminPanel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category model, int categoryId)
+        public async Task<IActionResult> Edit(Category model, int categoryId)
         {
 
             if (categoryId != model.CategoryId)
@@ -109,21 +128,75 @@ namespace Web90TvCore2.Areas.AminPanel.Controllers
             }
             if (ModelState.IsValid)
             {
+                //todo: به صورت اصولی catch درست کردن قسمت
                 try
                 {
                     _iUintOfWork.CategoryRepUW.Update(model);
-                    _iUintOfWork.Save();
+                    await _iUintOfWork.Save();
 
                     ViewBag.SuccessMessage = "اطلاعات با موفقیت ویرایش شد";
                 }
-                catch (Exception)
+                catch (DbUpdateConcurrencyException ex)
                 {
 
-                    throw;
+                    throw ex;
+                }
+                catch (DbUpdateException ex)
+                {
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Category category = await _iUintOfWork.CategoryRepUW.GetById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            //برای فرستادن ورژن بوت استرپ به مودال که باتجه به ورژن بوت استرپ دستورات را بیاورد
+            //ModalHedear class روش ۲ در داخل 
+            //ViewBag.bootstrapVers = 4;
+            return PartialView("_DeletePartial", category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            try
+            {
+                await _iUintOfWork.CategoryRepUW.DeletById(id);
+                await _iUintOfWork.CategoryRepUW.Save();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+
+                throw ex;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RedirectToAction(nameof(Index));
+            
         }
         #endregion#################################
 
