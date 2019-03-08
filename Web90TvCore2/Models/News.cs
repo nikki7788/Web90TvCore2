@@ -35,7 +35,7 @@ namespace Web90TvCore2.Models
         [Display(Name = "عنوان خبر")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
         [StringLength(250, MinimumLength = 4, ErrorMessage = PublicConst.LengthMessage)]
-        [RegularExpression(@"[0-9A-Zا-یa-z_\s\-\(\)\.]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
+        [RegularExpression(@"[0-9A-Zا-ی ء ؤ ئ ةأإآa-z_\s\-\(\)\.]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
         public string Title { get; set; }
 
 
@@ -47,7 +47,7 @@ namespace Web90TvCore2.Models
         [Display(Name = "چکیده")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
         [StringLength(400, MinimumLength = 5, ErrorMessage = PublicConst.LengthMessage)]
-        [RegularExpression(@"[0-9A-Zا-یa-z_\s\-\(\)\.]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
+        [RegularExpression(@"[0-9A-Zا-ی ء ؤ ئ ةأإآa-z_\s\-\(\)\.]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
         public string Abstract { get; set; }
 
         [Display(Name = "تعداد بازدید")]

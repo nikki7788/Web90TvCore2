@@ -16,6 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190308142923_Mig3-ApplicatiuonUserChanged_adding_Properties.cs" />
+    <Compile Remove="Migrations\20190308142923_Mig3-ApplicatiuonUserChanged_adding_Properties.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.min.css" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-reboot.css" />

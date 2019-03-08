@@ -12,7 +12,7 @@ namespace Web90TvCore2.PublicClass
     {
 
         /// <summary>
-        /// خطای وارد نکردن فیلد و پراپرتی
+        /// خطای پرنکردن فیلد و پراپرتی
         /// </summary>
         public const string EnterMessage="لطفا {0} را وارد نمایید";
 

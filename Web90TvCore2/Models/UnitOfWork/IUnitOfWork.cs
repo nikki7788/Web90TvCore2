@@ -13,7 +13,11 @@ namespace Web90TvCore2.Models.UnitOfWork
     /// </summary>
     public interface IUnitOfWork
     {
-       CrudRepGeneric<Category> CategoryRepUW { get;}
+        CrudRepGeneric<Category> CategoryRepUW { get; }
+
+        CrudRepGeneric<News> NewsRepUW { get; }
+
+         CrudRepGeneric<ApplicationUsers> UserManagerUW { get; }
 
         Task Save();
 

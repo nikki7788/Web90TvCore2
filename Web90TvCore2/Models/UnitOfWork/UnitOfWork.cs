@@ -22,7 +22,13 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         #region############################# Fields ################################### 
 
-        private CrudRepGeneric<Category> _CategoryRepUW;
+        //نباید باشد readonly  
+        private CrudRepGeneric<Category> _categoryRepUW;
+
+        private CrudRepGeneric<News> _newsRepUW;
+
+        private  CrudRepGeneric<ApplicationUsers> _userManagerUW;
+
 
         #endregion #######################
 
@@ -31,6 +37,7 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         #region ############################ properties #############################################
         /// <summary>
+        /// دسته بندی های سایت
         ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
         ///  category برای کلاس و جدول CRUD پیاده سازی کلاس 
         /// </summary>
@@ -39,13 +46,50 @@ namespace Web90TvCore2.Models.UnitOfWork
             //فقط خواندنی
             get
             {
-                if (_CategoryRepUW == null)
+                if (_categoryRepUW == null)
                 {
-                    _CategoryRepUW = new CrudRepGeneric<Category>(_context);
+                    _categoryRepUW = new CrudRepGeneric<Category>(_context);
                 }
-                return _CategoryRepUW;
+                return _categoryRepUW;
             }
         }
+
+
+        /// <summary>
+        ///  اخبار
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  News برای کلاس و جدول CRUD پیاده سازی کلاس 
+        /// </summary>
+        public CrudRepGeneric<News> NewsRepUW
+        {
+
+            //فقط خواندنی
+            get
+            {
+                if (_newsRepUW == null)
+                {
+                    _newsRepUW = new CrudRepGeneric<News>(_context);
+                }
+                return _newsRepUW;
+            }
+
+        }
+
+        /// <summary>
+        /// کاربران سایت
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  ApplicationUser برای کلاس و جدول CRUD پیاده سازی کلاس 
+        /// </summary>
+        public CrudRepGeneric<ApplicationUsers> UserManagerUW {
+            get
+            {
+                if (_userManagerUW==null)
+                {
+                    _userManagerUW = new CrudRepGeneric<ApplicationUsers>(_context);
+                }
+                return _userManagerUW;
+            }
+                }
 
         #endregion ##########################
 
