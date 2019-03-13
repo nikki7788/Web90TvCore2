@@ -24,18 +24,12 @@ namespace Web90TvCore2.Models
         /// نام کاربر
         /// </summary>
         [Display(Name = "نام")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
-        [StringLength(90, MinimumLength = 4, ErrorMessage = PublicConst.LengthMessage)]
-        [RegularExpression(@"[0-9A-Zا-ی ء ؤ ئ ةأإآa-z_\s\-\(\)\.]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// نام خانوادگی کاربر
         /// </summary>
         [Display(Name = "نام خانوادگی")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
-        [StringLength(100, MinimumLength = 4, ErrorMessage = PublicConst.LengthMessage)]
-        [RegularExpression(@"[0-9A-Zا-ی ء ؤ ئ ةأإآa-z_\s\-\(\)\.]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
         public string LastName { get; set; }
 
         /// <summary>
@@ -44,17 +38,29 @@ namespace Web90TvCore2.Models
         [Display(Name = "جنسیت")]
         public GenderSelect Gender { get; set; }
 
-
         /// <summary>
         ///شماره تلفن کاربر
         ///override prop
         /// </summary>
         /// این متد از روی پراپرتی خود ایدنتیتی اورراید شده است برای فارسی کردن نام پرارپرتی
         [Display(Name = "موبایل")]
-        [StringLength(20, ErrorMessage = PublicConst.LengthMessage)]
-        [RegularExpression(@"[0-9]+", ErrorMessage = PublicConst.DangrouseMessageForBadCharachter)]
         public override string PhoneNumber { get; set; }
 
+        [Display(Name = "تصویر")]
+        public string UserImagePath { get; set; }
+
+        [Display(Name = "تاریخ تولد")]
+        public string BirthDayDate { get; set; }
+
+
+
+
+        ///// <summary>
+        ///// شماره تماس کاربر
+        ///// </summary>
+        /////  اگر در ویو مدل ان را تعریف کریدم و از ویو مدل در ویو استفاده میکنیم نام پراپرتی ان در ویو مدل نمایش داده میشود و نیازی ب اوورراید نیست در اینجا
+        //[Display(Name = "تلفن")]
+        //public string PhoneNumber { get; set; }
         #endregion#################
 
 
@@ -66,8 +72,8 @@ namespace Web90TvCore2.Models
     /// </summary>
     public enum GenderSelect : byte
     {
-        mail = 0,
-        femail = 1
+        male = 0,
+        femal = 1
     }
 
 }

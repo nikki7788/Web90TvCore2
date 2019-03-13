@@ -34,7 +34,7 @@ namespace Web90TvCore2.Models.Repository
         /// ایجاد یک رکورد
         /// </summary>
         /// <param name="entity"></param>
-        public async Task Create(TEntity entity)
+        public virtual async Task Create(TEntity entity)
         {
             await _table.AddAsync(entity);
 

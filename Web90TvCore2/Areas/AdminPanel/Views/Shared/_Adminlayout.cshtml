@@ -14,9 +14,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/adminpanelfiles/dist/css/bootstrap-theme.css">
     <link href="~/adminpanelfiles/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <!-- Bootstrap rtl -->
-    @*<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-        <link href="~/css/bootstrap-rtl-moosavi.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/adminpanelfiles/dist/css/rtl.css">
+    @*<link href="~/css/bootstrap-rtl-moosavi.css" rel="stylesheet" />*@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/adminpanelfiles/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -27,6 +26,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="~/adminpanelfiles/dist/css/skins/skin-blue.min.css">
+
+    <!-- SweetAlert2 -->
+    <link href="~/node_modules/sweetalert2/dist/sweetalert2.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -85,7 +87,7 @@ desired effect
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h4>
-                   @ViewBag.viewTitle
+                    @ViewBag.viewTitle
                 </h4>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
@@ -97,8 +99,8 @@ desired effect
             <section class="content container-fluid">
                 @RenderBody()
                 <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
+                | Your Page Content Here |
+                -------------------------->
 
             </section>
             <!-- /.content -->
@@ -108,10 +110,12 @@ desired effect
 
 
         <footer class="main-footer text-left">
-            <strong>CopyRight &copy;  2019 <span>Phone:</span>
-                                          <span class="text-secondary">+989138950014</span>
-            <a href="www.linkedin.com/in/hossein-nikbakht">Linkdin</a>
-            <a href="https://t.me/nikki7777">Hossein Nikbakht</a></strong>
+            <strong>
+                CopyRight &copy;  2019 <span>Phone:</span>
+                <span class="text-secondary">+989138950014</span>
+                <a href="www.linkedin.com/in/hossein-nikbakht">Linkdin</a>
+                <a href="https://t.me/nikki7777">Hossein Nikbakht</a>
+            </strong>
         </footer>
 
         <!-- Control Sidebar -->
@@ -188,7 +192,7 @@ desired effect
         </aside>
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
+        immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
@@ -200,7 +204,10 @@ desired effect
     <!-- AdminLTE App -->
     <script src="~/adminpanelfiles/dist/js/adminlte.min.js"></script>
 
-    @RenderSection("panelScript",required:false)
+    <!-- SweetAlert2 -->
+    <script src="~/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+
+    @RenderSection("panelScript", required: false)
 
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +19,26 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190308142923_Mig3-ApplicatiuonUserChanged_adding_Properties.cs" />
     <Compile Remove="Migrations\20190308142923_Mig3-ApplicatiuonUserChanged_adding_Properties.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\upload\userImage\normalImage\0f5e7501840c4638ad0c2f04f2b84996.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\124023e3e27841fe803f0d652a1506a4.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\4e38bb0c700a4efb8ac8bd1282552a4f.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\5bf4aa3cac164e4ead7162cdc1625e11.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\7c5e669e3c164f4a9683b4ce60df1226.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\81103f4fc47a4bb7b03ec0bd63661d27.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\8b37d4c0cec648f4a68f19491d0c3a46.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\910e0a86737840d4948c10b69f69ad8c.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\f67f1745704842128c41fa23aee31c6f.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\f97435dc785b4909adbb325786aa4b83.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\124023e3e27841fe803f0d652a1506a4.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\4e38bb0c700a4efb8ac8bd1282552a4f.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\5bf4aa3cac164e4ead7162cdc1625e11.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\7c5e669e3c164f4a9683b4ce60df1226.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\8b37d4c0cec648f4a68f19491d0c3a46.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\910e0a86737840d4948c10b69f69ad8c.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\f67f1745704842128c41fa23aee31c6f.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +63,9 @@
     <Content Include="node_modules\jquery\LICENSE.txt" />
     <Content Include="node_modules\jquery\package.json" />
     <Content Include="node_modules\jquery\src\.eslintrc.json" />
+    <Content Include="node_modules\sweetalert2\dist\sweetalert2.css" />
+    <Content Include="node_modules\sweetalert2\dist\sweetalert2.min.css" />
+    <Content Include="node_modules\sweetalert2\package.json" />
     <Content Include="wwwroot\adminpanelfiles\bower_components\bootstrap\.bower.json" />
     <Content Include="wwwroot\adminpanelfiles\bower_components\bootstrap\bower.json" />
     <Content Include="wwwroot\adminpanelfiles\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
@@ -688,6 +712,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
   </ItemGroup>
@@ -984,6 +1009,69 @@
     <None Include="node_modules\jquery\src\var\support.js" />
     <None Include="node_modules\jquery\src\var\toString.js" />
     <None Include="node_modules\jquery\src\wrap.js" />
+    <None Include="node_modules\sweetalert2\CHANGELOG.md" />
+    <None Include="node_modules\sweetalert2\dist\sweetalert2.all.js" />
+    <None Include="node_modules\sweetalert2\dist\sweetalert2.all.min.js" />
+    <None Include="node_modules\sweetalert2\dist\sweetalert2.js" />
+    <None Include="node_modules\sweetalert2\dist\sweetalert2.min.js" />
+    <None Include="node_modules\sweetalert2\LICENSE" />
+    <None Include="node_modules\sweetalert2\README.md" />
+    <None Include="node_modules\sweetalert2\src\animations.scss" />
+    <None Include="node_modules\sweetalert2\src\constants.js" />
+    <None Include="node_modules\sweetalert2\src\enhancers\withNoNewKeyword.js" />
+    <None Include="node_modules\sweetalert2\src\globalState.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\close.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\enable-disable-elements.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\getInput.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\hideLoading.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\progress-steps.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\show-reset-validation-error.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\update.js" />
+    <None Include="node_modules\sweetalert2\src\instanceMethods\_main.js" />
+    <None Include="node_modules\sweetalert2\src\mixins.scss" />
+    <None Include="node_modules\sweetalert2\src\privateMethods.js" />
+    <None Include="node_modules\sweetalert2\src\privateProps.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\argsToParams.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\dom.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\fire.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\mixin.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\queue.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\showLoading.js" />
+    <None Include="node_modules\sweetalert2\src\staticMethods\timer.js" />
+    <None Include="node_modules\sweetalert2\src\SweetAlert.js" />
+    <None Include="node_modules\sweetalert2\src\sweetalert2.js" />
+    <None Include="node_modules\sweetalert2\src\sweetalert2.scss" />
+    <None Include="node_modules\sweetalert2\src\toasts.scss" />
+    <None Include="node_modules\sweetalert2\src\utils\aria.js" />
+    <None Include="node_modules\sweetalert2\src\utils\classes.js" />
+    <None Include="node_modules\sweetalert2\src\utils\defaultInputValidators.js" />
+    <None Include="node_modules\sweetalert2\src\utils\DismissReason.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\animationEndEvent.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\domUtils.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\getters.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\index.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\init.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\measureScrollbar.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\parseHtmlToContainer.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\index.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\renderActions.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\renderContent.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\renderIcon.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\renderImage.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\renderProgressSteps.js" />
+    <None Include="node_modules\sweetalert2\src\utils\dom\renderers\renderTitle.js" />
+    <None Include="node_modules\sweetalert2\src\utils\ieFix.js" />
+    <None Include="node_modules\sweetalert2\src\utils\iosFix.js" />
+    <None Include="node_modules\sweetalert2\src\utils\isNodeEnv.js" />
+    <None Include="node_modules\sweetalert2\src\utils\openPopup.js" />
+    <None Include="node_modules\sweetalert2\src\utils\params.js" />
+    <None Include="node_modules\sweetalert2\src\utils\scrollbarFix.js" />
+    <None Include="node_modules\sweetalert2\src\utils\setParameters.js" />
+    <None Include="node_modules\sweetalert2\src\utils\Timer.js" />
+    <None Include="node_modules\sweetalert2\src\utils\utils.js" />
+    <None Include="node_modules\sweetalert2\src\variables.scss" />
     <None Include="wwwroot\adminpanelfiles\bower_components\bootstrap\.DS_Store" />
     <None Include="wwwroot\adminpanelfiles\bower_components\bootstrap\CHANGELOG.md" />
     <None Include="wwwroot\adminpanelfiles\bower_components\bootstrap\dist\.DS_Store" />
@@ -1997,6 +2085,13 @@
     <Folder Include="Areas\AdminPanel\Data\" />
     <Folder Include="Areas\AdminPanel\Models\" />
     <Folder Include="wwwroot\font\" />
+    <Folder Include="wwwroot\upload\userImage\" />
+    <Folder Include="wwwroot\upload\userImage\thumbnailImage\" />
+    <Folder Include="wwwroot\upload\userImage\normalImage\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="node_modules\sweetalert2\sweetalert2.d.ts" />
   </ItemGroup>
 
 </Project>
