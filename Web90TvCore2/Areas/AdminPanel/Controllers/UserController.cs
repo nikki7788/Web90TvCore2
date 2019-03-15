@@ -40,12 +40,18 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         #region ###################### actions  ###############################################
 
+        /// <summary>
+        /// نمایش لیست کاربران
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             ViewBag.viewTitle = "  لیست کاربران";
             var model = await _iUintOfWork.UserManagerUW.Get();
             return View(model);
         }
+
+
 
         /// <summary>
         /// اپلود کردن تصویر پروفایل کاربر
@@ -151,6 +157,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
+
         /// <summary>
         /// Get Method
         /// نمایش صفحه ایجادکاربر
@@ -164,10 +171,13 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         }
 
 
+
         /// <summary>
         /// post method
-        ///ثبت و ایجاد کاربر در دیتابیس
+        ///ثبت و ایجاد کاربر در دیتابیس 
         /// </summary>
+        /// <param name="model"></param>
+        /// <param name="imageName"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -177,14 +187,16 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             {
                 try
                 {
-                    //-----------------اگر کاربر تصویری وارد نکرد-----------------------------
+                    //-------بررسی آپلود شدن عکس  ---------
 
                     if (imageName == null)
                     {
+                        //اگر عکس اپلود نشده بود نام تصویر پیش فرض را در پراپرتی نام عکس یوزر بریز
                         model.UserImage = "closedEyes.jpg";
                     }
                     else
                     {
+                        //اگر عکس اپلود شده بود نام ان را در پراپرتی نام عکس یوزر بریز
                         model.UserImage = imageName;
                     }
                     //-------------------------------------
@@ -198,7 +210,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         Email = model.Email,
                         BirthDayDate = model.BirthDayDate,
                         UserImagePath = model.UserImage,
-                        Gender = model.Gender
+                        Gender = model.Gender,
                     };
 
                     IdentityResult result = await _userManager.CreateAsync(user, model.Password);
@@ -220,6 +232,177 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             ViewBag.viewTitle = "  افزودن کاربر جدید";
             return View(model);
         }
+
+
+
+        /// <summary>
+        /// Get Method
+        ///---- نمایش صفحه ویرایش کاربر
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id != null)
+            {
+                //finding the user
+                ApplicationUsers user = await _userManager.FindByIdAsync(id);
+
+                if (user != null)
+                {
+                    //Initializing the viewmodel of user by user variable  and showing the user's information in the view
+                    EditUserViewModel model = new EditUserViewModel
+                    {
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        PhoneNumber = user.PhoneNumber,
+                        BirthDayDate = user.BirthDayDate,
+                        Gender = user.Gender,
+                        UserImage = user.UserImagePath
+                    };
+
+                    ViewBag.viewTitle = "  ویرایش کاربر";
+                    return View(model);
+                }
+                else
+                {
+                    return NotFound();
+
+                }
+            }
+            else
+            {
+                return NotFound();
+
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// post method
+        ///ویرایش کاربر در دیتابیس
+        /// </summary>
+        /// <param name="model">ویومدل حاوی اطلاعات ویرایش شده کاربر را برمیگرداند</param>
+        /// <param name="id">شناسه کاربر مورد ویرایش را برمیگرداند</param>
+        /// <param name="chekinput">چک بودن یا نبودن چک باکس را برمیگرداند</param>
+        /// <param name="imagename">نام عکس اپلود شده را در صورت وجود برمیگرداند</param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditConfirm(EditUserViewModel model, string id, string chekinput, string imageName)
+        {
+            try
+            {
+                ApplicationUsers user = await _userManager.FindByIdAsync(id);
+                if (ModelState.IsValid)
+                {
+                    //-------بررسی آپلود شدن عکس ---------
+
+                    if (Request.Cookies["ImgEdit"] != null)
+                    {
+                        //عکس  وقتی که  ولیدیشن رعایت نشده بود  را می اورد
+                        string cookieImg = Request.Cookies["ImgEdit"].ToString();
+                        model.UserImage = cookieImg;
+                        Response.Cookies.Delete("ImgEdit");
+
+                    }
+                    else if (imageName != null)
+                    {
+                        //اگر عکس اپلود شده بود نام ان را در پارپتی نام عکس یوزر بریز
+                        model.UserImage = imageName;
+                    }
+
+                    //----------------------------------------------
+
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Email = model.Email;
+                    user.BirthDayDate = model.BirthDayDate;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.Gender = model.Gender;
+                    user.UserImagePath = model.UserImage;
+
+                    //-------- بررسی انتخاب شدن و چک وشدن و تیک خوردن چک باکس پلاگین----------------------- 
+                    //on=چک بودن و تیک خوردن
+                    if (chekinput == "on")
+                    {
+                        //اگر تیک خورده بود رمز را ریست کنیم
+                        //Reset Password
+                        //123d@F
+                        user.PasswordHash = "AQAAAAEAACcQAAAAEAabKLaDOcVF55N+pqYxMKEsctUlZmrmudfUurx8DtbxZcPv0wXbujbbfg3g2LrYrg==";
+                    }
+                    //---------------------------------------------------------------
+
+                    IdentityResult result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                }
+                if (Request.Cookies["ImgEdit"] == null)
+                {
+                    //برای اولین بار لیدیشن ها رعایت نمیشوود
+
+                    if (imageName == null)
+                    {
+
+                        //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
+
+                        model.UserImage = user.UserImagePath;
+
+                        string cookieImageName = model.UserImage;
+                        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+                    }
+                    else
+                    {
+                        //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
+                        model.UserImage = imageName;
+
+                        string cookieImageName = imageName;
+                        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+
+
+                    }
+                }
+                else if (Request.Cookies["ImgEdit"] != null)
+                {
+                    //وقتی برای بار چندم ولیدیشن ها رعایت نمیشود 
+
+                    if (imageName != null)
+                    {
+                        //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
+
+                        model.UserImage = imageName;
+                        Response.Cookies.Delete("ImgEdit");
+                        string cookieImageName = imageName;
+                        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+
+                    }
+                    else
+                    {
+                        //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
+
+                        string cookieImg = Request.Cookies["ImgEdit"].ToString();
+                        model.UserImage = cookieImg;
+                    }
+
+                }
+                //---------------------------------------
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+
         #endregion ################################
 
 
