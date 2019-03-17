@@ -1,7 +1,8 @@
 ﻿@model AddUserViewModel
-@{
-    ViewData["Title"] = "لیست کاربران";
-}
+<!--تزریق کوکی-->
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpCookie
+
+
 <link href="~/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
 
 <style>
@@ -83,7 +84,9 @@
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
                 <input asp-for="UserName" class="form-control circleInput" placeholder="نام کاربری را وارد نمایید" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                @* <span asp-validation-for="UserName" class="text-danger"></span>*@
+                <span class="text-danger">@Html.ValidationMessage("UserName")</span>
+
             </div>
 
             @* رمز عبور *@
@@ -153,12 +156,23 @@
                 </div>
             </div>
 
+            @if (httpCookie.HttpContext.Request.Cookies["ImgCreate"] != null)
+            {
+                <div class="form-group">
+                    <img id="imgUser" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                         src="~/upload/userImage/normalImage/@Model.UserImage" alt="UserImage"
+                         style="height:350px;" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <img id="imgUser" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                         src="~/upload/userImage/normalImage/closedEyes.jpg" alt="UserImage"
+                         style="height:350px;" />
+                </div>
+            }
 
-            <div class="form-group">
-                <img id="imgUser" class="img-bordered col-md-12 col-xs-12 col-sm-12"
-                     src="~/upload/userImage/normalImage/closedEyes.jpg" alt="UserImage"
-                     style="height:350px;" />
-            </div>
 
             <div id="divmessage" class="text-center hidden" style="color:green;">
 
@@ -208,7 +222,7 @@
                         $("#divmessage").removeClass('hidden');
                         $("#divmessage").text("تصویر با موفقیت آپلود شد");
 
-                        //ان را دریافت و به ان دسترسی داشته باشیم create نام فایل اپلود شده را از طریق جیسون دریافت و میریزیم داخل تگ زیر تا در اکشن 
+                        //ان را دریافت و به ان دسترسی داشته باشیم create نام فایل اپلود شده را از طریق جیسون دریافت و میریزیم داخل تگ زیر تا در اکشن
                         $("#imageName").val(result.imageName);
                     }
                     //اگر تصویری براای اپلود انتخب نشود

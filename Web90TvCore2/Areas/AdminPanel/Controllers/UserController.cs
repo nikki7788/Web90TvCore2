@@ -188,17 +188,25 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 try
                 {
                     //-------بررسی آپلود شدن عکس  ---------
-
-                    if (imageName == null)
-                    {
-                        //اگر عکس اپلود نشده بود نام تصویر پیش فرض را در پراپرتی نام عکس یوزر بریز
-                        model.UserImage = "closedEyes.jpg";
-                    }
-                    else
+                    //-------بررسی آپلود شدن عکس ---------
+                    if (imageName != null)
                     {
                         //اگر عکس اپلود شده بود نام ان را در پراپرتی نام عکس یوزر بریز
                         model.UserImage = imageName;
                     }
+                    else if (Request.Cookies["ImgCreate"] != null)
+                    {
+                        //عکس  وقتی که  ولیدیشن رعایت نشده بود  را می اورد
+                        string cookieImg = Request.Cookies["ImgCreate"].ToString();
+                        model.UserImage = cookieImg;
+                        Response.Cookies.Delete("ImgCreate");
+                    }
+                    else if (imageName == null)
+                    {
+                        //اگر عکس اپلود نشده بود نام تصویر پیش فرض را در پراپرتی نام عکس یوزر بریز
+                        model.UserImage = "closedEyes.jpg";
+                    }
+
                     //-------------------------------------
 
                     ApplicationUsers user = new ApplicationUsers
@@ -219,6 +227,11 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         //return Json(new {status });
                         return RedirectToAction(nameof(Index));
                     }
+                    if(!result.Succeeded)
+                    {
+                        ModelState.AddModelError("UserName", "نام کاربی از قبل وجود دارد");
+                     
+                    }
                 }
                 catch (Exception)
                 {
@@ -229,6 +242,46 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
             }
+            //------------------------** استفاده از کوکی برای ذخیره نام تصویر برای بعد از رفرش شدن صفحه بخاطر ولیدیشن ----------------------
+            if (Request.Cookies["ImgCreate"] == null)
+            {
+                //برای اولین بار لیدیشن ها رعایت نمیشوود
+                if (imageName != null)
+                {
+
+                    //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
+                    model.UserImage = imageName;
+
+                    string cookieImageName = imageName;
+                    Response.Cookies.Append("ImgCreate", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+
+                }
+            }
+            else if (Request.Cookies["ImgCreate"] != null)
+            {
+                //وقتی برای بار چندم ولیدیشن ها رعایت نمیشود 
+
+                if (imageName != null)
+                {
+
+                    //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
+                    model.UserImage = imageName;
+
+                    Response.Cookies.Delete("ImgCreate");
+                    string cookieImageName = imageName;
+                    Response.Cookies.Append("ImgCreate", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+
+                }
+                else
+                {
+
+                    //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
+                    string cookieImg = Request.Cookies["ImgCreate"].ToString();
+                    model.UserImage = cookieImg;
+                }
+
+            }
+            //----------------،***-----------------------
             ViewBag.viewTitle = "  افزودن کاربر جدید";
             return View(model);
         }
@@ -308,7 +361,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         Response.Cookies.Delete("ImgEdit");
 
                     }
-                    else if (imageName != null)
+                    if (imageName != null)
                     {
                         //اگر عکس اپلود شده بود نام ان را در پارپتی نام عکس یوزر بریز
                         model.UserImage = imageName;
@@ -342,10 +395,11 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                     }
 
                 }
+
+                //------------------------** استفاده از کوکی برای ذخیره نام تصویر برای بعد از رفرش شدن صفحه بخاطر ولیدیشن ----------------------
                 if (Request.Cookies["ImgEdit"] == null)
                 {
                     //برای اولین بار لیدیشن ها رعایت نمیشوود
-
                     if (imageName == null)
                     {
 
@@ -390,7 +444,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                     }
 
                 }
-                //---------------------------------------
+                //----------------،***-----------------------
+                ViewBag.viewTitle = "  ویرایش کاربر ";
                 return View(model);
 
             }

@@ -33,8 +33,8 @@ namespace Web90TvCore2.Models.ViewModels
         [Display(Name = "رمز عبور")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
         [StringLength(50, MinimumLength = 6, ErrorMessage = PublicConst.LengthMessage)]
-        [DataType(DataType.Password)]
-        //[RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", ErrorMessage = "رمز عبور باید ترکیبی از حروف کوچک و بزرگ و عدد و علامت باشد")]
+       // [DataType(DataType.Password)]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", ErrorMessage = "رمز عبور باید ترکیبی از حروف کوچک و بزرگ و عدد و علامت باشد")]
         public string Password { get; set; }
 
 
