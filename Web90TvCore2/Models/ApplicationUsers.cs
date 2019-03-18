@@ -10,7 +10,9 @@ namespace Web90TvCore2.Models
 {
     /// <summary>
     /// مدیریت و افزوودن و ویرایش فیلد و پارپرتی ها برای یوزر
+    /// جدول و کلاس برای شخصی سازی جدول کاربر ها
     /// </summary>
+    ///  است که مابرای اعمال تغییرات و وشخصی سازی ان باید این کلاس را بوجود بیاوریم AspNetUsers درواقع همان کلاس    
 
     public class ApplicationUsers : IdentityUser
     {

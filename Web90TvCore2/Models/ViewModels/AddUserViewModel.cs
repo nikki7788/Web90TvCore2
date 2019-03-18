@@ -33,7 +33,7 @@ namespace Web90TvCore2.Models.ViewModels
         [Display(Name = "رمز عبور")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
         [StringLength(50, MinimumLength = 6, ErrorMessage = PublicConst.LengthMessage)]
-       // [DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", ErrorMessage = "رمز عبور باید ترکیبی از حروف کوچک و بزرگ و عدد و علامت باشد")]
         public string Password { get; set; }
 
@@ -91,7 +91,7 @@ namespace Web90TvCore2.Models.ViewModels
         /// </summary>
         [Display(Name = "ایمیل")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
-        //[RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "ایمیل معتبر وارد کنید")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "ایمیل معتبر وارد کنید")]
         public string Email { get; set; }
 
 
@@ -164,7 +164,7 @@ namespace Web90TvCore2.Models.ViewModels
         /// </summary>
         [Display(Name = "ایمیل")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]
-        //[RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "ایمیل معتبر وارد کنید")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "ایمیل معتبر وارد کنید")]
         public string Email { get; set; }
 
 

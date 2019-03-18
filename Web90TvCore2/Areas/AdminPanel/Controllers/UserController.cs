@@ -229,6 +229,9 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                     }
                     if(!result.Succeeded)
                     {
+                        //دو نوع خطا ممکن است بجود بیاید یکی برای رمز بور ویکی نام کاربری
+                        //خطای رمز عبور را با ولیدیشن گذاشتن از طریق عبارات باقاعده  میدیریت کردیم
+                        //خطای تکراری بودن نام کاربری را از طریق زیر
                         ModelState.AddModelError("UserName", "نام کاربی از قبل وجود دارد");
                      
                     }
