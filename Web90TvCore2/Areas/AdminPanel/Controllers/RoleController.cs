@@ -41,7 +41,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 nodes.Add(new TreeViewNode
                 {
                     id = "asd",
-                    parent = "#",
+                    parent = "#",   //اولین نود و ردیف پدر ندارد و پدر ان را # میگذاریم
                     text = "اجزای سیستم"
                 });
 

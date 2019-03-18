@@ -2,7 +2,8 @@
 <div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray; height:500px;">
     <div class="panel col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
 
-        <!--jsTree مربوط به پلاگین  -->
+        <!--jsTree مربوط به پلاگین
+            نمایش درختواره-->
         <div id="jstree">
         </div>
 
@@ -17,38 +18,66 @@
 
 @section panelScript{
     <script type="text/javascript">
-    $(function () {
+        //----------جلسه 31 ----------------
+        $(function () {
+            //وقتی صفحه لود شود این رویداد اتاق می افتد
+            $('#jstree').on("changed.jstree", function (data) {
 
-        $('#jstree').on("changed.jstree", function (data) {
-           
-                    var i, j;
-                    var postedItems = [];
+                //-######################- مشخص کردن اینکه پلاگین اینگونه پرشود-------مرحله ۱---##########################
 
-                    j = data.selected.length;
-                    for (i = 0; i < j; i++) {
-                        var id = data.selected[i];
-                        //Add the Node to thr Json Array
-                        postedItems.push({
-                            text: data.instance.get_node(data.selected[i]).text,
-                            id: id,
-                            //parents: data.node.parents[0]
-                            parent: data.node.parents[0]
-                        });
-                    }
-                    //Serialize the Json Array and save in HiddenField
-                    $('#selectedItems').val(JSON.stringify(postedItems));
-                }).jstree({
-                    "core": {
-                        "themes": {
-                            "variant": "large"
-                        },
-                        "data": @Html.Raw(ViewBag.Json)
-                        },
-                    "checkbox": {
-                        "keep_selected_style": false
+                //های دریافتی به ارایه اضافه میشوندتوسط این حلقه nodes تک تک
+
+                var i, j;
+                //داده دریافتی ازاکشن که به صورت جیسون است درواقع یک ارایه است و اطلاعات ان رادر داخل یک ارایه پوش و ذخیره میکنیم
+                //درنهایت ما این رایه را نشان میدهیم
+                var postedItems = [];
+
+                //طول داده دریافتی (که به صورت جیسون است )از  کنترلر
+                j = data.selected.length;
+
+                for (i = 0; i < j; i++) {
+
+                    //ایدی هر جز را بدست می اوریم(ازداده دریافتی از اکشن) و ذخیره میکنیم
+                    var id = data.selected[i];
+
+                    //Add the Node to the Json Array------ اضافه کردن هر درایه و عضو داده جیسون  دریافتی در داخل ارایه
+                    postedItems.push({
+                        // را که در داخل داده ای که به صورت جیسون ارسال کردیم را میریزیم داخل ارایه TreeViewNode جدول   text مقدار پراپرتی
+                        text: data.instance.get_node(data.selected[i]).text,
+
+                        // را که در داخل داده ای که به صورت جیسون ارسال کردیم را میریزیم داخل ارایه TreeViewNode جدول   id مقدار پراپرتی
+                        id: id,
+
+                        // را که در داخل داده ای که به صورت جیسون ارسال کردیم را میریزیم داخل ارایه TreeViewNode جدول   parent(rolelevel) مقدار پراپرتی
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //#############################################################################
+
+
+                // وجود دارد jstree بعداز اجرای ویو این تگ(به صورت مخفی است) درداخل دیو
+
+                //Serialize the Json Array and save in HiddenField
+                $('#selectedItems').val(JSON.stringify(postedItems));   // تبدیل جیسون به داده قابل خواندن توسط مفسر و ذخیره ان درتگ های مخفی
+            }).jstree({
+                //نحوه دریافت و نمایش اطلاعات را در اینجا تعیین میکنیم
+                "core": {
+                    "themes": {
+                        //  large , normal , small سایز نود ها را مشخص میکند
+                        "variant": "large"    
                     },
-                    "plugins": ["wholerow"]
-                });
+                    //دریافت اطلاعات زاز طریق ویوبگ
+                    //بعد از دریافت کارهای مرحله ۱ انجام میشود
+                    "data": @Html.Raw(ViewBag.Json)
+                        },
+                "checkbox": {
+                    //
+                    "keep_selected_style": false
+                },
+                //
+                "plugins": ["wholerow"]
             });
+        });
     </script>
 }
