@@ -1,0 +1,70 @@
+﻿
+@model AddApplicationRoleViewModel
+
+@{
+    //دریافت ویو بگ کمبو باکس نقش ها
+    List<ApplicationRoles> systemPart = ViewBag.systemPart;
+}
+
+<style>
+    .circleInput {
+        border-radius: 3px;
+    }
+</style>
+
+@Html.AntiForgeryToken()
+
+<div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="col-md-4 col-md-offset-4" style="margin-bottom:15px; margin-top:15px;">
+        <form asp-area="AdminPanel" asp-controller="Role" asp-action="Create" method="post">
+
+
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+
+
+            @* نام نقش *@
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <span class="pull-left" style="font:8px;color:gray;">مثال : <span style="font:10px;color:crimson">C</span>reate<span style="font:10px;color:crimson">U</span>ser</span>
+                <input asp-for="Name" class="form-control circleInput" placeholder="نام نقش را انگلیسی و حرف اول هر کلمه را بزرگ وارد نمایید" />
+
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            @* نام بخش *@
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <span class="pull-left" style="font:8px; color:gray">نمونه: اجزای سیستم</span>
+                <input asp-for="Description" class="form-control circleInput" placeholder="نام بخش را به صورت پارسی وارد نمایید" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+
+            @* انتخاب زیردسته *@
+            <!--تمام نقش ها و گزینهای موجود را می اورد که ازطریق ویوبگ دریافت کردیم :systemPart-->
+            <!-- کمبوباکس است مقدار گزینه انتخابی کاربر را در خود نگه میدارد value همان:Id-->
+            <!-- کمبوباکس است که متن  گزینه هارا نمایش می دهد Text همان :Description-->
+            <div class="form-group">
+                <label asp-for="RoleLevel" class="control-label"></label>
+                <select asp-for="RoleLevel" asp-items="@(new SelectList(systemPart,"Id","Description"))" class="form-control circleInput"></select>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">بازگشت</a>
+            </div>
+
+        </form>
+
+        @if (ViewBag.SuccessMessage != "")
+        {
+            <span style="color:green;">
+                @ViewBag.SuccessMessage
+            </span>
+        }
+
+
+    </div>
+
+</div>

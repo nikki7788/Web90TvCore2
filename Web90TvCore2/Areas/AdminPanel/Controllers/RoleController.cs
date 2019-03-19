@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.ViewModels;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
@@ -73,6 +75,79 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             catch (Exception ex)
             {
                 //todo:مدیریت خطاها در لاگمانده
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Get Method
+        /// نمایش ویوایجاد نقش(=بخش) جدید
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Create()
+        {
+            //تمام نقش ها را برمیکراند و در ویو دریافت میکنیم برای نمایش در کمیو باکس
+            ViewBag.systemPart = _roleManager.Roles.ToList();
+
+            ViewBag.viewTitle = "  ایجاد اجزای جدید";
+            return View();
+        }
+
+
+
+        /// <summary>
+        /// Post Method
+        /// ایجاد نقش (=بخش)جدید
+        /// </summary>
+        /// <param name="model">مدل دریافتی از ویو</param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Create")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateConfirm(AddApplicationRoleViewModel model)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    //------- برای بزرگ کردن حرف اول متن دریافتی -------
+                    //string ms = model.Name;
+                    // ms = ms.Substring(0, 1).ToUpper() + ms.Substring(1);
+                    //-------------------
+
+
+
+
+                    ApplicationRoles role = new ApplicationRoles
+                    {
+                        Id = model.Id,
+                        RoleLevel = model.RoleLevel, //دریافتی از کمبوباکس را میکیرد id
+                        Description = model.Description,
+                        Name = model.Name
+
+                    };
+                    //AspnetRoles ثبت اطالعات و نقش در جدول نقش ها
+                    IdentityResult result = await _roleManager.CreateAsync(role);
+
+                    if (result.Succeeded)
+                    {
+
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                //*************########## درصورت خطا درولیدیشن ها باید دوباره کمبوباکس و تایتل بالا ویورو را به ویو ارسال و نمایش دهیم##### ***************************
+                //تمام نقش ها را برمیکراند و در ویو دریافت میکنیم برای نمایش در کمیو باکس
+                ViewBag.systemPart = _roleManager.Roles.ToList();
+                ViewBag.viewTitle = "  ایجاد اجزای جدید";
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
 

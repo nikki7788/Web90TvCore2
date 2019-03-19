@@ -10,6 +10,7 @@ namespace Web90TvCore2.Models.ViewModels
     /// <summary>
     /// ویومدل برای افزودن کاربر
     /// </summary>
+    /// عمل میکند ApplicationUser روی کلاس 
     public class AddUserViewModel
     {
         /// <summary>
