@@ -45,18 +45,23 @@
                             <td>خانم</td>
 
                         }
-                        <td>
-                            <a class="btn btn-info" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id">
-                                <i class="glyphicon glyphicon-pencil"></i>
-                                ویرایش
-                            </a>
+                            <td>
+                                <!--رفتن به صفحه مشخص کردن سطح دسترسی هرکاربر-->
+                                <a class="btn btn-warning" asp-controller="Role" asp-action="AccessRight" asp-route-id="@item.Id">
+                                    <i class="glyphicon glyphicon-grain"></i>
+                                    دسترسی
+                                </a>
+                                <a class="btn btn-info" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                    ویرایش
+                                </a>
 
-                            <a class="btn btn-danger" asp-controller="User" asp-action="Delete"
-                               asp-route-id="@item.Id" data-toggle="modal" data-target="#modal-action-user">
-                                <i class="glyphicon glyphicon-trash"></i>
-                                حذف
-                            </a>
-                        </td>
+                                <a class="btn btn-danger" asp-controller="User" asp-action="Delete"
+                                   asp-route-id="@item.Id" data-toggle="modal" data-target="#modal-action-user">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    حذف
+                                </a>
+                            </td>
                     </tr>
                 }
             </tbody>
