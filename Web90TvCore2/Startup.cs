@@ -49,6 +49,7 @@ namespace Web90TvCore2
             //-------------------------- set the services and Unit of work and repository setting ---------------------------------------------
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAspNetUserRolesRepo, AspNetUserRolesRepo>();
 
             //-----------------------------------------------------------------------
 

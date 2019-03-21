@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.ViewModels;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
@@ -22,11 +23,14 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         private readonly RoleManager<ApplicationRoles> _roleManager;
         private readonly UserManager<ApplicationUsers> _userManager;
+        private readonly IAspNetUserRolesRepo _iAspNetUserRoleRepo;
 
-        public RoleController(RoleManager<ApplicationRoles> roleManager, UserManager<ApplicationUsers> userManager)
+        public RoleController(RoleManager<ApplicationRoles> roleManager, UserManager<ApplicationUsers> userManager,
+            IAspNetUserRolesRepo iAspNetUserRoleRepo)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _iAspNetUserRoleRepo = iAspNetUserRoleRepo;
         }
         #endregion ########################
 
@@ -87,6 +91,11 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             }
 
         }
+
+
+
+
+
 
 
         /// <summary>
@@ -165,13 +174,17 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
+
+
+
         /// <summary>
         /// Get Method
         /// نمایش درختواره و جز های آن برای مشخص کردن سطح دسترسی هر کاربر
         /// </summary>
+        /// <param name="Id"> از ویو ارسال شده ست asp-route-id آی دی کاربری که روی  دکمه دسترسی آن کلیک شده است را بااین ورودی دریافت میکنیم که از طریق   </param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult AccessRight()
+        public async Task<IActionResult> AccessRight(string Id)
         {
             try
             {
@@ -199,11 +212,29 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
                 }
 
+                //#######################################################
                 // دریافت میکند و ما اطالاعات را تبدیل به جیسان کرده و میفرستیم به ویو json اطلاعات را به صورت jstree
                 ViewBag.json = JsonConvert.SerializeObject(nodes);
-                ViewBag.viewTitle = "  نمایش درختی اجزای سیستم";
 
-                return View();
+                ApplicationUsers user = await _userManager.FindByIdAsync(Id);
+                if (user != null)
+                {
+                    ViewBag.viewTitle = "  نمایش درختی اجزای سیستم";
+
+                    //دریافت نقش هاودسترسی های کاربر
+                    string getRoleId = _iAspNetUserRoleRepo.GetRoleId(Id);
+
+                    //اگر کاربر نقش و دسترسی داشت
+                    if (getRoleId.Length > 0)
+                    {
+                        //  ویرگول انتهای رشته نقش های کاربر را حذف میکند-یک زیررشته از رشته اصلی تولید میکند ","
+                        //ارسال نقش ها و دسترسی های کاربر به ویوبرای نمایش ان(تیک خوردن و انتخاب بودن دسترسی هایی که کاربر داشته از قبل)د 
+                        ViewBag.roleList = getRoleId.Substring(0, getRoleId.Length - 1);
+                    }
+                    return View();
+
+                }
+                return NotFound();
             }
             catch (ArgumentNullException ex)
             {
@@ -224,6 +255,12 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
+        /// <summary>
+        ///  AspNetUserRoles ثبت دسترسی های (=نقش های)کاربر در جدول 
+        /// </summary>
+        /// <param name="selectedItems">دسترسی های(=نقش های)انتخاب شده و تیک خورده کاربرراتوسط این ورودی دیافت میکنیم</param>
+        /// <param name="Id"> از ویو ارسال شده ست asp-route-id آی دی کاربری که روی  دکمه دسترسی آن کلیک شده است را بااین ورودی دریافت میکنیم که از طریق   </param>
+        /// <returns></returns>
         [HttpPost, ActionName("AccessRight")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AccessRightConfirm(string selectedItems, string Id)
@@ -258,16 +295,16 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         }
 
                     }
-                    //(action,Controller)
+                    //RedirectToAction (action,Controller)
                     return RedirectToAction("Index", "User");
                 }
-
+                //اگرکاربری یافت نشد
                 return RedirectToAction("Index", "User"); ;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
 

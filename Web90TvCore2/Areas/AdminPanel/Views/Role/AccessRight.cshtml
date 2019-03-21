@@ -16,6 +16,7 @@
 <form method="post">
     <div class="row pull-left">
         <div>
+            <input type="hidden" id="roleList" value="@ViewBag.roleList" input>
             <!--این اینپوت مقادیر انتخاب شده توسط چک باکس ها که سطح دسترسی هر کاربر و درواقع آی دی نقش  هاست رادرخود نگه میدارد-->
             <input type="hidden" id="selectedItems" name="selectedItems" />
             <input type="submit" value="ثبت دسترسی" class="btn btn-success" /> 
@@ -24,12 +25,13 @@
     </div>
 </form>
 
+
 @section panelScript{
     <script type="text/javascript">
         //----------جلسه 31 ----------------
         $(function () {
             //وقتی صفحه لود شود این رویداد اتاق می افتد
-            $('#jstree').on("changed.jstree", function (e,data ) {
+            $('#jstree').on("changed.jstree", function (e, data) {
                 //  به اکشن ارسال میشود e اطلاعات از طریق پارمتر 
                 //باید داده اول باشد e حتما 
 
@@ -86,8 +88,21 @@
                     "keep_selected_style": false
                 },
                 //یک چکباکس برای هر درختواره ایجلد میکند : checkbox 
-                "plugins": ["wholerow","checkbox"]
-            });
+                "plugins": ["wholerow", "checkbox"]
+                }).on('loaded.jstree', function () {
+
+                    //دریافت نقش هاو دسترسی های کاربر توسط ویو بک و اینپوت مخفی
+                    // رشته را به یک آرایه تبدیل میکند.باید حتما جداکننده را بدهیم split()
+                    //به ان و چون ما در لایه سرویس با ویرگول نقش ها را جداکردیم اینجا هم ویرگول را به عنوان جداکننده میدهیم
+                    //مقادیر بین ویرگول ها جدا میکند و به آرایه تبدیل میکن 
+
+                    var _rolesList = $("#roleList").val().split(",");
+
+                    //آرایه میگیرد select_node
+
+                    $('#jstree').jstree(true).select_node(_rolesList);
+
+                });
         });
     </script>
 }
