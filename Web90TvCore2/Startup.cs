@@ -51,8 +51,12 @@ namespace Web90TvCore2
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAspNetUserRolesRepo, AspNetUserRolesRepo>();
 
-            //-----------------------------------------------------------------------
+            //--------------------------------- وجود دشاته باشد در لاگین کردن url(=returnUrl) هدایت به اکشن مورد نطر ما در صورتی که --------------------------------------
+            //وقتی کاربر ادرس صفحه یا به مسیری میرود که لاگین نیز دارد
+            //چون لاگین را به صورت پارشال ویو تعریف کردیم باید اینجا بگوییم که به کجا برود
+            services.ConfigureApplicationCookie(option => option.LoginPath = "/Home");
 
+            //-----------------------------------------------------------------------
             services.AddMvc();
         }
 
@@ -78,6 +82,13 @@ namespace Web90TvCore2
             }
 
             app.UseStaticFiles();
+
+            //--------_-------adding  Authorize to the project-----------------
+            
+            //app.UseIdentity();
+            app.UseAuthentication();
+
+            //------------------------------------
 
             //------------خودم اضافه کردم todo: --------------------
             //app.UseStatusCodePages();

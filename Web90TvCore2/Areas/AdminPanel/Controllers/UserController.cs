@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 using InsertShowImage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
 
     [Area("AdminPanel")]
+    [Authorize(Roles ="User")]
     public class UserController : Controller
     {
         #region ############## depenencies ###############################################
