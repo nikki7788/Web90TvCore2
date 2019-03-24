@@ -219,7 +219,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 ApplicationUsers user = await _userManager.FindByIdAsync(Id);
                 if (user != null)
                 {
-                    ViewBag.viewTitle = "  نمایش درختی اجزای سیستم";
+                    ViewBag.viewTitle = "ثبت دسترسی برای " + user.FirstName + " " + user.LastName; 
 
                     //دریافت نقش هاودسترسی های کاربر
                     string getRoleId = _iAspNetUserRoleRepo.GetRoleId(Id);
@@ -256,11 +256,13 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
         /// <summary>
-        ///  AspNetUserRoles ثبت دسترسی های (=نقش های)کاربر در جدول 
+        ///  AspNetUserRoles ثبت و ویرایش دسترسی های (=نقش های)کاربر در جدول 
         /// </summary>
         /// <param name="selectedItems">دسترسی های(=نقش های)انتخاب شده و تیک خورده کاربرراتوسط این ورودی دیافت میکنیم</param>
         /// <param name="Id"> از ویو ارسال شده ست asp-route-id آی دی کاربری که روی  دکمه دسترسی آن کلیک شده است را بااین ورودی دریافت میکنیم که از طریق   </param>
         /// <returns></returns>
+        /// ابتدا همه نقش های کاربر اگر وجود داشته باشد  را پاک میکنیم سپس نقش هایی که انتخاب شده و تیک خورده را دوباره در دیتابیس ثبت میکنیم
+        /// این کار برای ویرایش است
         [HttpPost, ActionName("AccessRight")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AccessRightConfirm(string selectedItems, string Id)
@@ -275,30 +277,40 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 //کاربر را براساس آی دی دریافتی از ورودی پیدامیکند
                 ApplicationUsers user = await _userManager.FindByIdAsync(Id);
 
-                if (user != null)
+                //###############------------- حذف همه دسترسی هاونقش ها در دیتابیس----------####################
+                //ایتدا همه دسترسی ها را حذف میکنیم پس دسترسی ها انخاب شده را ثبت بااین کار وییرایش انجام دادیم
+                var delRole = await _userManager.GetRolesAsync(user);
+                IdentityResult delRoleResult = await _userManager.RemoveFromRolesAsync(user, delRole);
+
+                //####################-----------
+
+                if (delRoleResult.Succeeded)
                 {
-                    for (int i = 0; i < items.Count; i++)
+                    if (user != null)
                     {
-
-                        ApplicationRoles role = await _roleManager.FindByIdAsync(items[i].id);
-
-                        if (role != null)
+                        for (int i = 0; i < items.Count; i++)
                         {
-                            // اطلاعات را ثبت میکند AspNetUserRoles در جدول 
-                            //آی دی یوزر را به همراه آی دی   نقش ها آن
-                            //یوزر و نام نقش را میگیرد این دستور
-                            IdentityResult result = await _userManager.AddToRoleAsync(user, role.Name);
-                            if (!result.Succeeded)
-                            {
-                                return NotFound();
-                            }
-                        }
 
+                            //###############------------- ثبت دسترسی هاونقش ها در دیتابیس----------####################
+                            ApplicationRoles role = await _roleManager.FindByIdAsync(items[i].id);
+
+                            if (role != null)
+                            {
+                                // اطلاعات را ثبت میکند AspNetUserRoles در جدول 
+                                //آی دی یوزر را به همراه آی دی   نقش ها آن
+                                //یوزر و نام نقش را میگیرد این دستور
+                                IdentityResult result = await _userManager.AddToRoleAsync(user, role.Name);
+                                if (!result.Succeeded)
+                                {
+                                    return NotFound();
+                                }
+                            }
+
+                        }
+                        
                     }
-                    //RedirectToAction (action,Controller)
-                    return RedirectToAction("Index", "User");
                 }
-                //اگرکاربری یافت نشد
+                //RedirectToAction (action,Controller)
                 return RedirectToAction("Index", "User"); ;
             }
             catch (Exception ex)
