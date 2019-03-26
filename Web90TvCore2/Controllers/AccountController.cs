@@ -88,8 +88,6 @@ namespace Web90TvCore2.Controllers
         }
 
 
-
-
         /// <summary>
         ///  Private Action = Method   
         ///    ----این متد پس از موفقیت امیز بودن لاگین کاربر را به صفحه مورد نظر هدایت میکند
@@ -119,6 +117,15 @@ namespace Web90TvCore2.Controllers
             return null;
         }
 
+
+        [HttpPost]
+       [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOut()
+        {
+
+          await  _signInManager.SignOutAsync();
+            return Redirect("/Home");
+        }
 
     }
 }
