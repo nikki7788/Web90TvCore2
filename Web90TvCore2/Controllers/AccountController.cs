@@ -45,6 +45,7 @@ namespace Web90TvCore2.Controllers
         ///   نداریم برای لاگین چون به صورت پارشال ویو ان را در صفحه اصلی تعریف کردیم و نیازی به نمایش ان نداریم Get متد      
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             // را به ویو میفرستیم به تگ فرم Url  توسط این مقدار
@@ -65,18 +66,25 @@ namespace Web90TvCore2.Controllers
 
                     //نقش ها و دسترسی های کاربر را برکردان
                     //var roles=string []roles
-                    string[] userRroles = _userManager.GetRolesAsync(user).Result.ToArray();
+                   string[] userRroles = _userManager.GetRolesAsync(user).Result.ToArray();
+
+
+                    //اگرلاگین موفق بود
+                    return Json(new { status="success" });
 
                     // اگر وجود داشت به متد زیر Url ارسال نقش ها و 
-                    return RedirectToLocal(userRroles, returnUrl);
+                   // return RedirectToLocal(userRroles, returnUrl);
 
                 }
 
+                //اگراطالعات درست نبود
+                return Json(new { status = "failInput" });
 
             }
 
-            // Failed Login
-            return PartialView(model);
+            // اگر ورودی های فرم لاگین  خالی بود
+            return Json(new { status = "failEmptyInput" });
+            // return PartialView(model);
         }
 
 
