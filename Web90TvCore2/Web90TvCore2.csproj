@@ -2153,6 +2153,7 @@
     <Folder Include="Areas\AdminPanel\Data\" />
     <Folder Include="Areas\AdminPanel\Models\" />
     <Folder Include="wwwroot\font\" />
+    <Folder Include="wwwroot\upload\indexImage\" />
     <Folder Include="wwwroot\upload\userImage\" />
     <Folder Include="wwwroot\upload\userImage\thumbnailImage\" />
     <Folder Include="wwwroot\upload\userImage\normalImage\" />

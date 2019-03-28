@@ -33,6 +33,28 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             return View(model);
         }
 
+
+        /// <summary>
+        /// get method ----
+        /// نمایش صفحه ایجاد خبر جدید
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.viewTitle = "  افزودن خبر";
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
         #endregion #############################
     }
 }
