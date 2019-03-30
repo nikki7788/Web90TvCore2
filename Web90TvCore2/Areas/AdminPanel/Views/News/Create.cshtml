@@ -67,7 +67,7 @@
                              style="height:100px; width:90px; margin:5px auto;" />
                     </div>
 
-                    <div id="divmessage" class="text-center d-none" style="color:green;">
+                    <div id="divmessage" class="text-center hidden" style="color:green;">
                     </div>
                 </div>
             </div>
@@ -134,14 +134,14 @@
 
                     $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imagename);
 
-                    $("#divmessage").removeClass('d-none');
+                    $("#divmessage").removeClass('hidden');
                     $("#divmessage").text("تصویر با موفقیت آپلود شد");
 
                     $("#imagename").val(result.imagename);
                     }
                 }).fail(function (result) {
                     if (result.status != "success") {
-                        $("#divmessage").removeClass('d-none');
+                        $("#divmessage").removeClass('hidden');
                         $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
 
                     }
