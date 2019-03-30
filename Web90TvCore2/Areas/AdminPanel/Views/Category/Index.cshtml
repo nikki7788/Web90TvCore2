@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Category>
+
+
+<div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="panel panel-primary col-md-8 col-md-offset-2" style="margin-top:25px; margin-bottom:25px;">
+
+        <div class="panel-body">
+            <div>
+                <a class="btn btn-primary" asp-controller="Category" asp-action="Create">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    افزودن دسته بندی جدید
+                </a>
+            </div>
+        </div>
+
+        <hr style="height:1px; background-color:gray;" />
+
+        <table class="box box-body table table-responsive text-center">
+            <thead>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Title)</td>
+                    <td>@Html.DisplayNameFor(model => model.Description)</td>
+                    <td>عملیات</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a class="btn btn-info" asp-area="AdminPanel" asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                ویرایش
+                            </a>
+
+                            <a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId"
+                               id="categoryDelete" data-toggle="modal" data-target="#modal-action-category">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                حذف
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalPartial.cshtml",
+    new BootstrapModel { Id= "modal-action-category",Size=ModalSize.Medium })
+
+@section panelScript{
+    <script src="~/js/modal-js/all-index.js"></script>
+}

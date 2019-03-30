@@ -1,0 +1,48 @@
+﻿@model Category
+
+
+<div class="row center-block box box-warning">
+    <div class="col-md-4 col-md-offset-4" style="margin-bottom:15px; margin-top:15px;">
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-warning alert-dismissible center-block" style="margin-top:10px; width:100%; ">
+                <strong> @ViewBag.SuccessMessage</strong>
+                <a href="#" class="close pull-left text-light" data-dismiss="alert" aria-label="close"
+                   style="opacity:.9;margin-left:0;color:white;text-decoration: none !important;">&times;</a>
+            </div>
+        }
+
+        <form asp-area="AdminPanel" asp-controller="Category" asp-action="Edit" method="post">
+
+
+            @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <!--در اکشن پست ادیت دریافت میشود-->
+            <div class="form-group hidden">
+                <input id="categoryid" asp-for="CategoryId" />
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="ویرایش" class="btn btn-success" />
+                <a asp-controller="Category" asp-action="Index" class="btn btn-danger">بازگشت</a>
+            </div>
+
+
+
+        </form>
+
+    
+
+    </div>
+</div>

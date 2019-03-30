@@ -1,0 +1,64 @@
+﻿<!--partial view for the modal header shared with the whole  project
+    -->
+@model ModalHeader
+<!--روش 1 -->
+@if (Model.BootstrapVersion ==BootstrapVr.version4)
+{
+    //برای بوت استرپ 4
+    <div class="modal-header">
+        <!--initializing header dynamically-->
+        <h4 class="modal-title">@Model.Heading</h4>
+
+        <div class="d-flex">
+            <button class="close justify-content-end" data-dismiss="modal" aria-label="close">
+                @*<span aria-hidden="true" class="fa fa-times fa-1x "></span>*@
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+}
+else if (Model.BootstrapVersion == BootstrapVr.version3)
+{
+    //برای بوت استرپ 3.3.7
+    <div class="modal-header">
+        <button type="button" class="close pull-left" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">@Model.Heading </h4>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+<!--روش ۲ -->
+<!--و مقدار دهی ان در اکشن viewbag با    -->
+@*@if (ViewBag.bootstrapVers == 4)*@
+@*{
+    //برای بوت استرپ 4
+    <div class="modal-header">*@
+<!--initializing header dynamically-->
+@*<h4 class="modal-title">@Model.Heading</h4>
+
+    <div class="d-flex">
+        <button class="close justify-content-end" data-dismiss="modal" aria-label="close">*@
+@*<span aria-hidden="true" class="fa fa-times fa-1x "></span>*@
+@*<span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }*@
+@*else if (ViewBag.bootstrapVers == 3)
+    {
+        //برای بوت استرپ 3.3.7
+        <div class="modal-header">
+            <button type="button" class="close pull-left" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">حذف دسته بندی</h4>
+        </div>
+    }*@

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<News>
+
+<div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="panel panel-primary col-md-10 col-md-offset-1" style="margin-top:25px; margin-bottom:25px;">
+
+        <div class="panel-body">
+            <div>
+                <a class="btn btn-primary" asp-controller="News" asp-action="Create">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    درج خبر جدید
+                </a>
+            </div>
+        </div>
+
+        <hr style="height:1px; background-color:gray;" />
+
+        <table class="table table-responsive text-center">
+            <thead>
+                <tr style="font-size:15px; font-weight:600;">
+                    <td>@Html.DisplayNameFor(model => model.Title)</td>
+                    <td>@Html.DisplayNameFor(model => model.Abstract)</td>
+                    <td>@Html.DisplayNameFor(model => model.VisitCount)</td>
+                    <td>@Html.DisplayNameFor(model => model.NewsDate)</td>
+                    <td>@Html.DisplayNameFor(model => model.NewsTime)</td>
+                    <td>@Html.DisplayNameFor(model => model.IndexImage)</td>
+                    <td>عملیات</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Abstract</td>
+                        <td>@item.VisitCount</td>
+                        <td>@item.NewsDate</td>
+                        <td>@item.NewsTime</td>
+                        <td>@item.IndexImage</td>
+                        <td>
+                            <a class="btn btn-info" asp-controller="News" asp-action="Edit" asp-route-id="@item.NewsId">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                ویرایش
+                            </a>
+
+                            <a class="btn btn-danger" asp-controller="News" asp-action="Delete"
+                               asp-route-id="@item.NewsId" data-toggle="modal" data-target="#modal-action-news">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                حذف
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalPartial.cshtml",
+    new BootstrapModel { Id= "modal-action-news",Size=ModalSize.Medium })
+
+@section panelScript{
+    <script src="~/js/modal-js/all-index.js"></script>
+}

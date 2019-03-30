@@ -1,0 +1,151 @@
+﻿
+
+@model News
+<!--استفاه از تاریخ شمسی-->
+<!--دراکشن هم میشد نوشت و با ویو بگ در ویو دریافت کرد-->
+@using System.Globalization
+@{
+    var currenDate = DateTime.Now;
+    PersianCalendar pCalendar = new PersianCalendar();
+    int year = pCalendar.GetYear(currenDate);
+    int month = pCalendar.GetMonth(currenDate);
+    int day = pCalendar.GetDayOfMonth(currenDate);
+    string shamsiDate = string.Format("{0:yyyy:MM:dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
+}
+
+<div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
+        <form asp-area="AdminPanel" asp-controller="News" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            @* عنوان خبر *@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control circleInput" placeholder="عنوان خبر را وارد نمایید" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+
+
+            @* متن خبر *@
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <div>
+                    <textarea id="Content" name="Content" asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+            </div>
+
+            @* چکیده خبر *@
+            <div class="form-group">
+                <label asp-for="Abstract" class="control-label"></label>
+                <div>
+                    <textarea asp-for="Abstract" class="form-control"></textarea>
+                    <span asp-validation-for="Abstract" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+
+            @* تصویر شاخص *@
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="IndexImage" class="control-label"></label>
+                    <div class="form-horizontal">
+                        <input asp-for="IndexImage" type="file" id="files" name="files" />
+                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info" value="آپلود و نمایش تصویر" />
+                    </div>
+                    <span asp-validation-for="IndexImage" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                             src="~/upload/indexImage/defaultpic.jpg" alt="UserImage"
+                             style="height:100px; width:90px; margin:5px auto;" />
+                    </div>
+
+                    <div id="divmessage" class="text-center hidden" style="color:green;">
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            @* تاریخ و زمان خبر *@
+            <div class="form-group" style="height:30px; margin-bottom:25px;">
+                <!--تاریخ خبر-->
+                <div style="font-size:15px;" class="col-md-6">
+                    <label asp-for="NewsDate" class="col-md-4 control-label"></label>
+                    <input asp-for="NewsDate" type="text" value="@shamsiDate" style="border:0px;" />
+                </div>
+                <!--زمان خبر-->
+                <div style="font-size:15px;" class="col-md-6">
+                    <label asp-for="NewsTime" class="col-md-4 control-label"></label>
+                    <input asp-for="NewsTime" type="text" value="@DateTime.Now.Hour:@DateTime.Now.Minute" style="border:0px;" />
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">بازگشت</a>
+            </div>
+
+            <input type="text" class="hidden" id="imagename" name="imagename" />
+
+        </form>
+
+        @if (ViewBag.SuccessMessage != "")
+        {
+            <span style="color:green;">
+                @ViewBag.SuccessMessage
+            </span>
+        }
+
+
+    </div>
+
+</div>
+
+@section panelScript{
+    <script>
+        var UploadImage = function () {
+            var data = new FormData;
+            var file = $("#files").get(0);
+            var files = file.files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadFile","News", new { area = "AdminPanel"})',
+                data: data,
+                contentType: false,
+                processData: false,
+            }).done(function (result) {
+                if (result.status == "success") {
+
+                    $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imagename);
+
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("تصویر با موفقیت آپلود شد");
+
+                    $("#imagename").val(result.imagename);
+                    }
+                }).fail(function (result) {
+                    if (result.status != "success") {
+                        $("#divmessage").removeClass('hidden');
+                        $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
+
+                    }
+                });
+        }
+    </script>
+}

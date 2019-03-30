@@ -1,0 +1,86 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Web90TvCore2.Models;
+using Web90TvCore2.Models.UnitOfWork;
+
+namespace Web90TvCore2.Controllers
+{
+    /// <summary>
+    /// کنترلر اصلی سایت
+    /// </summary>
+    public class HomeController : Controller
+    {
+        #region ################### Dependencies ###################
+
+        private readonly UserManager<ApplicationUsers> _userManager;
+        private readonly IUnitOfWork _UnitOfWork;
+        private readonly SignInManager<ApplicationUsers> _signInManager;
+        public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork, UserManager<ApplicationUsers> userManager)
+        {
+            _userManager = userManager;
+            _UnitOfWork = UnitOfWork;
+            _signInManager = signInManager;
+
+        }
+
+        #endregion###########
+
+        #region ############## Actions #######################
+
+        
+        /// <summary>
+        /// نمایش صفحه اصلی سایت
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IActionResult> Index()
+        {
+            // اشاره به کاربری دارد که لاگین کرده است User 
+
+            //اگر کاربر لاگین کرده بود
+            if (_signInManager.IsSignedIn(User))
+            {
+                //روش 1
+                //var query =  _UnitOfWork.UserManagerUW.GetById(_userManager.GetUserId(HttpContext.User));
+
+                // از کوکی مرورکر اطلاعات کاربر را میخواند  HttpContext.User اشاره به خود مرورگر خود کاربر لاگین کرده دارد  و HttpContext   
+                var query = await _UnitOfWork.UserManagerUW.GetById(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+                //ارسال اطلاعات کاربر به ویو اصلی جهت نمایش
+                ViewBag.FullName = query.FirstName + " " + query.LastName;
+            }
+
+            return View();
+            //todo: UserManagerUW  برای چی از دستور بالا استفاده کردیم؟   
+
+        }
+
+
+
+
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        #endregion #####################
+    }
+}

@@ -1,0 +1,108 @@
+﻿
+<div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray; height:500px;">
+    <div class="panel col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
+
+        <!--jsTree مربوط به پلاگین
+            نمایش درختواره-->
+        <div id="jstree">
+        </div>
+
+    </div>
+</div>
+
+<!--این فرم سطح دسترسی کاربران را به اکشن میفرستد---به صورت جیسون و ارایه-->
+<!--چون ارسال اطاعات داریم تگ فرم میخواهیم-->
+@Html.AntiForgeryToken()
+<form method="post">
+    <div class="row pull-left">
+        <div>
+            <input type="hidden" id="roleList" value="@ViewBag.roleList" input>
+            <!--این اینپوت مقادیر انتخاب شده توسط چک باکس ها که سطح دسترسی هر کاربر و درواقع آی دی نقش  هاست رادرخود نگه میدارد-->
+            <input type="hidden" id="selectedItems" name="selectedItems" />
+            <input type="submit" value="ثبت دسترسی" class="btn btn-success" /> 
+            <a asp-controller="User" asp-action="Index" class="btn btn-danger">بازگشت</a>
+        </div>
+    </div>
+</form>
+
+
+@section panelScript{
+    <script type="text/javascript">
+        //----------جلسه 31 ----------------
+        $(function () {
+            //وقتی صفحه لود شود این رویداد اتاق می افتد
+            $('#jstree').on("changed.jstree", function (e, data) {
+                //  به اکشن ارسال میشود e اطلاعات از طریق پارمتر 
+                //باید داده اول باشد e حتما 
+
+                //-######################- مشخص کردن اینکه پلاگین اینگونه پرشود-------مرحله ۱---##########################
+
+                //های دریافتی به ارایه اضافه میشوندتوسط این حلقه nodes تک تک
+
+                var i, j;
+                //داده دریافتی ازاکشن که به صورت جیسون است درواقع یک ارایه است و اطلاعات ان رادر داخل یک ارایه پوش و ذخیره میکنیم
+                //درنهایت ما این رایه را نشان میدهیم
+                var postedItems = [];
+
+                //طول داده دریافتی (که به صورت جیسون است )از  کنترلر
+                j = data.selected.length;
+
+                for (i = 0; i < j; i++) {
+
+                    //ایدی هر جز را بدست می اوریم(ازداده دریافتی از اکشن) و ذخیره میکنیم
+                    var id = data.selected[i];
+
+                    //Add the Node to the Json Array------ اضافه کردن هر درایه و عضو داده جیسون  دریافتی در داخل ارایه
+                    postedItems.push({
+                        // را که در داخل داده ای که به صورت جیسون ارسال کردیم را میریزیم داخل ارایه TreeViewNode جدول   text مقدار پراپرتی
+                        text: data.instance.get_node(data.selected[i]).text,
+
+                        // را که در داخل داده ای که به صورت جیسون ارسال کردیم را میریزیم داخل ارایه TreeViewNode جدول   id مقدار پراپرتی
+                        id: id,
+
+                        // را که در داخل داده ای که به صورت جیسون ارسال کردیم را میریزیم داخل ارایه TreeViewNode جدول   parent(rolelevel) مقدار پراپرتی
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //#############################################################################
+
+
+                // وجود دارد jstree بعداز اجرای ویو این تگ(به صورت مخفی است) درداخل دیو
+
+                //Serialize the Json Array and save in HiddenField
+                $('#selectedItems').val(JSON.stringify(postedItems));   // تبدیل جیسون به داده قابل خواندن توسط مفسر و ذخیره ان درتگ های مخفی
+            }).jstree({
+                //نحوه دریافت و نمایش اطلاعات را در اینجا تعیین میکنیم
+                "core": {
+                    "themes": {
+                        //  large , normal , small سایز نود ها را مشخص میکند
+                        "variant": "large"
+                    },
+                    //دریافت اطلاعات زاز طریق ویوبگ
+                    //بعد از دریافت کارهای مرحله ۱ انجام میشود
+                    "data": @Html.Raw(ViewBag.Json)
+                        },
+                "checkbox": {
+                    //
+                    "keep_selected_style": false
+                },
+                //یک چکباکس برای هر درختواره ایجلد میکند : checkbox 
+                "plugins": ["wholerow", "checkbox"]
+                }).on('loaded.jstree', function () {
+
+                    //دریافت نقش هاو دسترسی های کاربر توسط ویو بک و اینپوت مخفی
+                    // رشته را به یک آرایه تبدیل میکند.باید حتما جداکننده را بدهیم split()
+                    //به ان و چون ما در لایه سرویس با ویرگول نقش ها را جداکردیم اینجا هم ویرگول را به عنوان جداکننده میدهیم
+                    //مقادیر بین ویرگول ها جدا میکند و به آرایه تبدیل میکن 
+
+                    var _rolesList = $("#roleList").val().split(",");
+
+                    //آرایه میگیرد select_node
+
+                    $('#jstree').jstree(true).select_node(_rolesList);
+
+                });
+        });
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿
+
+@model LoginViewModel
+<!-- برای مشخص کردن اینکه کاربر لاگین کرده یا خیر -->
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUsers> signInManager;
+<!---->
+
+@Html.AntiForgeryToken()
+
+@if (signInManager.IsSignedIn(User))
+{
+    <!-- اشاره دارد به کاربری که لاگین کرده User-->
+    <!-- اگر کاربر لاگین بود-->
+    <div id="login">
+        <form asp-controller="Account" asp-action="LogOut" amethod="post">
+            @* <div class="text-center">کاربر گرامی @ViewBag.FullName خوش آمدید</div>*@
+            <hr style="height:1px; background-color:gray;" />
+            <div class="text-center">کاربر گرامی @ViewBag.FullName خوش آمدید</div>
+            <div class="" style="margin-top: 30px; margin-bottom:15px;">
+                <a href="/AdminPanel/User/Index" class="btn btn-primary ">پنل کاربری</a>
+                @*<a asp-area="AdminPanel" asp-controller="User" asp-action="Index" class="btn btn-primary">پنل کاربری</a>*@
+                <button type="submit" class="btn btn-danger float-left">خروج از سیستم</button>
+            </div>
+        </form>
+        <!--todo: علت کارنکردن دستور تگ هئر ه در گ لینک بالا-->
+    </div>
+
+}
+else
+{
+    <!--اگر کاربر لاگین نکرده بود فرم لاگین را نمایش دهد-->
+
+    <div id="login">
+        <span class="news-header ul-title-tabs-color">فرم ورود</span>
+        <div class="hr-divider"></div>
+        <div class="mx-3 my-2  "><span class="text-danger p-1" id="validationLogin"></span></div>
+        <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@ViewData["returnUrl"]" id="frmLogin">
+
+
+            <div class="form-group row ">
+                <label asp-for="UserName" class="col-md-4 col-sm-12 col-form-label"></label>
+                <div class="col-md-7 col-sm-12 pr-md-0">
+                    <input asp-for="UserName" type="text" class="form-control" id="inputUserName" placeholder="نام کاربری">
+                    @*<span asp-validation-for="UserName" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Password" class="col-md-4 col-sm-12 col-form-label pl-0">  رمز عبور :</label>
+                <div class="col-md-7 col-sm-12 pr-md-0">
+                    <input asp-for="Password" type="password" class="form-control" id="inputUserName" placeholder="رمز عبور">
+                    @* <span asp-validation-for="Password" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="form-group row px-0 mx-0">
+
+                <div class="form-check col-md-7 col-sm-12 offset-md-4 ">
+
+                    <div class="checkbox-inline ">
+                        <label asp-for="RememberMe" class="form-check-label">
+                            <input asp-for="RememberMe">
+                            <!--دکمه چک باکس نمایش میدهد-->
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row px-0 mx-0 justify-content-start" style="direction:ltr">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-success pt-1 pb-1 " id="submitLogin">ورود</button>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
+
+
+
