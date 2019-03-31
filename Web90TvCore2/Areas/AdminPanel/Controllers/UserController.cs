@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
+using Web90TvCore2.services;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
@@ -26,14 +27,16 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         private readonly IUnitOfWork _iUintOfWork;
 
-        private readonly IHostingEnvironment _appEnvironment;
+        private readonly IUploadingFileService _uploadingFile;
+
         private readonly UserManager<ApplicationUsers> _userManager;
 
-        public UserController(IUnitOfWork iUnitOfWork, IHostingEnvironment appEnvironment, UserManager<ApplicationUsers> userManager)
+
+        public UserController(IUnitOfWork iUnitOfWork, IUploadingFileService uploadingFile, UserManager<ApplicationUsers> userManager)
         {
             _iUintOfWork = iUnitOfWork;
 
-            _appEnvironment = appEnvironment;
+            _uploadingFile = uploadingFile;
 
             _userManager = userManager;
         }
@@ -58,98 +61,23 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// <summary>
         /// اپلود کردن تصویر پروفایل کاربر
         /// </summary>
-        /// <param name="files"></param>
+        /// <param name="files">فایل دریافتی از کاربر برای آپلودکردن</param>
         /// <returns></returns>
         public async Task<IActionResult> UploadFile(IEnumerable<IFormFile> files)
         {
-            //todo:catch - مدیریت خطا به درستی انجام شود
-            //todo:using -try catch - ایا هنگام استفاده از یوزینگ ترای کچ هم نیاز است
             if (files.Count() != 0)
             {
+                //مسر ذخیره تصویر عادی
+                string normalImagePath = "upload//userImage//normalImage//";
 
+                //مسر ذخیره تویر بند انگشنی
+                string thumbnailImagePath = "upload//userImage//thumbnailImage//";
 
-                try
-                {
-                    var upload = Path.Combine(_appEnvironment.WebRootPath, "upload//userImage//normalImage//");
-                    var fileName = "";
+                //دریافت نام فایل آپلود شده از لایه سرویس و متد آپلود کردن تصویر
+                string fileName =await _uploadingFile.UploadFiles(files,normalImagePath,thumbnailImagePath);
 
-                    foreach (var file in files)
-                    {
+                return Json(new { status = "success", message = "تصویر با موفقیت آپلود شد", imageName = fileName });
 
-                        fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-
-                        try
-                        {
-                            using (var fileStream = new FileStream(Path.Combine(upload, fileName), FileMode.Create))
-                            {
-                                await file.CopyToAsync(fileStream);
-                            }
-                        }
-                        catch (NotSupportedException)
-                        {
-
-                            throw;
-                        }
-                        catch (SecurityException)
-                        {
-
-                            throw;
-                        }
-                        catch (FileNotFoundException)
-                        {
-
-                            throw;
-                        }
-                        catch (DirectoryNotFoundException)
-                        {
-
-                            throw;
-                        }
-                        catch (PathTooLongException)
-                        {
-
-                            throw;
-                        }
-
-                        catch (IOException ex)
-                        {
-
-                            throw ex;
-                        }
-                        catch (ArgumentNullException)
-                        {
-
-                            throw;
-                        }
-
-                        ////---------------------- تغییر سایز عکس و ذخیره برای حالت  بندانگشتی ----------------------------////
-
-                        ImageResizer imgThumb = new ImageResizer();
-                        imgThumb.Resize(upload + fileName, Path.Combine(_appEnvironment.WebRootPath, "upload//userImage//thumbnailImage//") + fileName);
-
-                        //----------------------------------------------//
-                    }
-
-                    return Json(new { status = "success", message = "تصویر با موفقیت آپلود شد", imageName = fileName });
-                }
-
-
-
-                catch (ArgumentNullException)
-                {
-
-                    throw;
-                }
-                catch (ArgumentException)
-                {
-
-                    throw;
-                }
-                catch (Exception)
-                {
-                    //ModelState.AddModelError("UserImage", "خطایی رخ داده است");
-                    throw;
-                }
             }
 
             //اگر تصویری برای اپلود انتخاب نشود

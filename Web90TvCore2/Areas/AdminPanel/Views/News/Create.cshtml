@@ -4,6 +4,7 @@
 <!--استفاه از تاریخ شمسی-->
 <!--دراکشن هم میشد نوشت و با ویو بگ در ویو دریافت کرد-->
 @using System.Globalization
+
 @{
     var currenDate = DateTime.Now;
     PersianCalendar pCalendar = new PersianCalendar();
@@ -12,7 +13,10 @@
     int day = pCalendar.GetDayOfMonth(currenDate);
     string shamsiDate = string.Format("{0:yyyy:MM:dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
 }
-
+@{ 
+    // دریافت لیست دسته بندی برای نمایش در کمبوباکس
+   var CategoryList = ViewBag.CategoryList;
+}
 <div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
     <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
         <form asp-area="AdminPanel" asp-controller="News" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -60,16 +64,16 @@
                     <span asp-validation-for="IndexImage" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
+                <div class="col-md-4" style="margin-right:15px">
+                    <div class="form-group col-md-12" style="margin:0 auto">
                         <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
                              src="~/upload/indexImage/defaultpic.jpg" alt="UserImage"
                              style="height:100px; width:90px; margin:5px auto;" />
                     </div>
-
-                    <div id="divmessage" class="text-center hidden" style="color:green;">
-                    </div>
+                        <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
+                   
                 </div>
+                
             </div>
 
 
@@ -89,6 +93,11 @@
                 </div>
             </div>
 
+            @* دسته بندی موضوعات *@
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" asp-items="@(new SelectList(CategoryList,"CategoryId","Title"))" class="form-control"></select>
+            </div>
 
 
             <div class="form-group">
@@ -96,7 +105,7 @@
                 <a asp-action="Index" class="btn btn-danger">بازگشت</a>
             </div>
 
-            <input type="text" class="hidden" id="imagename" name="imagename" />
+            <input type="text" class="hidden" id="imageName" name="imageName" />
 
         </form>
 
@@ -132,12 +141,12 @@
             }).done(function (result) {
                 if (result.status == "success") {
 
-                    $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imagename);
+                    $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imageName);
 
                     $("#divmessage").removeClass('hidden');
                     $("#divmessage").text("تصویر با موفقیت آپلود شد");
 
-                    $("#imagename").val(result.imagename);
+                    $("#imageName").val(result.imageName);
                     }
                 }).fail(function (result) {
                     if (result.status != "success") {
