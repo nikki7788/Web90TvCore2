@@ -13,9 +13,9 @@
     int day = pCalendar.GetDayOfMonth(currenDate);
     string shamsiDate = string.Format("{0:yyyy:MM:dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
 }
-@{ 
+@{
     // دریافت لیست دسته بندی برای نمایش در کمبوباکس
-   var CategoryList = ViewBag.CategoryList;
+    var CategoryList = ViewBag.CategoryList;
 }
 <div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
     <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
@@ -34,11 +34,31 @@
 
             @* متن خبر *@
             <div class="form-group">
+                <script src="~/ckeditor/ckeditor.js"></script>
+
                 <label asp-for="Content" class="control-label"></label>
                 <div>
                     <textarea id="Content" name="Content" asp-for="Content" class="form-control"></textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
+
+                <!-------#########---- CKEditor دستورات استفاده از ------############---->
+                <script>
+                    //CKEDITOR.replace('Content');
+                    const config = {
+                        filebrowserImageBrowseUrl: "/imagebrowser",
+                        filebrowserImageWindowWidth: 780,
+                        filebrowserImageWindowHeight: 720,
+                        filebrowserBrowseUrl: "/linkbrowser",
+                        filebrowserWindowWidth: 350,
+                        filebrowserWindowHeight: 500
+                    };
+                    const editor = document.getElementById("Content");
+                    CKEDITOR.replace(editor, config);
+
+                </script>
+                <!------------------################---------->
+
             </div>
 
             @* چکیده خبر *@
@@ -70,15 +90,15 @@
                              src="~/upload/indexImage/defaultpic.jpg" alt="UserImage"
                              style="height:100px; width:90px; margin:5px auto;" />
                     </div>
-                        <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
-                   
+                    <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
+
                 </div>
-                
+
             </div>
 
 
 
-
+            @*  نمایش زمان "@DateTime.Now.Hour:@DateTime.Now.Minute*@
             @* تاریخ و زمان خبر *@
             <div class="form-group" style="height:30px; margin-bottom:25px;">
                 <!--تاریخ خبر-->
@@ -104,9 +124,16 @@
                 <input type="submit" value="ایجاد" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-danger">بازگشت</a>
             </div>
+            <!---------###############---   دریافت مقادیر از ویو بگ و ایجکس جیکویری-##################----- -->
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="indexImage" name="indexImage" />*@
+            <input type="text" class="hidden" asp-for="IndexImage" />
 
-            <input type="text" class="hidden" id="imageName" name="imageName" />
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="userId" name="userId" value="@ViewBag.UsersId" />*@
+            <input type="text" class="hidden" asp-for="UserId" value="@ViewBag.UsersId" />
 
+            <!-----------  ###############################-------->
         </form>
 
         @if (ViewBag.SuccessMessage != "")
@@ -141,20 +168,23 @@
             }).done(function (result) {
                 if (result.status == "success") {
 
+                    //برای نمایش تصویر کاربر
+                    //دریافت نام تصویر آپلود شده
                     $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imageName);
 
                     $("#divmessage").removeClass('hidden');
                     $("#divmessage").text("تصویر با موفقیت آپلود شد");
 
-                    $("#imageName").val(result.imageName);
-                    }
-                }).fail(function (result) {
-                    if (result.status != "success") {
-                        $("#divmessage").removeClass('hidden');
-                        $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
+                    //ذخیره نام تصویر در تگ و پراپرتی جدول خبر
+                    $("#IndexImage").val(result.imageName);
+                }
+            }).fail(function (result) {
+                if (result.status != "success") {
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
 
-                    }
-                });
-        }
+                }
+            });
+        };
     </script>
 }

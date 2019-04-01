@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.services;
 
@@ -18,11 +20,14 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         private readonly IUploadingFileService _uploadingFile;
 
+        private readonly UserManager<ApplicationUsers> _userManager;
 
-        public NewsController(IUnitOfWork iUnitOfWork, IUploadingFileService uploadingFile)
+
+        public NewsController(IUnitOfWork iUnitOfWork, IUploadingFileService uploadingFile, UserManager<ApplicationUsers> userManager)
         {
             _iUintOfWork = iUnitOfWork;
             _uploadingFile = uploadingFile;
+            _userManager = userManager;
         }
 
         #endregion ################################
@@ -49,8 +54,11 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            //برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
+            ViewBag.CategoryList = await _iUintOfWork.CategoryRepUW.Get();
 
-            ViewBag.CategoryList =await _iUintOfWork.CategoryRepUW.Get();
+            //بدست اوردن کاربری (و آیدی او) که لاگین است و خبر را ایجاد کرده
+            ViewBag.UsersId = _userManager.GetUserId(User);
 
             ViewBag.viewTitle = "  افزودن خبر";
             return View();
@@ -70,7 +78,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 string imagePath = "upload//indexImage//";
 
                 //دریافت نام فایل آپلود شده از لایه سرویس و متد آپلود کردن تصویر
-                string fileName = await _uploadingFile.UploadFiles(files, imagePath,null);
+                string fileName = await _uploadingFile.UploadFiles(files, imagePath, null);
 
                 return Json(new { status = "success", message = "تصویر با موفقیت آپلود شد", imageName = fileName });
             }
@@ -81,11 +89,62 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
-
-        [HttpPost,ActionName("Create")]
-        public IActionResult CreateConfirm()
+        /// <summary>
+        /// ایجاد خبر جدید----
+        /// متد پست
+        /// </summary>
+        /// <returns></returns>
+        ///  هم وجود دارد تگ هارا روی ان ست میکنیم و در پراپرتی های ان ذخیره میشود و از ان استفاده میکنیم News ورودی های زیر را هم میشتد در نطر گرفت ولی چون تگی که این ها در ان ذخیره شده در کلاس 
+        /// (News model, string indexImage, string userId)
+        [HttpPost, ActionName("Create")]
+        public async Task<IActionResult> CreateConfirm(News model)
         {
-            return View();
+
+            if (ModelState.IsValid)
+            {
+                //if (imageName == null)
+                if (model.IndexImage==null)
+                {
+                    //عکس پیش فرض
+                    model.IndexImage = "defaultpic.jpg";
+                }
+                //else
+                //{
+                //    model.IndexImage = imageName;
+                //}
+                try
+                {
+                    News news = new News
+                    {
+                        NewsId=model.NewsId,
+                        Title=model.Title,
+                        Abstract = model.Abstract,
+                        Content = model.Content,
+                        NewsDate = model.NewsDate,
+                        NewsTime = model.NewsTime,
+                        CategoryId = model.CategoryId,
+                        UserId = model.UserId,
+                        IndexImage = model.IndexImage
+                    };
+                    await _iUintOfWork.NewsRepUW.Create(news);
+                    await _iUintOfWork.Save();
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex )
+                {
+
+                    throw ex;
+                }
+            }
+
+            //برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
+            ViewBag.CategoryList = await _iUintOfWork.CategoryRepUW.Get();
+
+            //بدست اوردن کاربری (و آیدی او) که لاگین است و خبر را ایجاد کرده
+            ViewBag.UsersId = _userManager.GetUserId(User);
+
+            return View(model);
         }
 
 

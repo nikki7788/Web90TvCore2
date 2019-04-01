@@ -14,6 +14,34 @@
           "lib/netstandard2.0/CoreCompat.System.Drawing.dll": {}
         }
       },
+      "Imageflow.NativeRuntime.win-x86_64/1.1.0-rc18": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win7-x64/native/imageflow.dll": {
+            "assetType": "native",
+            "rid": "win7-x64"
+          }
+        }
+      },
+      "Imageflow.Net/0.2.6": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.IO.RecyclableMemoryStream": "1.2.2",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Imageflow.Net.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Imageflow.Net.dll": {}
+        }
+      },
       "Libuv/1.10.0": {
         "type": "package",
         "dependencies": {
@@ -2434,6 +2462,15 @@
           "lib/netstandard1.4/Microsoft.IdentityModel.Tokens.dll": {}
         }
       },
+      "Microsoft.IO.RecyclableMemoryStream/1.2.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.4/Microsoft.IO.RecyclableMemoryStream.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.4/Microsoft.IO.RecyclableMemoryStream.dll": {}
+        }
+      },
       "Microsoft.Net.Http.Headers/2.0.3": {
         "type": "package",
         "dependencies": {
@@ -2832,34 +2869,14 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Newtonsoft.Json/10.0.1": {
+      "Newtonsoft.Json/10.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
-          "System.Collections": "4.3.0",
+          "NETStandard.Library": "1.6.1",
           "System.ComponentModel.TypeConverter": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Dynamic.Runtime": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Linq.Expressions": "4.3.0",
-          "System.ObjectModel": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Extensions": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Numerics": "4.3.0",
           "System.Runtime.Serialization.Formatters": "4.3.0",
           "System.Runtime.Serialization.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0",
-          "System.Text.Encoding.Extensions": "4.3.0",
-          "System.Text.RegularExpressions": "4.3.0",
-          "System.Threading": "4.3.0",
-          "System.Threading.Tasks": "4.3.0",
-          "System.Xml.ReaderWriter": "4.3.0",
-          "System.Xml.XDocument": "4.3.0",
           "System.Xml.XmlDocument": "4.3.0"
         },
         "compile": {
@@ -5065,6 +5082,32 @@
         "corecompat.system.drawing.v2.5.2.0-preview1-r131.nupkg.sha512",
         "corecompat.system.drawing.v2.nuspec",
         "lib/netstandard2.0/CoreCompat.System.Drawing.dll"
+      ]
+    },
+    "Imageflow.NativeRuntime.win-x86_64/1.1.0-rc18": {
+      "sha512": "aQrwp0w1JnqhD+SYQJn3voSwC9DUi61k0gwutdgNStXa6syMzytoqs7IVRVs5++xaRRASsGpVhVfEPp+/IN8Og==",
+      "type": "package",
+      "path": "imageflow.nativeruntime.win-x86_64/1.1.0-rc18",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/net45/Imageflow.NativeRuntime.win-x86_64.props",
+        "imageflow.nativeruntime.win-x86_64.1.1.0-rc18.nupkg.sha512",
+        "imageflow.nativeruntime.win-x86_64.nuspec",
+        "lib/netstandard1.0/_._",
+        "runtimes/win7-x64/native/imageflow.dll"
+      ]
+    },
+    "Imageflow.Net/0.2.6": {
+      "sha512": "9gR+68G1muVDczPq+Ja6CLyRXsuVeEeQQ1JPEat6X1+y1dqKsfsEw3cLfduI9cafMRC/UmK3I+RQjUL6SYocyg==",
+      "type": "package",
+      "path": "imageflow.net/0.2.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "imageflow.net.0.2.6.nupkg.sha512",
+        "imageflow.net.nuspec",
+        "lib/netstandard2.0/Imageflow.Net.dll"
       ]
     },
     "Libuv/1.10.0": {
@@ -7584,6 +7627,24 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
+    "Microsoft.IO.RecyclableMemoryStream/1.2.2": {
+      "sha512": "LA4RBTStohA0hAAs6oKchmIC5M5Mjd5MwfB7vbbl+312N5kXj8abTGOgwZy6ASJYLCiqiiK5kHS0hDGEgfkB8g==",
+      "type": "package",
+      "path": "microsoft.io.recyclablememorystream/1.2.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Microsoft.IO.RecyclableMemoryStream.dll",
+        "lib/net40/Microsoft.IO.RecyclableMemoryStream.pdb",
+        "lib/net45/Microsoft.IO.RecyclableMemoryStream.dll",
+        "lib/net45/Microsoft.IO.RecyclableMemoryStream.pdb",
+        "lib/netstandard1.4/Microsoft.IO.RecyclableMemoryStream.deps.json",
+        "lib/netstandard1.4/Microsoft.IO.RecyclableMemoryStream.dll",
+        "lib/netstandard1.4/Microsoft.IO.RecyclableMemoryStream.pdb",
+        "microsoft.io.recyclablememorystream.1.2.2.nupkg.sha512",
+        "microsoft.io.recyclablememorystream.nuspec"
+      ]
+    },
     "Microsoft.Net.Http.Headers/2.0.3": {
       "sha512": "9Zq3d4amBFnfpI9b5eqiBABjlomhVUZ16ReJnn2tYEWoBklyFGQxKmRBolGrzNmM5TsHWEsJ9yRVIzykzAVqow==",
       "type": "package",
@@ -8353,14 +8414,14 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Newtonsoft.Json/10.0.1": {
-      "sha512": "MOUhQfeI43upq9QiEv+7YYTDQPtEZEj9xB50MgplO1XF/aumP0f+TCYIHpZEmfsiahJJaXt/gdRFYLFEoF2VyQ==",
+    "Newtonsoft.Json/10.0.3": {
+      "sha512": "hSXaFmh7hNCuEoC4XNY5DrRkLDzYHqPx/Ik23R4J86Z7PE/Y6YidhG602dFVdLBRSdG6xp9NabH3dXpcoxWvww==",
       "type": "package",
-      "path": "newtonsoft.json/10.0.1",
+      "path": "newtonsoft.json/10.0.3",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
+        "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
@@ -8373,9 +8434,11 @@
         "lib/netstandard1.0/Newtonsoft.Json.xml",
         "lib/netstandard1.3/Newtonsoft.Json.dll",
         "lib/netstandard1.3/Newtonsoft.Json.xml",
-        "lib/portable-net45+win8+wpa81+wp8/Newtonsoft.Json.dll",
-        "lib/portable-net45+win8+wpa81+wp8/Newtonsoft.Json.xml",
-        "newtonsoft.json.10.0.1.nupkg.sha512",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.10.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "tools/install.ps1"
       ]
@@ -13691,6 +13754,8 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "CoreCompat.System.Drawing.v2 >= 5.2.0-preview1-r131",
+      "Imageflow.NativeRuntime.win-x86_64 >= 1.1.0-rc18",
+      "Imageflow.Net >= 0.2.6",
       "Microsoft.AspNetCore.All >= 2.0.9",
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.4"
@@ -13740,6 +13805,14 @@
           "CoreCompat.System.Drawing.v2": {
             "target": "Package",
             "version": "[5.2.0-preview1-r131, )"
+          },
+          "Imageflow.NativeRuntime.win-x86_64": {
+            "target": "Package",
+            "version": "[1.1.0-rc18, )"
+          },
+          "Imageflow.Net": {
+            "target": "Package",
+            "version": "[0.2.6, )"
           },
           "Microsoft.AspNetCore.All": {
             "target": "Package",
