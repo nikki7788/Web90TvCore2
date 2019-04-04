@@ -34,6 +34,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         #region ################################ Actions ###################################### 
 
+
+
         /// <summary>
         /// نمایش لیست خبر ها
         /// </summary>
@@ -44,6 +46,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             var model = await _iUintOfWork.NewsRepUW.Get();
             return View(model);
         }
+
+
 
 
         /// <summary>
@@ -63,6 +67,9 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             ViewBag.viewTitle = "  افزودن خبر";
             return View();
         }
+
+
+
 
 
         /// <summary>
@@ -89,6 +96,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
+
+
         /// <summary>
         /// ایجاد خبر جدید----
         /// متد پست
@@ -103,7 +112,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             if (ModelState.IsValid)
             {
                 //if (imageName == null)
-                if (model.IndexImage==null)
+                if (model.IndexImage == null)
                 {
                     //عکس پیش فرض
                     model.IndexImage = "defaultpic.jpg";
@@ -116,8 +125,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 {
                     News news = new News
                     {
-                        NewsId=model.NewsId,
-                        Title=model.Title,
+                        NewsId = model.NewsId,
+                        Title = model.Title,
                         Abstract = model.Abstract,
                         Content = model.Content,
                         NewsDate = model.NewsDate,
@@ -131,7 +140,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
                     return RedirectToAction("Index");
                 }
-                catch (Exception ex )
+                catch (Exception ex)
                 {
 
                     throw ex;
@@ -149,6 +158,71 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
+        /// <summary>
+        /// نمایش ویرایش خبر
+        /// متد Get
+        /// </summary>
+        /// <param name="id">وقتی روی ویرایش کیلیک میکنیم آیدی خبر ارسال میشود به اکشن و اینجا دریافت میکنیم</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            //پیداکردن خبر در دیتابیس
+            News model = await _iUintOfWork.NewsRepUW.GetById(id);
+            if (model != null)
+            {
+                //برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
+                ViewBag.CategoryList = await _iUintOfWork.CategoryRepUW.Get();
+
+                //بدست اوردن کاربری (و آیدی او) که لاگین است و خبر را ایجاد کرده
+                ViewBag.UsersId = _userManager.GetUserId(User);
+
+                ViewBag.viewTitle = "  ویرایش خبر";
+                return View(model);
+
+            }
+            else
+            {
+                return NotFound();
+            }
+
+
+
+        }
+
+
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditConfirm(int id,News model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                     _iUintOfWork.NewsRepUW.Update(model);
+                    await _iUintOfWork.Save();
+                   return RedirectToAction(nameof(Index));
+
+                }
+                else
+                {
+                  //  برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
+                    ViewBag.CategoryList = await _iUintOfWork.CategoryRepUW.Get();
+
+                   // بدست اوردن کاربری(و آیدی او) که لاگین است و خبر را ایجاد کرده
+                    ViewBag.UsersId = _userManager.GetUserId(User);
+
+                    ViewBag.viewTitle = "  ویرایش خبر";
+                    return View(model);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         #endregion #############################
     }
