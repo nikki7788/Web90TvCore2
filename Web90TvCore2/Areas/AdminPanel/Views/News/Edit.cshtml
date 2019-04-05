@@ -11,7 +11,7 @@
     <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
         <form asp-area="AdminPanel" asp-controller="News" asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+            <span class="text-danger">@Html.ValidationMessage("nullError")</span>
 
             @* عنوان خبر *@
             <div class="form-group">
@@ -127,6 +127,7 @@
 
 
             <!-- مانند تگ های دیگ مینوسیم تا آدی خبر مقدار دهی شود در مدل ارسالی به اکشن پست ویرایش----ارسال آدی به اکشن پست ویرایش خبر-->
+          <!--اگر این را ننویسیمپ باید از طریق دستور *+ اینکاررادر اکشن انجام دهیم-->
             <input type="text" class="hidden" asp-for="NewsId" />
 
             <!-----------  ###############################-------->

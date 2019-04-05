@@ -85,11 +85,26 @@
                 </div>
 
                 <div class="col-md-4" style="margin-right:15px">
-                    <div class="form-group col-md-12" style="margin:0 auto">
-                        <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
-                             src="~/upload/indexImage/defaultpic.jpg" alt="NewsImage"
-                             style="height:100px; width:90px; margin:5px auto;" />
-                    </div>
+                    <!--برای وقتی که تص.یری آپ.ل.د نشده است تصویر پیش فرض را نشان دهد-->
+                    @if (ViewBag.ImgNM==null)
+                    {
+                        <div class="form-group col-md-12" style="margin:0 auto">
+                            <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                                 src="~/upload/indexImage/defaultpic.jpg" alt="NewsImage"
+                                 style="height:100px; width:90px; margin:5px auto;" />
+                        </div>
+                    }
+                    else
+                    {
+                        //اگر تصویری آپلود شده بود و ولیدشن ها رعایت نشده بود کس اپل.د شده همجنان نمایش داده شود و وجود داشته باشد*
+                        <div class="form-group col-md-12" style="margin:0 auto">
+                            <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                                 src="~/upload/indexImage/@ViewBag.ImgNM" alt="NewsImage"
+                                 style="height:100px; width:90px; margin:5px auto;" />
+                        </div>
+                    }
+
+
                     <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
 
                 </div>

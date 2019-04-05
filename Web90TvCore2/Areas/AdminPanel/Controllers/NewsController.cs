@@ -147,14 +147,29 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 }
             }
 
+            // ---------------اگر ولیدیشن رعایت نشده بود-------
+
             //برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
             ViewBag.CategoryList = await _iUintOfWork.CategoryRepUW.Get();
 
             //بدست اوردن کاربری (و آیدی او) که لاگین است و خبر را ایجاد کرده
             ViewBag.UsersId = _userManager.GetUserId(User);
 
+            //-----اگر ولیدیشن رعایت نشده بود عکس آپلود شده دوباره نمایش داده شود ------------------
+            //و نام ان برای ذخیره در دیتابیس بماند و نیاز ب اپدیت مجدد نباشد
+            if (model.IndexImage != null)
+            {
+                // این روش بدون کوکی است
+                //در کنترلر یوزر و اکشن ایجاد از کوکی استفاده کرده ام
+                ViewBag.ImgNM= model.IndexImage;
+            }
+            //---------------------------------------------------------
+
             return View(model);
         }
+
+
+
 
 
 
@@ -185,32 +200,42 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             {
                 return NotFound();
             }
-
-
-
         }
 
 
 
+
+        /// <summary>
+        /// ارسال اطلاعات خبر و ثبت در دیتابیس
+        ///  Post
+        /// </summary>
+        /// <param name="model">مودل واطالاعات  دریافتی از ویو </param>
+        /// را به صورت مخفی ایجاد کنیم تا مقدار دهی شود NewsId  نال نباشد و مقدار داشته باشد باید در ویو تگ  model  در NewsId برای اینکه مقدار  
+        /// <param name="id">آیدی خبر</param>
+        ///  دریافت میشود get ايدی بطور خودکار از اکشن
+        /// <returns></returns>
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditConfirm(int id,News model)
+        public async Task<IActionResult> EditConfirm(News model, int id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                     _iUintOfWork.NewsRepUW.Update(model);
+                    // +* را به صورت مخفی در ویو ننویسیم میتوانیم اینگنه مقدار آیدی خبر را داخل مودل بریزیم NewsId اگر تگ 
+                    // model.NewsId = id;
+
+                    _iUintOfWork.NewsRepUW.Update(model);
                     await _iUintOfWork.Save();
-                   return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
 
                 }
                 else
                 {
-                  //  برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
+                    //  برای برگرداندن مقادیر دسته بندی برای نمایش در کمبو باکس
                     ViewBag.CategoryList = await _iUintOfWork.CategoryRepUW.Get();
 
-                   // بدست اوردن کاربری(و آیدی او) که لاگین است و خبر را ایجاد کرده
+                    // بدست اوردن کاربری(و آیدی او) که لاگین است و خبر را ایجاد کرده
                     ViewBag.UsersId = _userManager.GetUserId(User);
 
                     ViewBag.viewTitle = "  ویرایش خبر";
@@ -219,7 +244,6 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
