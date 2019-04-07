@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.services;
@@ -246,6 +247,72 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             {
                 throw;
             }
+        }
+
+
+
+        /// <summary>
+        /// حذف خبر--  متد خواندنی
+        /// نمایش اطلاعات موردی  که    میخوااهیم  حذف کنیم
+        /// </summary>
+        /// <param name="id">آی دی موردی که می خواهیم حذف کنیم</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id!=null)
+            {
+                var model =await _iUintOfWork.NewsRepUW.GetById(id);
+                if (model!=null)
+                {
+                    return PartialView("_DeletePartial", model);
+                }
+                else
+                {
+                    return NotFound();
+                }
+
+            }
+            else
+            {
+                return NotFound();
+
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// حذف خبر متد نوشتنی
+        /// </summary>
+        /// <param name="id">آیدی را از متد خواندنی دریافت میکنیم</param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            try
+            {
+                await _iUintOfWork.NewsRepUW.DeletById(id);
+                await _iUintOfWork.CategoryRepUW.Save();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+
+                throw ex;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         #endregion #############################

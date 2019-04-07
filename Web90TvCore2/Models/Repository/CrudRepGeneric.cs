@@ -142,6 +142,7 @@ namespace Web90TvCore2.Models.Repository
         /// </summary>
         public virtual async Task Save()
         {
+            //todo: را اینجا بنویسیم یا درکنترلر کدام بهتر است؟ try catch 
             await _context.SaveChangesAsync();
         }
         //public virtual async void Save()

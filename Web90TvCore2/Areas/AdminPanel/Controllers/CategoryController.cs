@@ -154,6 +154,14 @@ namespace Web90TvCore2.Areas.AminPanel.Controllers
             return View(model);
         }
 
+
+
+        /// <summary>
+        /// حذف دسته بندی متد خواندنی
+        /// نمایش اطلاعات موردی  که    میخوااهیم  حذف کنیم
+        /// </summary>
+        /// <param name="id">آی دی موردی که می خواهیم حذف کنیم</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -172,6 +180,13 @@ namespace Web90TvCore2.Areas.AminPanel.Controllers
             return PartialView("_DeletePartial", category);
         }
 
+
+        /// <summary>
+        /// حذف دسته بندی متد نوشتنی
+        /// 
+        /// </summary>
+        /// <param name="id">آیدی را از متد خواندنی دریافت میکنیم</param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirm(int id)
