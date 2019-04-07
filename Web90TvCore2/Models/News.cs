@@ -9,13 +9,13 @@ using Web90TvCore2.PublicClass;
 namespace Web90TvCore2.Models
 {
     /// <summary>
-        /// اخبار
-        /// </summary>
-        
-        [Table("News")]
+    /// اخبار
+    /// </summary>
+
+    [Table("News")]
     public class News
     {
-       
+
 
         #region  ########################### Constructor ################
 
@@ -27,7 +27,7 @@ namespace Web90TvCore2.Models
         #endregion
 
         #region ################# Properties ################################
-       
+
 
         [Key]
         public int NewsId { get; set; }
@@ -61,6 +61,12 @@ namespace Web90TvCore2.Models
         [Display(Name = "زمان خبر")]
         public string NewsTime { get; set; }
 
+        /// <summary>
+        /// محل نمایش خبر را مشخص میکند
+        /// </summary>
+        ///  مقادیرش را میگیرد وکاربر با اتخاب محل مورد نظر خود آیدی محل را درانجا ذخیره میکند asdf این ستون از کلاس ثابت  
+        [Display(Name = "محل نمایش خبر")]
+        public int NewsPlace { get; set; }
 
         [Display(Name = "تصویر شاخص")]
         public string IndexImage { get; set; }
@@ -68,10 +74,10 @@ namespace Web90TvCore2.Models
 
         public string UserId { get; set; }
 
-
+        [Display(Name ="دسته بندی ")]
         public int CategoryId { get; set; }
         #endregion
-       
+
         #region #################### navigation Properties #################################
 
         [ForeignKey("UserId")]

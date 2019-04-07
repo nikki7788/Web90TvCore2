@@ -44,7 +44,11 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.viewTitle = "  لیست خبر ها";
-            var model = await _iUintOfWork.NewsRepUW.Get();
+            //برای ورودی که جوین مارا در لایه سرویسانجام دهد باید نام جدولی که میخاهیم با ان جوین صورت گیرد بنویسیم و این نام حتما باید 
+            //    دادیم باشد.دراینجا در جدول در جدول خبر در قسمت مرجع کلید خارجی navigation property  نامی که در   
+            //در اینجا شرطی اعمال میگنیم وفیلتر میکنیم که کاربرخبرهای ایجاد شده توسط خود ش را ببیند نه تمام خبرها
+            //اگر آيدی کاربر برابر کاربری که که الان لاگین است خبرهایش رابیاور
+            var model = await _iUintOfWork.NewsRepUW.Get(n => n.UserId == _userManager.GetUserId(User), null, "Category");
             return View(model);
         }
 
@@ -162,7 +166,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             {
                 // این روش بدون کوکی است
                 //در کنترلر یوزر و اکشن ایجاد از کوکی استفاده کرده ام
-                ViewBag.ImgNM= model.IndexImage;
+                ViewBag.ImgNM = model.IndexImage;
             }
             //---------------------------------------------------------
 
@@ -260,10 +264,10 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id!=null)
+            if (id != null)
             {
-                var model =await _iUintOfWork.NewsRepUW.GetById(id);
-                if (model!=null)
+                var model = await _iUintOfWork.NewsRepUW.GetById(id);
+                if (model != null)
                 {
                     return PartialView("_DeletePartial", model);
                 }

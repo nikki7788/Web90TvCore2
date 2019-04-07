@@ -96,6 +96,9 @@ namespace Web90TvCore2.Models.Repository
             {
                 foreach (var item in joinString.Split(','))
                 {
+                    //مانند جوین عمل میکند
+                    //همه اطلاعات  به یکباره میاورد
+                    //eager loading
                     query = query.Include(item);
                 }
 

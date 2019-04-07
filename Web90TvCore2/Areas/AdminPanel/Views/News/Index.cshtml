@@ -18,7 +18,10 @@
             <thead>
                 <tr style="font-size:15px; font-weight:600;">
                     <td>@Html.DisplayNameFor(model => model.Title)</td>
-                    <td>@Html.DisplayNameFor(model => model.Abstract)</td>
+
+                    <!--این نام پاپرتی کلید خارجی است و در پایین مقدار را از طریق مرجع کلید خارجی و جوین در کنترلر روی ان بدست اوردیم-->
+                    <td>@Html.DisplayNameFor(model => model.CategoryId)</td>
+
                     <td>@Html.DisplayNameFor(model => model.VisitCount)</td>
                     <td>@Html.DisplayNameFor(model => model.NewsDate)</td>
                     <td>@Html.DisplayNameFor(model => model.NewsTime)</td>
@@ -31,11 +34,14 @@
                 {
                     <tr>
                         <td>@item.Title</td>
-                        <td>@item.Abstract</td>
+
+                        <!--مقدار این را از روی جوینی که در کنترلر برروی جد.ل خبر و. دسته بندی زدیم روی کلید خارجی جدول خب که آدی دسته بندی است-->
+                        <td>@item.Category.Title</td>
+
                         <td>@item.VisitCount</td>
                         <td>@item.NewsDate</td>
                         <td>@item.NewsTime</td>
-                        <td>@item.IndexImage</td>
+                        <td><img style="height:55px; width:50px;" src="~/upload/indexImage/@item.IndexImage" alt="Index Image" /></td>
                         <td>
                             <a class="btn btn-info" asp-controller="News" asp-action="Edit" asp-route-id="@item.NewsId">
                                 <i class="glyphicon glyphicon-pencil"></i>
