@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
+using Web90TvCore2.Models.ViewModels;
 
 namespace Web90TvCore2.Controllers
 {
@@ -51,10 +52,19 @@ namespace Web90TvCore2.Controllers
                 var query = await _UnitOfWork.UserManagerUW.GetById(_userManager.GetUserAsync(HttpContext.User).Result.Id);
                 //ارسال اطلاعات کاربر به ویو اصلی جهت نمایش
                 ViewBag.FullName = query.FirstName + " " + query.LastName;
+
+                //todo: UserManagerUW  برای چی از دستور بالا استفاده کردیم؟ 
             }
 
-            return View();
-            //todo: UserManagerUW  برای چی از دستور بالا استفاده کردیم؟   
+            var model = new IndexViewModel();
+            //   استقاده میکردیم result باید از  Crud در  Get نوشته شده متد   async چون به  صورت غیر همزمان 
+            //  نبود نیاز نداشت async اگر 
+            model.SliderNews =  _UnitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
+
+            model.SpecialNews=_UnitOfWork.NewsRepUW.Get(n=>n.NewsPlace==1).Result.Take(4).ToList();
+            //model.loginVM=
+            return View(model);
+              
 
         }
 

@@ -103,8 +103,9 @@ namespace Web90TvCore2.Models.Repository
                 }
 
             }
+            var model= await query.ToListAsync(); 
 
-            return await query.ToListAsync();
+            return model;
         }
 
 

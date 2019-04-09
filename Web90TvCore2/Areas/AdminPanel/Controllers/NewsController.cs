@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
+using Web90TvCore2.Models.ViewModels;
+using Web90TvCore2.PublicClass;
 using Web90TvCore2.services;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
@@ -132,6 +134,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                     {
                         NewsId = model.NewsId,
                         Title = model.Title,
+                        NewsPlace=model.NewsPlace,
                         Abstract = model.Abstract,
                         Content = model.Content,
                         NewsDate = model.NewsDate,

@@ -5,6 +5,10 @@
 @{
     // دریافت لیست دسته بندی برای نمایش در کمبوباکس
     var CategoryList = ViewBag.CategoryList;
+
+    // دریافت لیست محل نمایش خبر  برای نمایش در کمبوباکس
+    HomeIndexViewModel IndexVm = new HomeIndexViewModel();
+    List<HomeIndexViewModel> homeIndexVM = IndexVm.GetPlaceInIndex();
 }
 @Html.AntiForgeryToken()
 <div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
@@ -112,6 +116,13 @@
             </div>
 
 
+            @* محل نمایش خبر در صفحه اصلی *@
+            <div class="form-group">
+                <label asp-for="NewsPlace" class="control-label"></label>
+                <select asp-for="NewsPlace" asp-items="@(new SelectList(homeIndexVM,"Id","Title"))" class="form-control"></select>
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="ویرایش" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-danger">بازگشت</a>
@@ -127,7 +138,7 @@
 
 
             <!-- مانند تگ های دیگ مینوسیم تا آدی خبر مقدار دهی شود در مدل ارسالی به اکشن پست ویرایش----ارسال آدی به اکشن پست ویرایش خبر-->
-          <!--اگر این را ننویسیمپ باید از طریق دستور *+ اینکاررادر اکشن انجام دهیم-->
+            <!--اگر این را ننویسیمپ باید از طریق دستور *+ اینکاررادر اکشن انجام دهیم-->
             <input type="text" class="hidden" asp-for="NewsId" />
 
             <!-----------  ###############################-------->

@@ -16,6 +16,10 @@
 @{
     // دریافت لیست دسته بندی برای نمایش در کمبوباکس
     var CategoryList = ViewBag.CategoryList;
+
+    // دریافت لیست محل نمایش خبر  برای نمایش در کمبوباکس
+    HomeIndexViewModel IndexVm = new HomeIndexViewModel();
+    List<HomeIndexViewModel> homeIndexVM = IndexVm.GetPlaceInIndex();
 }
 <div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
     <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
@@ -86,7 +90,7 @@
 
                 <div class="col-md-4" style="margin-right:15px">
                     <!--برای وقتی که تص.یری آپ.ل.د نشده است تصویر پیش فرض را نشان دهد-->
-                    @if (ViewBag.ImgNM==null)
+                    @if (ViewBag.ImgNM == null)
                     {
                         <div class="form-group col-md-12" style="margin:0 auto">
                             <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
@@ -132,6 +136,12 @@
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" asp-items="@(new SelectList(CategoryList,"CategoryId","Title"))" class="form-control"></select>
+            </div>
+
+            @* محل نمایش خبر در صفحه اصلی *@
+            <div class="form-group">
+                <label asp-for="NewsPlace" class="control-label"></label>
+                <select asp-for="NewsPlace" asp-items="@(new SelectList(homeIndexVM,"Id","Title"))" class="form-control"></select>
             </div>
 
 
