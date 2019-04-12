@@ -14,6 +14,15 @@ namespace Web90TvCore2.Models.ViewModels
     {
 
         /// <summary>
+        /// ویومدل لاگین
+        /// </summary>
+        /// برای اینکه ویو اصی از لاگین ویو مدل باید تغذیه کند
+        public LoginViewModel LoginVM { get; set; }
+
+
+
+
+        /// <summary>
         /// خبرهای اسلایر
         /// </summary>
         /// دارند newsPlace=0 خبرهایی که 
@@ -27,11 +36,14 @@ namespace Web90TvCore2.Models.ViewModels
         public List<News> SpecialNews { get; set; }
 
 
+
+
         /// <summary>
-        /// ویومدل لاگین
+        /// آخرین ویدوها
         /// </summary>
-        /// برای اینکه ویو اصی از لاگین ویو مدل باید تغذیه کند
-        public LoginViewModel LoginVM { get; set; }
+        /// دارند newsPlace=1 خبرهایی که 
+        public List<News> LastVideos { get; set; }
+
 
 
 
@@ -47,7 +59,7 @@ namespace Web90TvCore2.Models.ViewModels
         /// خبرهای داخلی
         /// </summary>
         /// انها 0 باشد NewsType خبرهایی که پراپرتی 
-        public List<News> EnternalNews { get; set; }
+        public List<News> DomesticNews { get; set; }
 
 
 
@@ -55,7 +67,7 @@ namespace Web90TvCore2.Models.ViewModels
         /// خبرهای خارجی
         /// </summary>
         /// انها 1 باشد NewsType خبرهایی که پراپرتی 
-        public List<News> ExternalNews { get; set; }
+        public List<News> ForeignNews { get; set; }
 
 
 
@@ -64,6 +76,6 @@ namespace Web90TvCore2.Models.ViewModels
         /// خبرهای اختصاصی
         /// </summary>
         /// انها 2 باشد NewsType خبرهایی که پراپرتی 
-        public List<News> PrivateNews { get; set; }
+        public List<News> ExclusiveNews { get; set; }
     }
 }

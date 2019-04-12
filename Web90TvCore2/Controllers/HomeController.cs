@@ -57,11 +57,32 @@ namespace Web90TvCore2.Controllers
             }
 
             var model = new IndexViewModel();
+
             //   استقاده میکردیم result باید از  Crud در  Get نوشته شده متد   async چون به  صورت غیر همزمان 
             //  نبود نیاز نداشت async اگر 
+
+
             model.SliderNews =  _UnitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
 
-            model.SpecialNews=_UnitOfWork.NewsRepUW.Get(n=>n.NewsPlace==1).Result.Take(4).ToList();
+
+            model.SpecialNews=_UnitOfWork.NewsRepUW.Get(n=>n.NewsPlace==1).Result.Take(8).ToList();
+
+
+            model.LastVideos = _UnitOfWork.NewsRepUW.Get(n => n.NewsPlace == 2).Result.Take(8).ToList();
+
+            //ازبین تمامی خبر ها 15 تا خبر اخر را در تب نمایش میدهد
+            model.LastNews = _UnitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
+
+            //خبرهای داخلی NewsType==0
+            model.DomesticNews = _UnitOfWork.NewsRepUW.Get(n=>n.NewsType==0).Result.Take(15).ToList();
+
+            //خبرهای خارجی n => n.NewsType == 1
+            model.ForeignNews = _UnitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
+
+            //خبرهای اختصاصی n => n.NewsType == 2
+            model.ExclusiveNews = _UnitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
+
+            
             //model.loginVM=
             return View(model);
               

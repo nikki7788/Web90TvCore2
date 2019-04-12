@@ -33,13 +33,14 @@
                 </div>
                 <!--end main advers-->
                 <!--start last-videos-->
-                @await Html.PartialAsync("PartialViews/_LastVideosPartial")
+                @await Html.PartialAsync("PartialViews/_LastVideosPartial",Model.LastVideos)
                 <!--End last videos-->
 
             </div>   <!--end main content-->
             <!--start list second part-->
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                 <!--start last-info-->
+                <!--چون این پارشال ویو از چندین مدل تغذیه میکند مدلی در اینجا به ان معرفی نمیکنیم و در پارشال مدل داینامیک میکیریم-->
                 @await Html.PartialAsync("PartialViews/_LastInfoPartial")
                 <!--end lst-info-->
                 <!--start newspapers-->
