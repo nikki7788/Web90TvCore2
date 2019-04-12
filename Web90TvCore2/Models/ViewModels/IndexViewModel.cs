@@ -9,7 +9,7 @@ namespace Web90TvCore2.Models.ViewModels
     /// مدل و وویومدل برای ویوی اصلی سایت
     /// این وبو مدل حاوی چندین کلاس دیگر است
     /// </summary>
-    /// این ویو مدل برای ویوی اصلی سایت است که باید ز چندین کلاس تغذیه کند و استفاده کند
+    /// این ویو مدل برای ویوی اصلی سایت است که باید از چندین کلاس تغذیه واستفاده کند
     public class IndexViewModel
     {
 
@@ -31,7 +31,39 @@ namespace Web90TvCore2.Models.ViewModels
         /// ویومدل لاگین
         /// </summary>
         /// برای اینکه ویو اصی از لاگین ویو مدل باید تغذیه کند
-        public LoginViewModel loginVM { get; set; }
+        public LoginViewModel LoginVM { get; set; }
 
+
+
+        /// <summary>
+        /// آخرین خبرها
+        /// </summary>
+        /// چمدتا خبر اخری که ثبت شده را در این تب نشان میدهیم 
+        public List<News> LastNews { get; set; }
+
+
+
+        /// <summary>
+        /// خبرهای داخلی
+        /// </summary>
+        /// انها 0 باشد NewsType خبرهایی که پراپرتی 
+        public List<News> EnternalNews { get; set; }
+
+
+
+        /// <summary>
+        /// خبرهای خارجی
+        /// </summary>
+        /// انها 1 باشد NewsType خبرهایی که پراپرتی 
+        public List<News> ExternalNews { get; set; }
+
+
+
+
+        /// <summary>
+        /// خبرهای اختصاصی
+        /// </summary>
+        /// انها 2 باشد NewsType خبرهایی که پراپرتی 
+        public List<News> PrivateNews { get; set; }
     }
 }

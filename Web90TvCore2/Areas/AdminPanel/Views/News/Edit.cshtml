@@ -123,6 +123,30 @@
             </div>
 
 
+
+            @* نوع خبر *@
+            <!--توسط مدل اطلاعاتشان ارسال نمیشود.اطالاعاتشان در مدل ذخیره نمیشود تا ارسال شود radio button-->
+            <!--مربوط به ان را تیک میزند و انتخاب میکند radio  رابرمیگرداند و دکمه newsType که بنویسیم مقدار  پراپرتی نوع خبر  asp-for-->
+            <div class="form-group">
+                <span style="font-weight:700; margin-left:50px;">نوع خبر :</span>
+                <label style="margin-left:45px;">
+                    داخلی
+                    <input asp-for="NewsType" type="radio" name="r1" value="1" class="minimal">
+                </label>
+                <label style="margin-left:45px;">
+                    خارجی
+                    <input asp-for="NewsType" type="radio" name="r1" value="2" class="minimal">
+                </label>
+                <label>
+                    اختصاصی
+                    <input asp-for="NewsType" type="radio" name="r1" value="3" class="minimal">
+                </label>
+            </div>
+
+
+
+
+
             <div class="form-group">
                 <input type="submit" value="ویرایش" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-danger">بازگشت</a>
@@ -157,6 +181,18 @@
 </div>
 
 @section panelScript{
+
+
+    <script>
+        //iCheck for checkbox and radio inputs
+        //دستورات مربوط به رادیو پنل ادمین
+        $('input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+
+    </script>
+
     <script>
         var UploadImage = function () {
             var data = new FormData;

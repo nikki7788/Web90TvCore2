@@ -20,6 +20,9 @@
     // دریافت لیست محل نمایش خبر  برای نمایش در کمبوباکس
     HomeIndexViewModel IndexVm = new HomeIndexViewModel();
     List<HomeIndexViewModel> homeIndexVM = IndexVm.GetPlaceInIndex();
+
+    //
+
 }
 <div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
     <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
@@ -144,6 +147,25 @@
                 <select asp-for="NewsPlace" asp-items="@(new SelectList(homeIndexVM,"Id","Title"))" class="form-control"></select>
             </div>
 
+            @* نوع خبر *@
+            <div class="form-group">
+                <span style="font-weight:700; margin-left:50px;">نوع خبر :</span>
+                <label style="margin-left:45px;">
+                    داخلی
+                    <input type="radio" name="r1" value="1" class="minimal" checked>
+                </label>
+                <label style="margin-left:45px;">
+                    خارجی
+                    <input type="radio" name="r1" value="2" class="minimal">
+                </label>
+                <label>
+                    اختصاصی
+                    <input type="radio" name="r1" value="3" class="minimal">
+                </label>
+            </div>
+
+
+
 
             <div class="form-group">
                 <input type="submit" value="ایجاد" class="btn btn-success" />
@@ -174,6 +196,17 @@
 </div>
 
 @section panelScript{
+
+    <script>
+        //iCheck for checkbox and radio inputs
+        //دستورات مربوط به رادیو پنل ادمین
+        $('input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+
+    </script>
+
     <script>
         var UploadImage = function () {
             var data = new FormData;

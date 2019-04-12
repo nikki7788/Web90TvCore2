@@ -104,16 +104,20 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
-
         /// <summary>
         /// ایجاد خبر جدید----
         /// متد پست
         /// </summary>
+        ///  /// (News model, string indexImage, string userId)
+        ///  ///  هم وجود دارد تگ هارا روی ان ست میکنیم و در پراپرتی های ان ذخیره میشود و از ان استفاده میکنیم News ورودی های زیر را هم میشتد در نطر گرفت ولی چون تگی که این ها در ان ذخیره شده در کلاس 
+        /// <param name="model">مدل دریافتی از فرم داخل ویوکه توسط کاربر پر شده است</param>
+        /// <param name="r1">نوع خبر را برمیگرداند</param>
+        /// مقدار دکمه های رادیو را برمیگرداند---
+        /// شده اند name="r1" که در ویو با  
+        /// رادیو باتن ها اطلاعاتشان توسط مدل برگردانده نمیشود و در مدل ذیره نمیشوند باید دستی مقدار دهی کنیم
         /// <returns></returns>
-        ///  هم وجود دارد تگ هارا روی ان ست میکنیم و در پراپرتی های ان ذخیره میشود و از ان استفاده میکنیم News ورودی های زیر را هم میشتد در نطر گرفت ولی چون تگی که این ها در ان ذخیره شده در کلاس 
-        /// (News model, string indexImage, string userId)
         [HttpPost, ActionName("Create")]
-        public async Task<IActionResult> CreateConfirm(News model)
+        public async Task<IActionResult> CreateConfirm(News model,byte r1)
         {
 
             if (ModelState.IsValid)
@@ -141,7 +145,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         NewsTime = model.NewsTime,
                         CategoryId = model.CategoryId,
                         UserId = model.UserId,
-                        IndexImage = model.IndexImage
+                        IndexImage = model.IndexImage,
+                        NewsType = r1
                     };
                     await _iUintOfWork.NewsRepUW.Create(news);
                     await _iUintOfWork.Save();
@@ -213,6 +218,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
+
+
         /// <summary>
         /// ارسال اطلاعات خبر و ثبت در دیتابیس
         ///  Post
@@ -221,15 +228,22 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// را به صورت مخفی ایجاد کنیم تا مقدار دهی شود NewsId  نال نباشد و مقدار داشته باشد باید در ویو تگ  model  در NewsId برای اینکه مقدار  
         /// <param name="id">آیدی خبر</param>
         ///  دریافت میشود get ايدی بطور خودکار از اکشن
+        /// <param name="r1">نوع خبر را برمیگرداند</param>
+        /// مقدار دکمه های رادیو را برمیگرداند---
+        /// شده اند name="r1" که در ویو با  
+        /// رادیو باتن ها اطلاعاتشان توسط مدل برگردانده نمیشود و در مدل ذیره نمیشوند باید دستی مقدار دهی کنیم
         /// <returns></returns>
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditConfirm(News model, int id)
+        public async Task<IActionResult> EditConfirm(News model, int id,byte r1)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    //مقدار دهی نوع خبر
+                    //رادیو باتن ها اطلاعاتشان توسط مدل برگردانده نمیشود و در مدل ذیره نمیشوند باید دستی مقدار دهی کنیم
+                    model.NewsType = r1;
                     // +* را به صورت مخفی در ویو ننویسیم میتوانیم اینگنه مقدار آیدی خبر را داخل مودل بریزیم NewsId اگر تگ 
                     // model.NewsId = id;
 

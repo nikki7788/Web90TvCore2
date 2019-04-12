@@ -44,7 +44,6 @@ namespace Web90TvCore2.Models.ViewModels
             {
                 new HomeIndexViewModel {Id = 0,Title = "اسلایدر"},
                 new HomeIndexViewModel {Id = 1,Title = "اخبار ویژه"},
-                new HomeIndexViewModel {Id = 2,Title = "آخرین مطالب"},
                 new HomeIndexViewModel {Id = 3,Title = "آخرین ویدیوها"},
             };
             return model;
