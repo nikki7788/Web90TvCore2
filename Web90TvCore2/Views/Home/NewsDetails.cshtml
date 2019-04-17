@@ -1,0 +1,103 @@
+﻿
+@model IndexViewModel
+
+@{
+    ViewData["Title"] = "جزییات خبر";
+}
+
+
+<div id="container" class="container-fluid">
+    <!--start header-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_HeaderPartial.cshtml")
+    <!--start  navbar-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_NavbarPartial.cshtml")
+    <!--End navbar-->
+    <!--start content-->
+    <div class=" mt-3" id="content">
+        <!--start content-body-->
+        <div class="row" id="content-body">
+            <!--start main content-->
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                
+                <div id="newsDetails">
+                    <!--Start NewsDetails-->
+                    @await Html.PartialAsync("~/Views/Shared/PartialViews/_NewsdetailPartial.cshtml", Model.NewsDetails)
+                    <!--End NewsDetails-->
+
+                </div>
+            </div>   <!--end main content-->
+            <!--start list second part-->
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <!--start last-info-->
+                <!--چون این پارشال ویو از چندین مدل تغذیه میکند مدلی در اینجا به ان معرفی نمیکنیم و در پارشال مدل داینامیک میکیریم-->
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_LastInfoPartial.cshtml")
+                <!--end lst-info-->
+                <!--start newspapers-->
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_NewspapersPartial.cshtml")
+                <!--end newspapers-->
+
+
+
+            </div><!--end list second part-->
+        </div><!--end content-body-->
+    </div> <!--end content-->
+    <!--start footer-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_FooterPartial.cshtml")
+    <!--End footer-->
+</div><!--end container-->
+
+<script>
+    //$(document).ready(function () {
+
+    $("#frmLogin").submit(function (e) {
+        e.preventDefault();  //از عمیلیات پیش فرض سابمیت فرم جلوگیری میکند
+        var form = $(this);    //تمام مقادیر اینپوت های فرم را میاورد و داخل متغیر میریزد.درپاقع اطلاعات فرم را میخواند
+
+        //   میشود  action تگ هلپرهای ادرس دهی هم در اخر تبدیل به اتریبیوت
+        //     asp-area  asp-action   asp-controller  ====> action="/..../.../"
+        var url = $("#frmLogin").attr("action"); //آدرسی(کنترلر و اکشن و اریا) که فرم باید به ان ارسال شود را میخواند از روی اتریبیپت های فرم
+
+        $.ajax({
+
+            type: "Post",
+
+            url: url, //     به این روش هم میتوان دستی داد ادرس را '@@Url.Action("action","controller", new { area = ""})'
+
+            data: form.serialize(),
+
+            //اکر ایجکس موفقیت امیز بود ئ ارسال موفق بود
+            success: function (msg) {
+
+                if (msg.status === "success") {
+
+                    window.location.href = '/Adminpanel/User';
+                    //window.location.href ='@@Url.Action( "Index", "User")';
+                }
+                else if (msg.status === "failInput") {
+
+                    $("#validationLogin").text("نام کاربری یا رمز عبور اشتباه است");
+                }
+                else if (msg.status === "failEmptyInput") {
+
+                    $("#validationLogin").text("نام کاربری یا رمز عبور وارد نشده است ");
+                }
+            }
+
+        });
+
+
+
+    });
+
+
+    //});
+
+</script>
+
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+</script>
+    

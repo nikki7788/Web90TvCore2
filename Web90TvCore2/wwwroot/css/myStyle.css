@@ -278,3 +278,17 @@ h6 {
     border-top: 1px solid #ccc;
     font-size: 13px;
 }
+
+/*-----------------------------------------------*/
+/*جزییات خبر*/
+#newsDetails {
+    border-radius: 2px;
+    padding-top: 8px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding-right: 12px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}

@@ -117,7 +117,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// رادیو باتن ها اطلاعاتشان توسط مدل برگردانده نمیشود و در مدل ذیره نمیشوند باید دستی مقدار دهی کنیم
         /// <returns></returns>
         [HttpPost, ActionName("Create")]
-        public async Task<IActionResult> CreateConfirm(News model,byte r1)
+        public async Task<IActionResult> CreateConfirm(News model, byte r1)
         {
 
             if (ModelState.IsValid)
@@ -138,7 +138,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                     {
                         NewsId = model.NewsId,
                         Title = model.Title,
-                        NewsPlace=model.NewsPlace,
+                        NewsPlace = model.NewsPlace,
                         Abstract = model.Abstract,
                         Content = model.Content,
                         NewsDate = model.NewsDate,
@@ -235,7 +235,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// <returns></returns>
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditConfirm(News model, int id,byte r1)
+        public async Task<IActionResult> EditConfirm(News model, int id, byte r1)
         {
             try
             {
@@ -336,6 +336,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         }
 
+ 
         #endregion #############################
     }
 }

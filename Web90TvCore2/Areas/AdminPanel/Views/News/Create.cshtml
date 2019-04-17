@@ -11,7 +11,9 @@
     int year = pCalendar.GetYear(currenDate);
     int month = pCalendar.GetMonth(currenDate);
     int day = pCalendar.GetDayOfMonth(currenDate);
-    string shamsiDate = string.Format("{0:yyyy:MM:dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
+    string shamsiDate = string.Format("{0:yyyy/MM/dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
+
+    string newsTimeNow = string.Format("{0:hh:mm}", Convert.ToDateTime(currenDate.Hour + ":" + currenDate.Minute));
 }
 @{
     // دریافت لیست دسته بندی برای نمایش در کمبوباکس
@@ -131,7 +133,7 @@
                 <!--زمان خبر-->
                 <div style="font-size:15px;" class="col-md-6">
                     <label asp-for="NewsTime" class="col-md-4 control-label"></label>
-                    <input asp-for="NewsTime" type="text" value="@DateTime.Now.Hour:@DateTime.Now.Minute" style="border:0px;" />
+                    <input asp-for="NewsTime" type="text" value="@newsTimeNow" style="border:0px;" />
                 </div>
             </div>
 

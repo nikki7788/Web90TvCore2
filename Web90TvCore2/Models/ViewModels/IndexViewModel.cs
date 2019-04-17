@@ -77,5 +77,12 @@ namespace Web90TvCore2.Models.ViewModels
         /// </summary>
         /// انها 2 باشد NewsType خبرهایی که پراپرتی 
         public List<News> ExclusiveNews { get; set; }
+
+        /// <summary>
+        /// جزییات خبر
+        /// </summary>
+        /// نمایش جزییات خبر
+        public News NewsDetails { get; set; }
+
     }
 }

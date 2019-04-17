@@ -19,12 +19,12 @@ namespace Web90TvCore2.Controllers
         #region ################### Dependencies ###################
 
         private readonly UserManager<ApplicationUsers> _userManager;
-        private readonly IUnitOfWork _UnitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<ApplicationUsers> _signInManager;
         public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork, UserManager<ApplicationUsers> userManager)
         {
             _userManager = userManager;
-            _UnitOfWork = UnitOfWork;
+            _unitOfWork = UnitOfWork;
             _signInManager = signInManager;
 
         }
@@ -46,10 +46,10 @@ namespace Web90TvCore2.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 //روش 1
-                //var query =  _UnitOfWork.UserManagerUW.GetById(_userManager.GetUserId(HttpContext.User));
+                //var query =  _unitOfWork.UserManagerUW.GetById(_userManager.GetUserId(HttpContext.User));
 
                 // از کوکی مرورکر اطلاعات کاربر را میخواند  HttpContext.User اشاره به خود مرورگر خود کاربر لاگین کرده دارد  و HttpContext   
-                var query = await _UnitOfWork.UserManagerUW.GetById(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+                var query = await _unitOfWork.UserManagerUW.GetById(_userManager.GetUserAsync(HttpContext.User).Result.Id);
                 //ارسال اطلاعات کاربر به ویو اصلی جهت نمایش
                 ViewBag.FullName = query.FirstName + " " + query.LastName;
 
@@ -62,25 +62,25 @@ namespace Web90TvCore2.Controllers
             //  نبود نیاز نداشت async اگر 
 
 
-            model.SliderNews =  _UnitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
+            model.SliderNews =  _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
 
 
-            model.SpecialNews=_UnitOfWork.NewsRepUW.Get(n=>n.NewsPlace==1).Result.Take(8).ToList();
+            model.SpecialNews=_unitOfWork.NewsRepUW.Get(n=>n.NewsPlace==1).Result.Take(8).ToList();
 
 
-            model.LastVideos = _UnitOfWork.NewsRepUW.Get(n => n.NewsPlace == 2).Result.Take(8).ToList();
+            model.LastVideos = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 2).Result.Take(8).ToList();
 
             //ازبین تمامی خبر ها 15 تا خبر اخر را در تب نمایش میدهد
-            model.LastNews = _UnitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
+            model.LastNews = _unitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
 
             //خبرهای داخلی NewsType==0
-            model.DomesticNews = _UnitOfWork.NewsRepUW.Get(n=>n.NewsType==0).Result.Take(15).ToList();
+            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n=>n.NewsType==0).Result.Take(15).ToList();
 
             //خبرهای خارجی n => n.NewsType == 1
-            model.ForeignNews = _UnitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
+            model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
 
             //خبرهای اختصاصی n => n.NewsType == 2
-            model.ExclusiveNews = _UnitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
+            model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
 
             
             //model.loginVM=
@@ -90,6 +90,41 @@ namespace Web90TvCore2.Controllers
         }
 
 
+
+
+        /// <summary>
+        /// نمایش جزییات خبر
+        /// متد خواندنی Get
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> NewsDetails(int id)
+        {
+
+        
+            var model = new IndexViewModel();
+
+            //   استقاده میکردیم result باید از  Crud در  Get نوشته شده متد   async چون به  صورت غیر همزمان 
+            //  نبود نیاز نداشت async اگر 
+
+            //ازبین تمامی خبر ها 15 تا خبر اخر را در تب نمایش میدهد
+            model.LastNews = _unitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
+
+            //خبرهای داخلی NewsType==0
+            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0).Result.Take(15).ToList();
+
+            //خبرهای خارجی n => n.NewsType == 1
+            model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
+
+            //خبرهای اختصاصی n => n.NewsType == 2
+            model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
+
+
+            model.NewsDetails = await _unitOfWork.NewsRepUW.GetById(id);
+
+            return View(model);
+        }
 
 
         public IActionResult About()
