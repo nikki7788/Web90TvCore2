@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
 
@@ -21,19 +22,22 @@ namespace Web90TvCore2.Controllers
         private readonly UserManager<ApplicationUsers> _userManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<ApplicationUsers> _signInManager;
-        public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork, UserManager<ApplicationUsers> userManager)
+        private readonly INewsService _newsService;
+
+        public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork,
+            UserManager<ApplicationUsers> userManager, INewsService newsService)
         {
             _userManager = userManager;
             _unitOfWork = UnitOfWork;
             _signInManager = signInManager;
-
+            _newsService = newsService;
         }
 
         #endregion###########
 
         #region ############## Actions #######################
 
-        
+
         /// <summary>
         /// نمایش صفحه اصلی سایت
         /// </summary>
@@ -62,10 +66,10 @@ namespace Web90TvCore2.Controllers
             //  نبود نیاز نداشت async اگر 
 
 
-            model.SliderNews =  _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
+            model.SliderNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
 
 
-            model.SpecialNews=_unitOfWork.NewsRepUW.Get(n=>n.NewsPlace==1).Result.Take(8).ToList();
+            model.SpecialNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 1).Result.Take(8).ToList();
 
 
             model.LastVideos = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 2).Result.Take(8).ToList();
@@ -74,7 +78,7 @@ namespace Web90TvCore2.Controllers
             model.LastNews = _unitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
 
             //خبرهای داخلی NewsType==0
-            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n=>n.NewsType==0).Result.Take(15).ToList();
+            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0).Result.Take(15).ToList();
 
             //خبرهای خارجی n => n.NewsType == 1
             model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
@@ -82,10 +86,10 @@ namespace Web90TvCore2.Controllers
             //خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
 
-            
+
             //model.loginVM=
             return View(model);
-              
+
 
         }
 
@@ -102,7 +106,7 @@ namespace Web90TvCore2.Controllers
         public async Task<IActionResult> NewsDetails(int id)
         {
 
-        
+
             var model = new IndexViewModel();
 
             //   استقاده میکردیم result باید از  Crud در  Get نوشته شده متد   async چون به  صورت غیر همزمان 
@@ -110,19 +114,16 @@ namespace Web90TvCore2.Controllers
 
             //ازبین تمامی خبر ها 15 تا خبر اخر را در تب نمایش میدهد
             model.LastNews = _unitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
-
             //خبرهای داخلی NewsType==0
             model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0).Result.Take(15).ToList();
-
             //خبرهای خارجی n => n.NewsType == 1
             model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
-
             //خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
-
-
             model.NewsDetails = await _unitOfWork.NewsRepUW.GetById(id);
 
+            //به روز رسانی تعدا بازدید خبر
+            await _newsService.RefreshVisitCounter(id);
             return View(model);
         }
 
