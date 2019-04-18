@@ -66,25 +66,25 @@ namespace Web90TvCore2.Controllers
             //  نبود نیاز نداشت async اگر 
 
 
-            model.SliderNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0).Result.Take(4).ToList();
+            model.SliderNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0,ne=>ne.OrderByDescending(n=>n.NewsId)).Result.Take(4).ToList();
 
 
-            model.SpecialNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 1).Result.Take(8).ToList();
+            model.SpecialNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 1, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(8).ToList();
 
 
-            model.LastVideos = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 2).Result.Take(8).ToList();
+            model.LastVideos = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(8).ToList();
 
             //ازبین تمامی خبر ها 15 تا خبر اخر را در تب نمایش میدهد
-            model.LastNews = _unitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
+            model.LastNews = _unitOfWork.NewsRepUW.Get(null, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
             //خبرهای داخلی NewsType==0
-            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0).Result.Take(15).ToList();
+            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
             //خبرهای خارجی n => n.NewsType == 1
-            model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
+            model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
             //خبرهای اختصاصی n => n.NewsType == 2
-            model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
+            model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
 
             //model.loginVM=
@@ -113,13 +113,13 @@ namespace Web90TvCore2.Controllers
             //  نبود نیاز نداشت async اگر 
 
             //ازبین تمامی خبر ها 15 تا خبر اخر را در تب نمایش میدهد
-            model.LastNews = _unitOfWork.NewsRepUW.Get().Result.Take(15).ToList();
+            model.LastNews = _unitOfWork.NewsRepUW.Get(null, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
             //خبرهای داخلی NewsType==0
-            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0).Result.Take(15).ToList();
+            model.DomesticNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 0, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
             //خبرهای خارجی n => n.NewsType == 1
-            model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1).Result.Take(15).ToList();
+            model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
             //خبرهای اختصاصی n => n.NewsType == 2
-            model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2).Result.Take(15).ToList();
+            model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
             model.NewsDetails = await _unitOfWork.NewsRepUW.GetById(id);
 
             //به روز رسانی تعدا بازدید خبر

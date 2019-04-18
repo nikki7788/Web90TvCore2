@@ -11,7 +11,7 @@
             @foreach (var item in Model)
             {
                 <div class="col-6 col-sm-6 col-xl-4">
-                    <a href="#">
+                    <a  asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">
                         <div class="fontawsome-transition">
                             <img src="~/upload/indexImage/@item.IndexImage" class="img-fluid" />
                             <span class="fa fa-play-circle"></span>

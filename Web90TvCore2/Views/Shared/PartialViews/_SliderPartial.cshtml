@@ -13,12 +13,13 @@
             }
             @foreach (var item in Model)
             {
-                <div class="carousel-item @(isActive?Html.Raw("active") : Html.Raw(" ")) ">
-                   
-                        <img src="~/upload/indexImage/@item.IndexImage" style="border-radius:0;"/>
+                <div   class="carousel-item @(isActive?Html.Raw("active") : Html.Raw(" ")) ">
+                    <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">
+                        <img src="~/upload/indexImage/@item.IndexImage" style="border-radius:0;" />
                         <div class="text-light h-auto" style=" background-image: linear-gradient(to left , #5b5252,#9a9595,#cbc3c3, #dddcdc,#fff);">
                             <span class="font-weight-light" style="font-size:17px">  @item.Abstract</span>
                         </div>
+                    </a>
                 </div>
                 isActive = false;
 

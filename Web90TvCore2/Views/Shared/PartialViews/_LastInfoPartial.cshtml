@@ -7,6 +7,8 @@
 <div class="last-info">
     <span class="news-header ul-title-tabs-color">آخرین مطالب</span>
     <div class="hr-divider"></div>
+
+    @{ var newsicon = ViewBag.newsIcon; }
     <!--nav tabs-->
     <ul class="nav nav-tabs">
         <li class="nav-item"><a href="#last-news" class="nav-link active" data-toggle="tab">آخرین اخبار</a></li>
@@ -25,7 +27,17 @@
 
                     <li>
                         <span class="badge badge-success">@item.NewsTime</span>
-                        <a href="#">@item.Title</a>
+
+                        @if (item.NewsPlace == 2)
+                        {
+                            //نمایش ایکون دوربین کنار خبرهای ویدویی
+                            <i class="fa fa-video-camera" aria-hidden="true"></i>
+                        }
+
+                        <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">
+                            @item.Title
+
+                        </a>
                     </li>
                 }
             </ul>
@@ -40,7 +52,14 @@
 
                     <li>
                         <span class="badge badge-success">@item.NewsTime</span>
-                        <a href="#">@item.Title</a>
+                        @if (item.NewsPlace == 2)
+                        {
+                            //نمایش ایکون دوربین کنار خبرهای ویدویی
+
+                            <i class="fa fa-video-camera" aria-hidden="true"></i>
+                        }
+
+                        <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">@item.Title</a>
                     </li>
                 }
             </ul>
@@ -54,7 +73,14 @@
 
                     <li>
                         <span class="badge badge-success">@item.NewsTime</span>
-                        <a href="#">@item.Title</a>
+                        @if (item.NewsPlace == 2)
+                        {
+                            //نمایش ایکون دوربین کنار خبرهای ویدویی
+
+                            <i class="fa fa-video-camera" aria-hidden="true"></i>
+                        }
+
+                        <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">@item.Title</a>
                     </li>
                 }
             </ul>
@@ -62,14 +88,21 @@
 
 
         <!-- اخبار اختصاصی-->
-        <div id="exclusive-news" class="tab-pane container">
+        <div id="exclusive-news" class="tab-pane container" >
             <ul class="list-list">
                 @foreach (var item in Model.ExclusiveNews)
                 {
 
                     <li>
                         <span class="badge badge-success">@item.NewsTime</span>
-                        <a href="#">@item.Title</a>
+                        @if (item.NewsPlace == 2)
+                        {
+                            //نمایش ایکون دوربین کنار خبرهای ویدویی
+
+                            <i class="fa fa-video-camera" aria-hidden="true"></i>
+                        }
+
+                        <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">@item.Title</a>
                     </li>
                 }
             </ul>
