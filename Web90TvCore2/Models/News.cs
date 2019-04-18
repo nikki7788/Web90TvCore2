@@ -79,7 +79,7 @@ namespace Web90TvCore2.Models
         /// </summary>
         ///  مقادیرش را میگیرد وکاربر با اتخاب محل مورد نظر خود آیدی محل را درانجا ذخیره میکند asdf این ستون از کلاس ثابت  
         [Display(Name = "محل نمایش خبر")]
-        public int NewsPlace { get; set; }
+        public byte NewsPlace { get; set; }
 
 
         /// <summary>

@@ -18,13 +18,16 @@
         <div class="row" id="content-body">
             <!--start main content-->
             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
-                
+
                 <div id="newsDetails">
                     <!--Start NewsDetails-->
                     @await Html.PartialAsync("~/Views/Shared/PartialViews/_NewsdetailPartial.cshtml", Model.NewsDetails)
                     <!--End NewsDetails-->
-
                 </div>
+                <!--Start comments-->
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_CommentPartial.cshtml")
+                <!--End commets-->
+
             </div>   <!--end main content-->
             <!--start list second part-->
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
