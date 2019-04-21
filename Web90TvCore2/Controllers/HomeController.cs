@@ -66,7 +66,7 @@ namespace Web90TvCore2.Controllers
             //  نبود نیاز نداشت async اگر 
 
 
-            model.SliderNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0,ne=>ne.OrderByDescending(n=>n.NewsId)).Result.Take(4).ToList();
+            model.SliderNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 0, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(4).ToList();
 
 
             model.SpecialNews = _unitOfWork.NewsRepUW.Get(n => n.NewsPlace == 1, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(8).ToList();
@@ -100,7 +100,7 @@ namespace Web90TvCore2.Controllers
         /// نمایش جزییات خبر
         /// متد خواندنی Get
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">شناسه خبر</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> NewsDetails(int id)
@@ -120,15 +120,34 @@ namespace Web90TvCore2.Controllers
             model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
             //خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
-            model.NewsDetails = await _unitOfWork.NewsRepUW.GetById(id);
+
 
             //به روز رسانی تعدا بازدید خبر
             await _newsService.RefreshVisitCounter(id);
+
+            //ارسال مدل متن و جزییات خبر 
+            //model.NewsDetails = await _unitOfWork.NewsRepUW.GetById(id);
+            ViewBag.newsContext = await _unitOfWork.NewsRepUW.GetById(id);
+
+            //ارسال مدل نطرات 
+            ViewBag.comments = await _unitOfWork.CommentRepUW.Get(n => n.NewsId == id);
+
             return View(model);
         }
 
 
-
+        /// <summary>
+        /// نمایش نطرات - متد خواندنی
+        /// </summary>
+        /// <param name="id">شناسه خبر</param>
+        /// شناسه خبری که درمورد ان نظرات ثبت میشود
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Comments(int id)
+        {
+            //_unitOfWork.CommentRepUW()
+            return View();
+        }
 
 
 

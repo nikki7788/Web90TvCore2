@@ -27,8 +27,9 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         private CrudRepGeneric<News> _newsRepUW;
 
-        private  CrudRepGeneric<ApplicationUsers> _userManagerUW;
+        private CrudRepGeneric<ApplicationUsers> _userManagerUW;
 
+        private CrudRepGeneric<Comment> _commentUW;
 
         #endregion #######################
 
@@ -36,6 +37,7 @@ namespace Web90TvCore2.Models.UnitOfWork
 
 
         #region ############################ properties #############################################
+
         /// <summary>
         /// دسته بندی های سایت
         ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
@@ -48,6 +50,7 @@ namespace Web90TvCore2.Models.UnitOfWork
             {
                 if (_categoryRepUW == null)
                 {
+                    //اگر نمونه ای از دیتا بیس وجود نداشت یک نمونه از روی دیتابیس دسته بندی بسازد  
                     _categoryRepUW = new CrudRepGeneric<Category>(_context);
                 }
                 return _categoryRepUW;
@@ -75,22 +78,47 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         }
 
+
+        /// <summary>
+        /// نطرات کاربران
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  Comment برای کلاس و جدول CRUD پیاده سازی کلاس 
+        /// </summary>
+        public CrudRepGeneric<Comment> CommentRepUW
+        {
+            get
+            {
+                if (_categoryRepUW == null)
+                {
+                    _commentUW = new CrudRepGeneric<Comment>(_context);
+                }
+                return _commentUW;
+            }
+        }
+
+
+
         /// <summary>
         /// کاربران سایت
         ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
         ///  ApplicationUser برای کلاس و جدول CRUD پیاده سازی کلاس 
         /// </summary>
-        public CrudRepGeneric<ApplicationUsers> UserManagerUW {
+        public CrudRepGeneric<ApplicationUsers> UserManagerUW
+        {
             get
             {
-                if (_userManagerUW==null)
+                if (_userManagerUW == null)
                 {
                     _userManagerUW = new CrudRepGeneric<ApplicationUsers>(_context);
                 }
                 return _userManagerUW;
             }
-                }
+        }
         //todo: UserManagerUW  برای چی از دستور بالا استفاده کردیم؟   
+
+
+
+
         #endregion ##########################
 
 

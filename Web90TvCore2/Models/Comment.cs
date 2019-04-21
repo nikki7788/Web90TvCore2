@@ -54,7 +54,7 @@ namespace Web90TvCore2.Models
 
 
         /// <summary>
-        /// متن نظرس
+        /// متن نظر
         /// </summary>
         [Display(Name = "متن نظر")]
         [Required(AllowEmptyStrings = false, ErrorMessage = PublicConst.EnterMessage)]

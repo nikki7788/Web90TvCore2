@@ -1,5 +1,15 @@
 ﻿
+@{
+    //دریافت  کل نطرات
+    List<Comment> cm = ViewBag.comments;
 
+    //نظر های اصلی- پاسخ نیستند
+    var comments = cm.Where(c => c.ReplyID == -1);
+
+    //نطرهایی که پاسخ به نطرات دیگر هستند
+    var replyComments = cm.Where(c => c.ReplyID != -1);
+
+}
 
 <style>
     .comment {
@@ -15,12 +25,16 @@
     <div class="col-12 col-sm-12">
         <div class="col-md-12" style="padding:0px;">
             <section class="widget title-c p-2" id="comments">
+
                 <h3 class="text-left" style="font-size:16px;">
                     نظرات
                     <span class="badge " style="background-color:gray; width:25px; border-radius:5px;">
-                        4
+
+                        @comments.Count();
+
                     </span>
                 </h3>
+
                 <hr style="background-color:gray; height:1px; width:100%;" />
                 <div class="content">
 
@@ -29,19 +43,24 @@
                         <div class="col-sm-12 col-sm-10 col-sm-offset-1">
                             <div id="comment-form-wrap">
                                 <div class="form form-comment">
-                                    <form role="form"  id="FormModel" method="post">
+                                    <form role="form" id="FormModel" method="post">
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 mb-3">
 
-                                                <label class="sr-only control-label" for="email">ايميل<span class="required ">*</span></label> <input class="form-control" placeholder="ايميل" name="cms_models_Comment[email]" id="cms_models_Comment_email" type="text">
+                                                <label class="sr-only control-label" for="email">
+                                                    <span class="required ">*</span>
+                                                </label>
+                                                <input class="form-control" placeholder="ايميل" id="txtEmail" name="txtEmail" type="text">
                                             </div>
-                                            <div class="col-12 col-sm-12">
-                                                <label class="sr-only control-label" for="fullname">نام<span class="required">*</span></label> <input class="form-control" placeholder="نام" name="cms_models_Comment[fullname]" id="cms_models_Comment_fullname" type="text">
+                                            <div class="col-12 col-sm-6">
+                                                <label class="sr-only control-label" for="fullname">نام<span class="required"></span></label>
+                                                <input class="form-control" placeholder="نام" name="txtFullname" id="txtFullname" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-12">
-                                                <label class="sr-only control-label" for="message">نظر<span class="required">*</span></label> <textarea class="form-control" rows="3" placeholder="ديدگاه شما..." name="cms_models_Comment[message]" id="cms_models_Comment_message"></textarea>
+                                                <label class="sr-only control-label" for="message">نظر<span class="required"></span></label>
+                                                <textarea class="form-control" rows="3" placeholder="ديدگاه شما..." name="txtComment" id="txtComment"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -61,185 +80,118 @@
                     <div class="list-view" style="border-radius:4px; padding-bottom:5px;">
                         <ul class="items" style="list-style:none;">
 
-                            <li style="background-color:#EDEDED; margin-bottom:5px;">
-                                <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
-                                    <div class="avatar">
-                                        <figure>
-                                            <img style="margin:5px;" src="~/image/519bf20d.avatar.jpg">
-                                        </figure>
-                                    </div>
-
-                                    <div>
-                                        <header>
-                                            <span style="font-weight:bold;">
-                                                saeed
-                                            </span>
-                                            <time class="float-left" style="font-size:12px;">
-                                                1397/06/30 12:25
-                                            </time>
-                                        </header>
-                                        <div style="margin-right:10px; margin-top:7px; font-size:12px;">
-                                            <p>
-                                                ياد و خاطره بازي الماتي قزاقستان - پرسپوليس بعد از ?? سال برام زنده شد - فقط ميتونم بگم بچه ها مچکريم
-                                            </p>
+                            @foreach (var item in comments)
+                            {
+                                <li style="background-color:#EDEDED; margin-bottom:5px;">
+                                    <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
+                                        <div class="avatar">
+                                            <figure>
+                                                <img style="margin:5px;" src="~/image/519bf20d.avatar.jpg">
+                                            </figure>
                                         </div>
-                                        <footer style="margin-bottom:10px;">
-                                            <div class="btn-group flaot-left">
 
-                                                @* Like *@
-                                                <button class="btn btn-xs btn-success" data-action="like">
-                                                    <span class="fa fa-thumbs-up"></span>
-                                                    <span data-name="likes-count-placeholder" class="numbers">???</span>
-                                                </button>
+                                        <div>
+                                            @* هدر هر نطر *@
+                                            <header>
+                                                <span style="font-weight:bold;">
 
-                                                @* DisLike *@
-                                                <button class="btn btn-xs btn-default" data-action="dislike">
-                                                    <span class="fa fa-thumbs-down"></span>
-                                                    <span data-name="dislikes-count-placeholder" class="numbers">??</span>
-                                                </button>
+                                                    @item.FullName
+
+                                                </span>
+                                                <time class="float-left" style="font-size:12px;">
+                                                    @item.commentDate - @item.commentTime
+                                                </time>
+                                            </header>
+                                            @* متن نظر *@
+                                            <div style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                                <p>
+                                                    @item.Message
+                                                </p>
                                             </div>
-                                            <button class="btn btn-default btn-xs" data-toggle="show-reply-form">
-                                                <span class="fa fa-reply"></span>
-                                                <span>پاسخ به ديدگاه</span>
-                                            </button>
-                                        </footer>
+                                            <footer style="margin-bottom:10px;">
+                                                <div class="btn-group flaot-left">
+
+                                                    @* Like *@
+                                                    <button class="btn btn-xs btn-success" data-action="like">
+                                                        <span class="fa fa-thumbs-up"></span>
+                                                        <span data-name="likes-count-placeholder">@item.LikeCount</span>
+                                                    </button>
+
+                                                    @* DisLike *@
+                                                    <button class="btn btn-xs btn-default" data-action="dislike">
+                                                        <span class="fa fa-thumbs-down"></span>
+                                                        <span data-name="dislikes-count-placeholder">@item.DisLikeCount</span>
+                                                    </button>
+                                                </div>
+
+                                                @* دکمه پاسخ به نطر *@
+                                                <button class="btn btn-default btn-xs" data-toggle="show-reply-form">
+                                                    <span class="fa fa-reply"></span>
+                                                    <span>پاسخ به ديدگاه</span>
+                                                </button>
+
+                                            </footer>
+                                        </div>
+
+
+                                        @* پاسخ *@
+                                        <ul class="mx-auto w-100" style="list-style:none; margin-right:20px;">
+
+                                            @foreach (var replyItem in replyComments.Where(r => r.ReplyID == item.Id))
+                                            {
+                                                //پاسخ های که به یک نطر مشخص داده شده را میاورد
+                                                <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;">
+                                                    <div>
+                                                        <div class="row" style="padding:0px; margin:0px;">
+                                                            <div class="avatar">
+                                                                <figure>
+                                                                    <img src="~/image/519bf20d.avatar.jpg">
+                                                                </figure>
+                                                            </div>
+                                                            <div class="body">
+                                                                <div>
+                                                                    @* comment header *@
+                                                                    <header>
+                                                                        <span style="font-weight:bold;">
+                                                                            @replyItem.FullName
+                                                                        </span>
+                                                                        <time class="flaot-left" style="font-size:12px;">
+                                                                            @replyItem.commentDate - @replyItem.commentTime
+                                                                        </time>
+                                                                    </header>
+
+                                                                    @* متن نظر *@
+                                                                    <div style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                                                        <p>
+                                                                            @replyItem.Message
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <footer>
+                                                                        <div class="btn-group flaot-left" data-role="likebox">
+                                                                            <button class="btn btn-xs btn-success" data-action="like">
+                                                                                <span class="fa fa-thumbs-up"></span>
+                                                                                <span data-name="likes-count-placeholder">@replyItem.LikeCount</span>
+                                                                            </button>
+                                                                            <button class="btn btn-xs btn-default" data-action="dislike">
+                                                                                <span class="fa fa-thumbs-down"></span>
+                                                                                <span data-name="dislikes-count-placeholder">@replyItem.DisLikeCount</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </footer>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+
+                                        </ul>
                                     </div>
+                                </li>
 
-                                    @* پاسخ *@
-                                    <ul class="mx-auto w-100" style="list-style:none; margin-right:20px;">
-                                        <li  style="background-color:white; padding:5px; margin:5px; border-radius:4px;">
-                                            <div>
-                                                <div class="row" style="padding:0px; margin:0px;">
-                                                    <div class="avatar">
-                                                        <figure>
-                                                            <img src="~/image/519bf20d.avatar.jpg">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="body">
-                                                        <div >
-                                                            <header>
-                                                                <span style="font-weight:bold;">
-                                                                    پيمان
-                                                                </span>
-                                                                <time class="flaot-left" style="font-size:12px;">
-                                                                    ??:?? ??.شهريور.????
-                                                                </time>
-                                                            </header>
-                                                            <div style="margin-right:10px; margin-top:7px; font-size:12px;">
-                                                                <p>
-                                                                    پاسخ به جواب اصلي در اين قسمت مي باشد
-                                                                </p>
-                                                            </div>
-                                                            <footer>
-                                                                <div class="btn-group flaot-left" data-role="likebox">
-                                                                    <button class="btn btn-xs btn-success" data-action="like">
-                                                                        <span class="fa fa-thumbs-up"></span>
-                                                                        <span data-name="likes-count-placeholder" class="numbers">??</span>
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-default" data-action="dislike">
-                                                                        <span class="fa fa-thumbs-down"></span>
-                                                                        <span data-name="dislikes-count-placeholder" class="numbers">??</span>
-                                                                    </button>
-                                                                </div>
-                                                            </footer>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;">
-                                            <div>
-                                                <div class="row" style="padding:0px; margin:0px;">
-                                                    <div class="avatar">
-                                                        <figure>
-                                                            <img src="~/image/519bf20d.avatar.jpg">
-                                                        </figure>
-                                                    </div>
-                                                    <div class="body ">
-                                                        <div class="mx-auto">
-                                                            <header>
-                                                                <span style="font-weight:bold;">
-                                                                    پيمان
-                                                                </span>
-                                                                <time class="flaot-left" style="font-size:12px;">
-                                                                    ??:?? ??.شهريور.????
-                                                                </time>
-                                                            </header>
-                                                            <div style="margin-right:10px; margin-top:7px; font-size:12px;">
-                                                                <p>
-                                                                    پاسخ به جواب اصلي در اين قسمت مي باشد
-                                                                </p>
-                                                            </div>
-                                                            <footer>
-                                                                <div class="btn-group flaot-left" data-role="likebox">
-                                                                    <button class="btn btn-xs btn-success" data-action="like">
-                                                                        <span class="fa fa-thumbs-up"></span>
-                                                                        <span data-name="likes-count-placeholder" class="numbers">??</span>
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-default" data-action="dislike">
-                                                                        <span class="fa fa-thumbs-down"></span>
-                                                                        <span data-name="dislikes-count-placeholder" class="numbers">??</span>
-                                                                    </button>
-                                                                </div>
-                                                            </footer>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                            }
                             @* ---------------------------- *@
-
-                            <li style="background-color:#EDEDED; margin-bottom:5px;">
-                                <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
-                                    <div class="avatar">
-                                        <figure>
-                                            <img style="margin:5px;" src="~/image/519bf20d.avatar.jpg">
-                                        </figure>
-                                    </div>
-
-                                    <div>
-                                        <header>
-                                            <span style="font-weight:bold;">
-                                                saeed
-                                            </span>
-                                            <time class="flaot-left" style="font-size:12px;">
-                                                ??:?? ??.شهريور.????
-                                            </time>
-                                        </header>
-                                        <div style="margin-right:10px; margin-top:7px; font-size:12px;">
-                                            <p>
-                                                ياد و خاطره بازي الماتي قزاقستان - پرسپوليس بعد از ?? سال برام زنده شد - فقط ميتونم بگم بچه ها مچکريم
-                                            </p>
-                                        </div>
-                                        <footer style="margin-bottom:10px;">
-                                            <div class="btn-group flaot-left">
-
-                                                @* Like *@
-                                                <button class="btn btn-xs btn-success" data-action="like">
-                                                    <span class="fa fa-thumbs-up"></span>
-                                                    <span data-name="likes-count-placeholder" class="numbers">???</span>
-                                                </button>
-
-                                                @* DisLike *@
-                                                <button class="btn btn-xs btn-default" data-action="dislike">
-                                                    <span class="fa fa-thumbs-down"></span>
-                                                    <span data-name="dislikes-count-placeholder" class="numbers">??</span>
-                                                </button>
-                                            </div>
-                                            <button class="btn btn-default btn-xs" data-toggle="show-reply-form">
-                                                <span class="fa fa-reply"></span>
-                                                <span>پاسخ به ديدگاه</span>
-                                            </button>
-                                        </footer>
-                                    </div>
-
-                                    @* پاسخ *@
-
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
