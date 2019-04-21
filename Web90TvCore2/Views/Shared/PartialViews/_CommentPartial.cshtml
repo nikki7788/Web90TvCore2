@@ -43,7 +43,7 @@
                         <div class="col-sm-12 col-sm-10 col-sm-offset-1">
                             <div id="comment-form-wrap">
                                 <div class="form form-comment">
-                                    <form id="FrmCm" >
+                                    <form id="FrmCm">
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 mb-3">
 
@@ -84,31 +84,38 @@
                             {
                                 <li style="background-color:#EDEDED; margin-bottom:5px;">
                                     <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
-                                        <div class="avatar">
+                                        <div class="avatar  ">
                                             <figure>
-                                                <img style="margin:5px;" src="~/image/519bf20d.avatar.jpg">
+                                                <img  src="~/image/519bf20d.avatar.jpg">
                                             </figure>
                                         </div>
 
-                                        <div>
+                                        <div class="w-100 row ">
+
                                             @* هدر هر نطر *@
-                                            <header>
-                                                <span style="font-weight:bold;">
+                                                <header class="col-12">
 
-                                                    @item.FullName
+                                                    <span class="float-right" style="font-weight:600;">
 
-                                                </span>
-                                                <time class="float-left" style="font-size:12px;">
-                                                    @item.commentDate - @item.commentTime
-                                                </time>
-                                            </header>
+                                                        @item.FullName
+
+                                                    </span>
+
+                                                    <time class="float-left text-secondary" >
+                                                        <i class="fa fa-clock-o" style="font-size:12px;font-weight:700;">@item.commentTime</i>  -  <i class="fa fa-calendar" style="font-size:12px;font-weight:700;"> @item.commentDate</i>
+
+
+                                                    </time>
+
+                                                </header>
+
                                             @* متن نظر *@
-                                            <div style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                            <div  class="col-12" style="margin-right:10px; margin-top:7px; font-size:12px;">
                                                 <p>
                                                     @item.Message
                                                 </p>
                                             </div>
-                                            <footer style="margin-bottom:10px;">
+                                            <footer class="col-12" style="margin-bottom:10px;">
                                                 <div class="btn-group flaot-left">
 
                                                     @* Like *@
@@ -118,14 +125,14 @@
                                                     </button>
 
                                                     @* DisLike *@
-                                                    <button class="btn btn-xs btn-default" data-action="dislike">
+                                                    <button class="btn btn-xs btn-danger" data-action="dislike">
                                                         <span class="fa fa-thumbs-down"></span>
                                                         <span data-name="dislikes-count-placeholder">@item.DisLikeCount</span>
                                                     </button>
                                                 </div>
 
                                                 @* دکمه پاسخ به نطر *@
-                                                <button class="btn btn-default btn-xs" data-toggle="show-reply-form">
+                                                <button class="btn btn-primary" data-toggle="show-reply-form">
                                                     <span class="fa fa-reply"></span>
                                                     <span>پاسخ به ديدگاه</span>
                                                 </button>
@@ -148,26 +155,29 @@
                                                                     <img src="~/image/519bf20d.avatar.jpg">
                                                                 </figure>
                                                             </div>
-                                                            <div class="body">
-                                                                <div>
+                                                            <div class="body col-12 p-0">
+                                                                <div class="w-100 row">
                                                                     @* comment header *@
-                                                                    <header>
-                                                                        <span style="font-weight:bold;">
+                                                
+                                                                    <header class="col-12">
+                                                                        <span class="float-right" style="font-weight:600;">
                                                                             @replyItem.FullName
                                                                         </span>
-                                                                        <time class="flaot-left" style="font-size:12px;">
-                                                                            @replyItem.commentDate - @replyItem.commentTime
+                                                                        <time class="float-left text-secondary">
+                                                                            <i class="fa fa-clock-o" style="font-size:12px;font-weight:700;">@replyItem.commentTime</i>  -  <i class="fa fa-calendar" style="font-size:12px;font-weight:700;"> @replyItem.commentDate</i>
+
+
                                                                         </time>
                                                                     </header>
 
                                                                     @* متن نظر *@
-                                                                    <div style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                                                    <div class="col-12" style="margin-right:10px; margin-top:7px; font-size:12px;">
                                                                         <p>
                                                                             @replyItem.Message
                                                                         </p>
                                                                     </div>
 
-                                                                    <footer>
+                                                                    <footer class="col-12">
                                                                         <div class="btn-group flaot-left" data-role="likebox">
                                                                             <button class="btn btn-xs btn-success" data-action="like">
                                                                                 <span class="fa fa-thumbs-up"></span>
