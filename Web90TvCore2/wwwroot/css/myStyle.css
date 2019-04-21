@@ -6,7 +6,12 @@
     font-style: normal;
     src: url('../font/yekan/yekan.eot') format('embedded-opentype'),url('../font/yekan/yekan.ttf') format('truetype'),url('../font/yekan/yekan.woff') format('woff');
 }
-
+@font-face {
+    font-family: Vazir;
+    src: url('~/fonts/Vazir-FD-WOL.eot');
+    src: url('~/fonts/Vazir-FD-WOL.eot?#iefix') format('embedded-opentype'), url('~/fonts/Vazir-FD-WOL.woff') format('woff'), url('../fonts/Vazir-FD-WOL.ttf') format('truetype');
+    font-weight: normal;
+}
 * {
     padding: 0;
     margin: 0;
@@ -14,7 +19,7 @@
 }
 
 body {
-    font-family:yekan,tahoma !important;
+    font-family:Vazir,tahoma !important;
     background-color: rgb(251,251,251);
 }
 

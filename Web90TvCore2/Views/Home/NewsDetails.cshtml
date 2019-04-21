@@ -60,6 +60,30 @@
 
     <script>
         //نظرات
+
+        $("submitFrmCm").submit(function (e) {
+
+            //از انجام دستورات و دریافت اطلاعات پیش قرض از دیتابیس خودداری میکند
+            e.preventDefault();
+
+            //دریافت تمام اطلاعات اینپوت های فرم
+            // formdata روش دوم استفاده 
+            var form = $(this);
+
+            $.ajax({
+                type: "post",
+                url:@Url.Action("InsertComment","Home"),
+
+                //اطلاعات کش مرورگر را همراه فرم نفرستد
+                cache: false,
+
+                // اطلاعات سریالایز کردیم برای امنیت
+                data: form.serialize()
+
+            });
+
+        });
+
     </script>
 }
 

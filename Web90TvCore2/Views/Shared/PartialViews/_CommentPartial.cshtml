@@ -26,11 +26,11 @@
         <div class="col-md-12" style="padding:0px;">
             <section class="widget title-c p-2" id="comments">
 
-                <h3 class="text-left" style="font-size:16px;">
-                    نظرات
-                    <span class="badge " style="background-color:gray; width:25px; border-radius:5px;">
+                <h3 class="text-left" style="font-size:17px;">
+                    <span class="float-right ">نظرات</span>
+                    <span class="badge " style="background-color:#b6ff00; width:25px; border-radius:5px;">
 
-                        @comments.Count();
+                        @cm.Count()
 
                     </span>
                 </h3>
@@ -43,7 +43,7 @@
                         <div class="col-sm-12 col-sm-10 col-sm-offset-1">
                             <div id="comment-form-wrap">
                                 <div class="form form-comment">
-                                    <form role="form" id="FormModel" method="post">
+                                    <form id="FrmCm" >
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 mb-3">
 
@@ -53,19 +53,19 @@
                                                 <input class="form-control" placeholder="ايميل" id="txtEmail" name="txtEmail" type="text">
                                             </div>
                                             <div class="col-12 col-sm-6">
-                                                <label class="sr-only control-label" for="fullname">نام<span class="required"></span></label>
+                                                <label class="sr-only control-label" for="fullname">نام</label>
                                                 <input class="form-control" placeholder="نام" name="txtFullname" id="txtFullname" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-12">
-                                                <label class="sr-only control-label" for="message">نظر<span class="required"></span></label>
+                                                <label class="sr-only control-label" for="message">نظر</label>
                                                 <textarea class="form-control" rows="3" placeholder="ديدگاه شما..." name="txtComment" id="txtComment"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-12 col-sm-12">
-                                                <input class="btn btn-default flaot-left" id="comment-form-button" type="submit" name="yt0" value="ارسال">
+                                                <input class="btn btn-default flaot-left" id="submitFrmCm" type="submit" name="submitFrmCm" value="ارسال">
                                             </div>
                                         </div>
                                     </form>
