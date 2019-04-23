@@ -109,6 +109,8 @@ namespace Web90TvCore2.Models
         /// <summary>
         /// وضعیت انتشار
         /// </summary>
+        /// است false در ابتدا و. به طورپیش فرض 
+        /// تغییر میکند و درسایت نمایش داده میشود true وضعیت خبر بعد از تایید مدیر سایت به 
         [Display(Name = "وضعیت انتشار")]
         public bool status { get; set; }
 
@@ -117,6 +119,7 @@ namespace Web90TvCore2.Models
         /// <summary>
         /// شناسه پاسخ
         /// </summary>
+        /// نطری که پاسخ نباشد و نطر اصلی باشد شناسه ان را به طور توافقی 1-در نطر میگیریم
         public int ReplyID { get; set; }
 
        

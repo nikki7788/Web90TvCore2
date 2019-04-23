@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -142,11 +143,58 @@ namespace Web90TvCore2.Controllers
         /// <param name="id">شناسه خبر</param>
         /// شناسه خبری که درمورد ان نظرات ثبت میشود
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> Comments(int id)
+        [HttpPost]
+        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId)
         {
-            //_unitOfWork.CommentRepUW()
-            return View();
+
+
+            if (txtEmail == null || txtFullname == null || txtComment == null)
+            {
+                return Json(new { status = "failValidation" });
+            }
+            try
+            {
+
+                //-------------  بدست اوردن تایخ شمسی و زمان کنونی   -------------
+
+                PersianCalendar persianCalendar = new PersianCalendar();
+                var currentDate = DateTime.Now;
+                int year = persianCalendar.GetYear(currentDate);
+                int month = persianCalendar.GetMonth(currentDate);
+                int day = persianCalendar.GetDayOfMonth(currentDate);
+
+                string pCalendar = String.Format("{00:yyyy/MM/dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
+                string currentTime = String.Format("{0:hh:mm}", Convert.ToDateTime(currentDate.Hour + ":" + currentDate.Minute));
+                // string NowTime = string.Format("{0:hh:mm}", Convert.ToDateTime(persianCalendar.GetHour(currentDate) + ":" + persianCalendar.GetMinute(currentDate)));
+                //----------------------------------------------------
+
+                //مقدار دهی جدول نطرات از روی اطلاعات ارسالی نطر
+                Comment model = new Comment()
+                {
+                    //بدست اوردن آی پی کاربر
+                    IP = HttpContext.Connection.RemoteIpAddress.ToString(),
+                    //تغییر میکند و درسایت نمایش داده میشود true وضعیت خبر بعد از تاید مدیر سایت به 
+                    status = false,
+                    Email = txtEmail,
+                    FullName = txtFullname,
+                    Message = txtComment,
+                    commentDate = pCalendar,
+                    commentTime = currentTime,
+                    NewsId = newsId,
+                    ReplyID = -1 //موقتی قرار دادیم
+                };
+
+                await _unitOfWork.CommentRepUW.Create(model);
+                await _unitOfWork.Save();
+
+                return Json(new { status = "success" });
+            }
+            catch 
+            {
+
+                return Json(new { status = "failSystem" });
+                //throw;
+            }
         }
 
 

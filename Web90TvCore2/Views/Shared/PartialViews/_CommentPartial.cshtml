@@ -9,6 +9,9 @@
     //نطرهایی که پاسخ به نطرات دیگر هستند
     var replyComments = cm.Where(c => c.ReplyID != -1);
 
+    //دریافت مدل خبر برای ارسال شناسه خبر برای ثبت نطر
+    var n = ViewBag.newsContext;
+
 }
 
 <style>
@@ -17,6 +20,10 @@
         border: 1px solid rgb(200,200,200);
         padding-bottom: 10px;
         background-color: white;
+    }
+
+    .fontsize-button {
+        font-size: 10px;
     }
 </style>
 
@@ -63,14 +70,20 @@
                                                 <textarea class="form-control" rows="3" placeholder="ديدگاه شما..." name="txtComment" id="txtComment"></textarea>
                                             </div>
                                         </div>
+                                        <!--ارسال شناسه خبر - مشخص کردن شناسه خبری که برای ان نطر ات ثبت میشود-->
+                                        @*<input class="form-control d-none" name="newsId" id="newsId" type="text" value="@n.NewsId">*@
+
                                         <div class="form-group">
                                             <div class="col-12 col-sm-12">
-                                                <input class="btn btn-default flaot-left" id="submitFrmCm" type="submit" name="submitFrmCm" value="ارسال">
+                                                 <input class="btn btn-default flaot-left" id="submitFrmCm" type="submit" name="submitFrmCm" value="ارسال">
+                                              
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div id="successBox" class="alert alert-success d-none"></div>
+                                <div id="successBox" class="alert alert-success d-none alert-dismissible fade show">
+                                    <button type="button" class="close float-left" data-dismiss="alert">&times;</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,57 +95,59 @@
 
                             @foreach (var item in comments)
                             {
-                                <li style="background-color:#EDEDED; margin-bottom:5px;">
+                                //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
+                                <li style="background-color:#EDEDED; margin-bottom:5px;" data-cm-id="@item.Id">
                                     <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
                                         <div class="avatar  ">
                                             <figure>
-                                                <img  src="~/image/519bf20d.avatar.jpg">
+                                                <img src="~/image/519bf20d.avatar.jpg">
                                             </figure>
                                         </div>
 
                                         <div class="w-100 row ">
 
                                             @* هدر هر نطر *@
-                                                <header class="col-12">
+                                            <header class="col-12">
 
-                                                    <span class="float-right" style="font-weight:600;">
+                                                <span class="float-right" style="font-weight:600;">
 
-                                                        @item.FullName
+                                                    @item.FullName
 
-                                                    </span>
+                                                </span>
 
-                                                    <time class="float-left text-secondary" >
-                                                        <i class="fa fa-clock-o" style="font-size:12px;font-weight:700;">@item.commentTime</i>  -  <i class="fa fa-calendar" style="font-size:12px;font-weight:700;"> @item.commentDate</i>
+                                                <time class="float-left text-secondary">
+                                                    <i class="fa fa-clock-o mx-1" style="font-size:13px;font-weight:bold;">@item.commentTime</i>
+                                                    -  <i class="fa fa-calendar mx-1" style="font-size:13px;font-weight:bold;"> @item.commentDate</i>
 
 
-                                                    </time>
+                                                </time>
 
-                                                </header>
+                                            </header>
 
                                             @* متن نظر *@
-                                            <div  class="col-12" style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                            <div class="col-12" style="margin-right:10px; margin-top:7px; font-size:12px;">
                                                 <p>
                                                     @item.Message
                                                 </p>
                                             </div>
-                                            <footer class="col-12" style="margin-bottom:10px;">
-                                                <div class="btn-group flaot-left">
+                                            <footer class="col-12 w-100" style="margin-bottom:10px;">
+                                                <div class="btn-group float-left">
 
                                                     @* Like *@
-                                                    <button class="btn btn-xs btn-success" data-action="like">
+                                                    <button class="btn btn-success fontsize-button" data-action="like ">
                                                         <span class="fa fa-thumbs-up"></span>
                                                         <span data-name="likes-count-placeholder">@item.LikeCount</span>
                                                     </button>
 
                                                     @* DisLike *@
-                                                    <button class="btn btn-xs btn-danger" data-action="dislike">
+                                                    <button class="btn btn-danger fontsize-button" data-action="dislike">
                                                         <span class="fa fa-thumbs-down"></span>
                                                         <span data-name="dislikes-count-placeholder">@item.DisLikeCount</span>
                                                     </button>
                                                 </div>
 
                                                 @* دکمه پاسخ به نطر *@
-                                                <button class="btn btn-primary" data-toggle="show-reply-form">
+                                                <button class="btn btn-primary fontsize-button" data-toggle="show-reply-form">
                                                     <span class="fa fa-reply"></span>
                                                     <span>پاسخ به ديدگاه</span>
                                                 </button>
@@ -147,7 +162,8 @@
                                             @foreach (var replyItem in replyComments.Where(r => r.ReplyID == item.Id))
                                             {
                                                 //پاسخ های که به یک نطر مشخص داده شده را میاورد
-                                                <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;">
+                                //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
+                                                <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;"  data-cm-id="@replyItem">
                                                     <div>
                                                         <div class="row" style="padding:0px; margin:0px;">
                                                             <div class="avatar">
@@ -158,14 +174,17 @@
                                                             <div class="body col-12 p-0">
                                                                 <div class="w-100 row">
                                                                     @* comment header *@
-                                                
+
                                                                     <header class="col-12">
                                                                         <span class="float-right" style="font-weight:600;">
                                                                             @replyItem.FullName
                                                                         </span>
                                                                         <time class="float-left text-secondary">
-                                                                            <i class="fa fa-clock-o" style="font-size:12px;font-weight:700;">@replyItem.commentTime</i>  -  <i class="fa fa-calendar" style="font-size:12px;font-weight:700;"> @replyItem.commentDate</i>
-
+                                                                            <i class="fa fa-clock-o  mx-1" style="font-size:13px;font-weight:bold;">@replyItem.commentTime</i>
+                                                                            -
+                                                                            <i class="fa fa-calendar  mx-1 " style="font-size:13px;font-weight:bold;">
+                                                                                @replyItem.commentDate
+                                                                            </i>
 
                                                                         </time>
                                                                     </header>
@@ -177,13 +196,13 @@
                                                                         </p>
                                                                     </div>
 
-                                                                    <footer class="col-12">
-                                                                        <div class="btn-group flaot-left" data-role="likebox">
-                                                                            <button class="btn btn-xs btn-success" data-action="like">
+                                                                    <footer class="col-12 ">
+                                                                        <div class="btn-group float-left" data-role="likebox">
+                                                                            <button class="btn  btn-success fontsize-button" data-action="like">
                                                                                 <span class="fa fa-thumbs-up"></span>
                                                                                 <span data-name="likes-count-placeholder">@replyItem.LikeCount</span>
                                                                             </button>
-                                                                            <button class="btn btn-xs btn-default" data-action="dislike">
+                                                                            <button class="btn btn-danger fontsize-button" data-action="dislike">
                                                                                 <span class="fa fa-thumbs-down"></span>
                                                                                 <span data-name="dislikes-count-placeholder">@replyItem.DisLikeCount</span>
                                                                             </button>

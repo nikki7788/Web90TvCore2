@@ -1,5 +1,4 @@
-﻿
-@model IndexViewModel
+﻿@model IndexViewModel
 
 @{
     ViewData["Title"] = "جزییات خبر";
@@ -24,9 +23,6 @@
                     @await Html.PartialAsync("~/Views/Shared/PartialViews/_NewsdetailPartial.cshtml", Model.NewsDetails)
                     <!--End NewsDetails-->
                 </div>
-                <!--Start comments-->
-                @await Html.PartialAsync("~/Views/Shared/PartialViews/_CommentPartial.cshtml")
-                <!--End commets-->
 
             </div>   <!--end main content-->
             <!--start list second part-->
@@ -56,35 +52,65 @@
             $(this).tab('show')
         });
     </script>
-
-
-    <script>
+    <script type="text/javascript">
+        $(document).ready(function () {
         //نظرات
-        //پارشال ویو هارا باید در ویویی که در ان قرار دارند بنویسیم نه خود پارشال  jquery دستورات 
-
-        $("submitFrmCm").submit(function (e) {
+        //پارشال ویو هارا باید در ویویی که در ان قرار دارند بنویسیم نه خود پارشال  jquery دستورات
+        $("#FrmCm").submit(function (e) {
 
             //از انجام دستورات و دریافت اطلاعات پیش قرض از دیتابیس خودداری میکند
             e.preventDefault();
-
+           
             //دریافت تمام اطلاعات اینپوت های فرم
-            // formdata روش دوم استفاده 
+            // formdata روش دوم استفاده
             var form = $(this);
 
             $.ajax({
                 type: "post",
-                url:@Url.Action("InsertComment","Home"),
+                url: '@Url.Action("InsertComment", "Home")',
 
                 //اطلاعات کش مرورگر را همراه فرم نفرستد
                 cache: false,
 
                 // اطلاعات سریالایز کردیم برای امنیت
-                data: form.serialize()
+                data: form.serialize(),
 
-            });
+                
+                //beforeSend: function () { 
+               
+                //    //$(".se-pre-con").fadeIn('fast');
+                //},
+
+                success: function (msg) {
+                    if (msg.status === "failValidation") {
+
+                        $("#successBox").removeClass("d-none").addClass("alert-danger").text("لطفا اطلاعات خواسته شده را کامل کنید");
+                    };
+                    if (msg.status === "success") {
+                        $("#successBox").removeClass("d-none").removeClass("alert-danger").addClass("alter-success").html("نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده می شود");
+                        $("#txtEmail").val("");
+                        $("#txtFullname").val("");
+                        $("#txtComment").val("");
+                    };
+                }
+
+            }).done(function () {
+                //وقتی عملیات تمام شد
+                //محو کردن لودینگ   fading out loading
+                //$(".se-pre-con").fadeOut('slow');
+
+                }).fail(function (msg) {
+                    if (msg.status === "failSystem") {
+                        $('#successBox').removeClass('d-none').addClass('alert-danger').text('سیستم موقتا قطع می باشد. لطفا بعدا سعی نمایید');
+
+                        //محو کردن لودینگ   fading out loading
+                        //$(".se-pre-con").fadeOut('slow');
+
+                    };
+
+                });
 
         });
-
+            });
     </script>
 }
-
