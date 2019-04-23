@@ -189,11 +189,11 @@ namespace Web90TvCore2.Controllers
 
                 return Json(new { status = "success" });
             }
-            catch 
+            catch(Exception)
             {
-
+           
                 return Json(new { status = "failSystem" });
-                //throw;
+                throw;
             }
         }
 

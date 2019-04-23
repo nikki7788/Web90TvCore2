@@ -54,13 +54,13 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
+
         //نظرات
         //پارشال ویو هارا باید در ویویی که در ان قرار دارند بنویسیم نه خود پارشال  jquery دستورات
         $("#FrmCm").submit(function (e) {
 
             //از انجام دستورات و دریافت اطلاعات پیش قرض از دیتابیس خودداری میکند
             e.preventDefault();
-           
             //دریافت تمام اطلاعات اینپوت های فرم
             // formdata روش دوم استفاده
             var form = $(this);
@@ -75,11 +75,11 @@
                 // اطلاعات سریالایز کردیم برای امنیت
                 data: form.serialize(),
 
-                
-                //beforeSend: function () { 
-               
-                //    //$(".se-pre-con").fadeIn('fast');
-                //},
+
+                beforeSend: function () {
+
+                    $(".se-pre-con").fadeIn('fast');
+                },
 
                 success: function (msg) {
                     if (msg.status === "failValidation") {
@@ -92,25 +92,34 @@
                         $("#txtFullname").val("");
                         $("#txtComment").val("");
                     };
+                    if (msg.status === "failSystem") {
+                         //برای حالت هایی که نطر ارسال میشود با موفقیت ولی خطایی وجود دارد مثلا آیدی خبر وجود نداشته باشد
+                        $('#successBox').removeClass('d-none').addClass('alert-danger').text('سیستم موقتا قطع می باشد. لطفا بعدا سعی نمایید');
+
+                        //محو کردن لودینگ   fading out loading
+                        $(".se-pre-con").fadeOut('slow');
+
+                    };
                 }
 
             }).done(function () {
                 //وقتی عملیات تمام شد
                 //محو کردن لودینگ   fading out loading
-                //$(".se-pre-con").fadeOut('slow');
+                $(".se-pre-con").fadeOut('slow');
 
                 }).fail(function (msg) {
                     if (msg.status === "failSystem") {
                         $('#successBox').removeClass('d-none').addClass('alert-danger').text('سیستم موقتا قطع می باشد. لطفا بعدا سعی نمایید');
 
                         //محو کردن لودینگ   fading out loading
-                        //$(".se-pre-con").fadeOut('slow');
+                        $(".se-pre-con").fadeOut('slow');
 
                     };
 
                 });
 
         });
-            });
+        });
+//todo:buttom loading مانده
     </script>
 }
