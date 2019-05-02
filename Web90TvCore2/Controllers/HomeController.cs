@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
@@ -24,15 +25,18 @@ namespace Web90TvCore2.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly SignInManager<ApplicationUsers> _signInManager;
         private readonly INewsService _newsService;
+        private readonly ICommentService _comentService;
 
         public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork,
-            UserManager<ApplicationUsers> userManager, INewsService newsService)
+            UserManager<ApplicationUsers> userManager, INewsService newsService, ICommentService commentService)
         {
             _userManager = userManager;
             _unitOfWork = UnitOfWork;
             _signInManager = signInManager;
             _newsService = newsService;
+            _comentService = commentService;
         }
+
 
         #endregion###########
 
@@ -189,13 +193,208 @@ namespace Web90TvCore2.Controllers
 
                 return Json(new { status = "success" });
             }
-            catch(Exception)
+            catch (Exception)
             {
-           
+
                 return Json(new { status = "failSystem" });
                 throw;
             }
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Like(int cmId)
+        {
+            var IsExistCm = await _unitOfWork.CommentRepUW.GetById(cmId);
+
+            if (IsExistCm == null)
+            {
+
+                //اگر آی دی کامنت اشتباه بود
+                //return null;  بادستور زیر تقریبا یکی است
+                //برمیگردد به اکشن قبلی 
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            try
+            {
+                //چک کردن اینکه آیا از قبل کوکی ایجاد شده است یا نه
+                if (Request.Cookies["_cm"] == null)
+                {
+                    //------------------*****************-------------------------------
+                    //اگرکوکی برای دیسلایک وجود داشته باشد و خبر مورد نطردیسلایک شده باشد  تعداد تعداد دیسلایک را یکی کم میکند را کم میکند
+                    if (Request.Cookies["_cmD"] != null)
+                    {
+                        if (Request.Cookies["_cmD"].Contains("," + cmId + ","))
+                        {
+                            await _comentService.DecreaseDislike(cmId);
+                        }
+
+                    }
+                    //------------------*****************-------------------------------
+                    //کوکی وجود نداشته است
+                    //پس کوکی باید ایجاد شود
+                    Response.Cookies.Append("_cm", "," + cmId + ",",
+                        new Microsoft.AspNetCore.Http.CookieOptions() { Expires = DateTime.Now.AddYears(1) });
+
+
+                    await _comentService.IncreaseLike(cmId);
+                    //اگر کامنت دیسلایک شده باشد قبلا توسط این کابر و الان لایک کند از تعداد دیسلایک کم میشود و به لایک اضافه میشود
+                    return Json(new { status = "success", result = IsExistCm.LikeCount,result2=IsExistCm.DisLikeCount, backId = cmId });
+                }
+                else
+                { 
+                    //اگر کوکی از قبل وجود داشت
+                   
+                    string cookieContent = Request.Cookies["_cm"].ToString();
+                    
+                    if (cookieContent.Contains("," + cmId + ","))
+                    {
+                        //اگر کاربر خواست یک کامنت را 2 بار لایک کند
+
+                        return Redirect(Request.Headers["Referer"].ToString());
+                    }
+                    else
+                    {
+                        //اگر کاربر قبلا کامنتی را لایک کرده است و حالا می خواهد کامنت دیگری را لایک کند
+
+                        //------------------*****************-------------------------------
+                        //اگرکوکی برای دیسلایک وجود داشته باشد و خبر مورد نطردیسلایک شده باشد  تعداد تعداد دیسلایک را یکی کم میکند را کم میکند
+                        if (Request.Cookies["_cmD"] != null)
+                        {
+                            if (Request.Cookies["_cmD"].Contains("," + cmId + ","))
+                            {
+                                await _comentService.DecreaseDislike(cmId);
+                            }
+
+                        }
+                        //------------------*****************-------------------------------
+                        cookieContent += "," + cmId + ",";
+                        Response.Cookies.Append("_cm", cookieContent,
+                             new Microsoft.AspNetCore.Http.CookieOptions() { Expires = DateTime.Now.AddYears(1) });
+
+                        await _comentService.IncreaseLike(cmId);
+                        //اگر کامنت دیسلایک شده باشد قبلا توسط این کابر و الان لایک کند از تعداد دیسلایک کم میشود و به لایک اضافه میشود
+                        return Json(new { status = "success", result = IsExistCm.LikeCount, result2 = IsExistCm.DisLikeCount, backId = cmId });
+                    }
+                }
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+
+                throw ex;
+            }
+            catch (DbUpdateException ex)
+            {
+
+                throw ex;
+            }
+
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Dislike(int cmId)
+        {
+            var IsExistCm = await _unitOfWork.CommentRepUW.GetById(cmId);
+
+            if (IsExistCm == null)
+            {
+
+                //اگر آی دی کامنت اشتباه بود
+                //return null;  بادستور زیر تقریبا یکی است
+                //برمیگردد به اکشن قبلی 
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            try
+            {
+                //چک کردن اینکه آیا از قبل کوکی ایجاد شده است یا نه
+                if (Request.Cookies["_cmD"] == null)
+                {
+                    //------------------*****************-------------------------------
+                    //اگرکوکی برای لایک وجود داشته باشد و خبر مورد نطرلایک شده باشد  تعداد تعداد لایک را یکی کم میکند 
+                    if (Request.Cookies["_cm"] != null)
+                    {
+                        if (Request.Cookies["_cm"].Contains("," + cmId + ","))
+                        {
+                            await _comentService.DecreaseLike(cmId);
+                        }
+
+                    }
+                    //------------------*****************-------------------------------
+                    //کوکی وجود نداشته است
+                    //پس کوکی باید ایجاد شود
+                    Response.Cookies.Append("_cmD", "," + cmId + ",",
+                        new Microsoft.AspNetCore.Http.CookieOptions() { Expires = DateTime.Now.AddYears(1) });
+
+
+                    await _comentService.IncreaseDislike(cmId);
+                    //اگر کامنت لایک شده باشد قبلا توسط این کابر و الان دیسلایک کند از تعداد لایک کم میشود و به دیسلایم اضافه میشود
+                    return Json(new { status = "success", result = IsExistCm.DisLikeCount,result2= IsExistCm.LikeCount, backId = cmId });
+                }
+                else
+                {
+                    //اگر کوکی از قبل وجود داشت
+
+                    string cookieContent = Request.Cookies["_cmD"].ToString();
+
+                    if (cookieContent.Contains("," + cmId + ","))
+                    {
+                        //اگر کاربر خواست یک کامنت را 2 بار لایک کند
+
+                        return Redirect(Request.Headers["Referer"].ToString());
+                    }
+                    else
+                    {
+                        //اگر کاربر قبلا کامنتی را لایک کرده است و حالا می خواهد کامنت دیگری را لایک کند
+
+                        //------------------*****************-------------------------------
+                        //اگرکوکی برای لایک وجود داشته باشد و خبر مورد نطرلایک شده باشد  تعداد تعداد لایک را یکی کم میکند 
+                        if (Request.Cookies["_cm"] != null)
+                        {
+                            if (Request.Cookies["_cm"].Contains("," + cmId + ","))
+                            {
+                                await _comentService.DecreaseLike(cmId);
+                            }
+
+                        }
+                        //------------------*****************-------------------------------
+                        cookieContent += "," + cmId + ",";
+                        Response.Cookies.Append("_cmD", cookieContent,
+                             new Microsoft.AspNetCore.Http.CookieOptions() { Expires = DateTime.Now.AddYears(1) });
+
+                        await _comentService.IncreaseDislike(cmId);
+                        //اگر کامنت لایک شده باشد قبلا توسط این کابر و الان دیسلایک کند از تعداد لایک کم میشود و به دیسلایم اضافه میشود
+                        return Json(new { status = "success", result = IsExistCm.DisLikeCount,result2 = IsExistCm.LikeCount, backId = cmId });
+                    }
+                }
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+
+                throw ex;
+            }
+            catch (DbUpdateException ex)
+            {
+
+                throw ex;
+            }
+
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
 
 
 

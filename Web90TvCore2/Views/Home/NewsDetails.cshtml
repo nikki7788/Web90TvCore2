@@ -44,14 +44,16 @@
     @await Html.PartialAsync("~/Views/Shared/PartialViews/_FooterPartial.cshtml")
     <!--End footer-->
 </div><!--end container-->
-
 @section scripts{
+
     <script>
         $('#myTabs a').click(function (e) {
             e.preventDefault()
             $(this).tab('show')
         });
     </script>
+
+    @* ارسال نطر به سرور *@
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -119,7 +121,53 @@
                 });
 
         });
-        });
+
 //todo:buttom loading مانده
+             });
+
+
+
+ @* دستورات مربوط به لایک و دیس لایک کامنت *@
+        //دریافت آیدی کامنت که لایک یا دیسلایک میشود
+
+
+        //$(".dislike").click( DislikeSubmit(commentId));
+
+    function LikeSubmit(commentId) {
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("Like", "Home")',
+             data: { cmId: commentId },
+        success:function (msg) {
+            if(msg.status==="success") {
+                $(`.span-like[data-commentId=${msg.backId}]`).text(msg.result);
+         //کاهش تعداد لایک اگر کامنت دیسلایک شده بود قبلا و الان لایک شد توسط یک کاربر
+                $(`.span-Dislike[data-commentId=${msg.backId}]`).text(msg.result2
+                );
+
+            }
+        }
+        });
+
+        };
+
+    function DislikeSubmit(commentId) {
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("Dislike", "Home")',
+            data: { cmId: commentId },
+        success:
+            function(msg) {
+                if (msg.status === "success") {
+                    $(`.span-Dislike[data-commentId=${msg.backId}]`).text(msg.result);
+                    //کاهش تعداد لایک اگر کامنت لایک شده بود قبلا و الان دیسلاک شد توسط یک کاربر
+                   $(`.span-like[data-commentId=${msg.backId}]`).text(msg.result2);
+                };
+            }
+
+        });
+
+        };
+
     </script>
 }

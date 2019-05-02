@@ -134,15 +134,15 @@
                                                 <div class="btn-group float-left">
 
                                                     @* Like *@
-                                                    <button class="btn btn-success fontsize-button" data-action="like ">
-                                                        <span class="fa fa-thumbs-up"></span>
-                                                        <span data-name="likes-count-placeholder">@item.LikeCount</span>
+                                                    <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@item.Id)" >
+                                                        <span class="fa fa-thumbs-up "></span>
+                                                        <span class="span-like" data-commentId="@item.Id">@item.LikeCount</span>
                                                     </button>
 
                                                     @* DisLike *@
-                                                    <button class="btn btn-danger fontsize-button" data-action="dislike">
-                                                        <span class="fa fa-thumbs-down"></span>
-                                                        <span data-name="dislikes-count-placeholder">@item.DisLikeCount</span>
+                                                    <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@item.Id)" >
+                                                        <span class="fa fa-thumbs-down "></span>
+                                                        <span  class="span-Dislike" data-commentId="@item.Id">@item.DisLikeCount</span>
                                                     </button>
                                                 </div>
 
@@ -198,13 +198,17 @@
 
                                                                     <footer class="col-12 ">
                                                                         <div class="btn-group float-left" data-role="likebox">
-                                                                            <button class="btn  btn-success fontsize-button" data-action="like">
-                                                                                <span class="fa fa-thumbs-up"></span>
-                                                                                <span data-name="likes-count-placeholder">@replyItem.LikeCount</span>
+
+                                                                            @* Like *@
+                                                                            <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@replyItem.Id)" >
+                                                                                <span class="fa fa-thumbs-up "></span>
+                                                                                <span  class="span-like" data-commentId="@replyItem.Id">@replyItem.LikeCount</span>
                                                                             </button>
-                                                                            <button class="btn btn-danger fontsize-button" data-action="dislike">
-                                                                                <span class="fa fa-thumbs-down"></span>
-                                                                                <span data-name="dislikes-count-placeholder">@replyItem.DisLikeCount</span>
+
+                                                                            @* DisLike *@
+                                                                            <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@replyItem.Id)" >
+                                                                                <span class="fa fa-thumbs-down "></span>
+                                                                                <span class="span-Dislike" data-commentId="@replyItem.Id">@replyItem.DisLikeCount</span>
                                                                             </button>
                                                                         </div>
                                                                     </footer>
