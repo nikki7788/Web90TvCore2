@@ -148,7 +148,7 @@ namespace Web90TvCore2.Controllers
         /// شناسه خبری که درمورد ان نظرات ثبت میشود
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId)
+        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId,int cmId)
         {
 
 
@@ -185,7 +185,9 @@ namespace Web90TvCore2.Controllers
                     commentDate = pCalendar,
                     commentTime = currentTime,
                     NewsId = newsId,
-                    ReplyID = -1 //موقتی قرار دادیم
+                    //آیدی کامنتی که برای آن پاسخ ارسال میشود-اگر پاسخ به نطری نباشد کامنت -1از سمت جیکويری میاید.
+                    //  است بهصورت پیش فرض getCommentId=-1
+                    ReplyID = cmId
                 };
 
                 await _unitOfWork.CommentRepUW.Create(model);

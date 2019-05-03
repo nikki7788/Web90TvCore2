@@ -55,6 +55,9 @@
 
     @* ارسال نطر به سرور *@
     <script type="text/javascript">
+        //به صورت پیش فرض -1 است یعنی نظر پاسخ به نطر دیگری نیست.ولی وقتی روی پاسخ به نطری کلیگ گند آدیدی آن نطر به جای -1 ارسال میشود به اکشن
+        var getcommentId = -1;
+
         $(document).ready(function () {
 
         //نظرات
@@ -75,7 +78,8 @@
                 cache: false,
 
                 // اطلاعات سریالایز کردیم برای امنیت
-                data: form.serialize(),
+                //آدی پاسخ نطر را هم فرستادیم .اگر پاسخ باشد آدی نطری که به آن داسخ داده شده و اگر نطر اصلی باشد -1 ارسال میشود
+                data: form.serialize()+"&cmId=" + getcommentId,
 
 
                 beforeSend: function () {
@@ -127,12 +131,7 @@
 
 
 
- @* دستورات مربوط به لایک و دیس لایک کامنت *@
-        //دریافت آیدی کامنت که لایک یا دیسلایک میشود
-
-
-        //$(".dislike").click( DislikeSubmit(commentId));
-
+ // ---------------------- دستورات مربوط به لایک و دیس لایک کامنت ------------------------------------------
     function LikeSubmit(commentId) {
         $.ajax({
             type: "post",
@@ -168,6 +167,46 @@
         });
 
         };
+    </script>
+    <script>
+        //-------------------------------------------  دستورات مربوط به پاسخ به دیدگاه-----------------------------------------------
+
+        //-------------------------------------- جابجایی فرم ارسال نطر برای پاسخ به کامنت------------------------------------
+        function replyComment(commentId) {
+
+            //--------اگر کاربر روی پاسخ به کامنت کلیک کرد------------
+            if ($(`.btnreply[data-btn=${[commentId]}]`).attr('data-status') == 1) {
+                ///----------اگر کاربر روی پاسخ به کامنت کلیک کرد و مجدد روی دکمه پاسخ به کامنت دیگری کلیک کرد--------------------
+
+                //استایلهای باقیمانده حذف شود
+                $('.btnreply').css('background-color', '#007bff');
+                $('.spanfa').removeClass('fa-close').addClass('fa-reply');
+                $('.spanreplytext').text('پاسخ به دیدگاه');
+                $('.btnreply').attr('data-status', "1");
+                // وقتی روی پاسخ به دیکر کامنت ها کلیک میکنیم باکس موفقیت امیز بودن ارسال حذف شود اگز از قبل موجود بود 
+                $('#successBox').addClass('d-none');
+                //-------------------
+
+                $('#commentdiv').appendTo(`.divappend[data-replyid=${[commentId]}]`);
+                $(`.spanreplytext[data-spanreplytext=${[commentId]}]`).text('لغو');
+                $(`.spanfa[data-spanfa=${[commentId]}]`).removeClass('fa-reply').addClass('fa-close');
+                $(`.btnreply[data-btn=${[commentId]}]`).css('background-color', '#d9534f');
+                $(`.btnreply[data-btn=${[commentId]}]`).attr('data-status', '2');
+                getcommentId = $(`.btnreply[data-btn=${[commentId]}]`).attr('data-btn');
+
+            }
+            else {
+                //وقتی روی دکمه پاسخ به نظر کلیک نشده است فرم در جای اصلی خود قرار میکیرد
+                $('#commentdiv').appendTo('#maincommentdiv');
+                $(`.spanreplytext[data-spanreplytext=${[commentId]}]`).text('پاسخ به دیدگاه');
+                $(`.spanfa[data-spanfa=${[commentId]}]`).removeClass('fa-close').addClass('fa-reply');
+                $(`.btnreply[data-btn=${[commentId]}]`).css('background-color', '#007bff');
+                $(`.btnreply[data-btn=${[commentId]}]`).attr('data-status', '1');
+                $('#successBox').addClass('d-none');
+            }
+
+        }
+
 
     </script>
 }

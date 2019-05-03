@@ -46,11 +46,11 @@
                 <div class="content">
 
                     @* فرم ارسال نظر *@
-                    <div class="row">
-                        <div class="col-sm-12 col-sm-10 col-sm-offset-1">
+                    <div class="row" id="maincommentdiv">
+                        <div class="col-sm-12 col-sm-10 col-sm-offset-1" id="commentdiv">
                             <div id="comment-form-wrap">
                                 <div class="form form-comment">
-                                    <form id="FrmCm">
+                                    <form id="FrmCm" >
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 mb-3">
 
@@ -97,6 +97,7 @@
                             {
                                 //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
                                 <li style="background-color:#EDEDED; margin-bottom:5px;" data-cm-id="@item.Id">
+                                    
                                     <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
                                         <div class="avatar  ">
                                             <figure>
@@ -134,24 +135,26 @@
                                                 <div class="btn-group float-left">
 
                                                     @* Like *@
-                                                    <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@item.Id)" >
+                                                    <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@item.Id)">
                                                         <span class="fa fa-thumbs-up "></span>
                                                         <span class="span-like" data-commentId="@item.Id">@item.LikeCount</span>
                                                     </button>
 
                                                     @* DisLike *@
-                                                    <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@item.Id)" >
+                                                    <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@item.Id)">
                                                         <span class="fa fa-thumbs-down "></span>
-                                                        <span  class="span-Dislike" data-commentId="@item.Id">@item.DisLikeCount</span>
+                                                        <span class="span-Dislike" data-commentId="@item.Id">@item.DisLikeCount</span>
                                                     </button>
                                                 </div>
 
                                                 @* دکمه پاسخ به نطر *@
-                                                <button class="btn btn-primary fontsize-button" data-toggle="show-reply-form">
-                                                    <span class="fa fa-reply"></span>
-                                                    <span>پاسخ به ديدگاه</span>
+                                                <button class="btn btn-primary fontsize-button btnreply" data-btn="@item.Id" data-status="1"
+                                                        onclick="replyComment(@item.Id)">
+                                                    <span class="fa fa-reply spanfa" data-spanfa="@item.Id"></span>
+                                                    <span  class="spanreplytext" data-spanreplytext="@item.Id">پاسخ به ديدگاه</span>
                                                 </button>
-
+                                                <div data-replyid="@item.Id" class="row divappend" style="margin-top:20px;"></div>
+                                                <div class="d-none" id="cmId" name="cmId">@item.Id</div>
                                             </footer>
                                         </div>
 
