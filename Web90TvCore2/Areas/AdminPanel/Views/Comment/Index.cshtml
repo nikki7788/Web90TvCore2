@@ -1,0 +1,83 @@
+﻿
+
+@model IEnumerable<Comment>
+
+
+<div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="panel panel-primary col-md-8 col-md-offset-2" style="margin-top:25px; margin-bottom:25px;">
+
+
+
+        <table class="box box-body table table-responsive text-center">
+            <thead>
+                <tr style="font-size:12px; font-weight:600;">
+                    <td style="width:110px;">@Html.DisplayNameFor(model => model.FullName)</td>
+                    <td style="width:100px;">@Html.DisplayNameFor(model => model.Email)</td>
+                    <td style="width:100px;">@Html.DisplayNameFor(model => model.IP)</td>
+                    <td style="width:95px;">@Html.DisplayNameFor(model => model.commentDate)</td>
+                    <td style="width:95px;">@Html.DisplayNameFor(model => model.commentTime)</td>
+                    <td style="width:150px;">@Html.DisplayNameFor(model => model.TblNews.Title)</td>
+                    <td style="width:100px;">@Html.DisplayNameFor(model => model.status)</td>
+                    <td>@Html.DisplayNameFor(model => model.Message)</td>
+                    <td>عملیات</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="font-size:12px;">
+                        <td>@item.FullName</td>
+                        <td>@item.Email</td>
+                        <td>@item.IP</td>
+                        <td>@item.commentDate</td>
+                        <td>@item.commentTime</td>
+                        <td>@item.TblNews.Title</td>
+
+
+                        @if (item.status == true)
+                        {
+                            <td style="color:green;">تایید شده</td>
+                        }
+                        else
+                        {
+                            <td style="color:red;">تایید نشده</td>
+                        }
+
+                        <td>@item.Message</td>
+                        <td>
+                            <a class="" asp-controller="Comment" asp-action="AcceptOrReject" asp-route-id="@item.Id"
+                               data-toggle="modal" data-target="#modal-action-acceptOrReject">
+                                @if (item.status == true)
+                                {
+                                    <i class="glyphicon glyphicon-remove" style="color:orange;"></i>
+                                }
+                                else
+                                {
+                                    <i class="glyphicon glyphicon-ok" style="color:green;"></i>
+                                }
+
+
+                            </a>
+
+                            <a asp-controller="Comment" asp-action="Delete" style="margin-right:8px;"
+                               asp-route-id="@item.Id" data-toggle="modal" data-target="#modal-action-DeleteComment">
+                                <i class="glyphicon glyphicon-trash" style="color:red;"></i>
+
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalPartial.cshtml",
+    new BootstrapModel { Id = "modal-action-acceptOrReject", Size = ModalSize.Medium })
+
+@await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalPartial.cshtml",
+    new BootstrapModel { Id = "modal-action-DeleteComment", Size = ModalSize.Medium })
+
+@section panelScript{
+    <script src="~/js/modal-js/all-index.js"></script>
+}

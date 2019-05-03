@@ -47,5 +47,14 @@ namespace Web90TvCore2.Models.Service
         /// <param name="Id">شناسه کامنتی که لایک میشود</param>
         /// <returns></returns>
         Task DecreaseDislike(int Id);
+
+        /// <summary>
+        /// تایید یا رد نمایش نطر در سایت 
+        /// </summary>
+        /// <param name="Id">آیدی نظر</param>
+        /// <returns></returns>
+        /// 
+        Task AcceptOrReject(int Id);
+
     }
 }

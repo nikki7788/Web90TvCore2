@@ -10,7 +10,7 @@ namespace Web90TvCore2.Models.Repository
     /// <summary>
     /// متد های خاص جدول کامنت
     /// </summary>
-    public class CommentRepo: ICommentService
+    public class CommentRepo : ICommentService
     {
         #region ########################ctor Dependencies ######################
         private readonly ApplicationDbContext _context;
@@ -38,9 +38,9 @@ namespace Web90TvCore2.Models.Repository
             //var currentComment = result.FirstOrDefault();
 
             var result = _context.Comments.FirstOrDefault(c => c.Id == Id);
-            if (result!=null)
+            if (result != null)
             {
-                
+
                 result.LikeCount++;
                 _context.Comments.Attach(result);
                 _context.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -127,7 +127,36 @@ namespace Web90TvCore2.Models.Repository
                 await _context.SaveChangesAsync();
             }
         }
-        #endregion
+
+        /// <summary>
+        /// تایید یا رد نمایش نطر در سایت
+        /// </summary>
+        /// <param name="Id">شناسه نطر</param>
+        /// <returns></returns>
+        public async Task AcceptOrReject(int Id)
+        {
+            var result = _context.Comments.FirstOrDefault(c => c.Id == Id);
+            if (result != null)
+            {
+                if (result.status == true)
+                {
+                    result.status = false;
+                }
+                else
+                {
+                    result.status = true;
+                }
+                _context.Comments.Attach(result);
+                _context.Entry(result).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+
+        }
+
+
+
+
+        #endregion ######
 
     }
 }

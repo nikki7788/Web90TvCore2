@@ -1,0 +1,48 @@
+﻿
+@model Comment
+@{
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+<form asp-controller="Comment" asp-action="AcceptOrReject">
+    @*<div class="modal-header">
+            <button type="button" class="close pull-left" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">حذف دسته بندی</h4>
+        </div>*@
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalHeaderPartial.cshtml",
+    new ModalHeader { Heading = ViewBag.Title, BootstrapVersion = BootstrapVr.version3 })
+
+    @if (Model.status == true)
+    {
+        <div class="modal-body form-horizontal">
+            <span> آیا از رد نظر</span>
+            <span class="text-danger">" @Model.Message "</span>
+            <span> مطمئن هستید؟</span>
+        </div>
+        <div class="modal-footer" style="text-align:left;">
+            <button class="btn btn-default" type="button" data-dismiss="modal">برگشت</button>
+            <button class="btn btn-danger" type="submit">
+                تایید
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="modal-body form-horizontal">
+            <span> آیا از تایید</span>
+            <span class="text-danger">" @Model.Message "</span>
+            <span> مطمئن هستید؟</span>
+        </div>
+        <div class="modal-footer" style="text-align:left;">
+            <button class="btn btn-default" type="button" data-dismiss="modal">برگشت</button>
+            <button class="btn btn-success" type="submit">
+                تایید
+            </button>
+        </div>
+    }
+
+
+
+
+
+</form>

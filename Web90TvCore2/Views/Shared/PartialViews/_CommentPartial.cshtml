@@ -4,10 +4,10 @@
     List<Comment> cm = ViewBag.comments;
 
     //نظر های اصلی- پاسخ نیستند
-    var comments = cm.Where(c => c.ReplyID == -1);
+    var comments = cm.Where(c => c.ReplyID == -1 && c.status == true);
 
     //نطرهایی که پاسخ به نطرات دیگر هستند
-    var replyComments = cm.Where(c => c.ReplyID != -1);
+    var replyComments = cm.Where(c => c.ReplyID != -1 && c.status == true);
 
     //دریافت مدل خبر برای ارسال شناسه خبر برای ثبت نطر
     var n = ViewBag.newsContext;
@@ -50,7 +50,7 @@
                         <div class="col-sm-12 col-sm-10 col-sm-offset-1" id="commentdiv">
                             <div id="comment-form-wrap">
                                 <div class="form form-comment">
-                                    <form id="FrmCm" >
+                                    <form id="FrmCm">
                                         <div class="form-group row">
                                             <div class="col-12 col-sm-6 mb-3">
 
@@ -75,8 +75,8 @@
 
                                         <div class="form-group">
                                             <div class="col-12 col-sm-12">
-                                                 <input class="btn btn-default flaot-left" id="submitFrmCm" type="submit" name="submitFrmCm" value="ارسال">
-                                              
+                                                <input class="btn btn-default flaot-left" id="submitFrmCm" type="submit" name="submitFrmCm" value="ارسال">
+
                                             </div>
                                         </div>
                                     </form>
@@ -97,7 +97,7 @@
                             {
                                 //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
                                 <li style="background-color:#EDEDED; margin-bottom:5px;" data-cm-id="@item.Id">
-                                    
+
                                     <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
                                         <div class="avatar  ">
                                             <figure>
@@ -151,7 +151,7 @@
                                                 <button class="btn btn-primary fontsize-button btnreply" data-btn="@item.Id" data-status="1"
                                                         onclick="replyComment(@item.Id)">
                                                     <span class="fa fa-reply spanfa" data-spanfa="@item.Id"></span>
-                                                    <span  class="spanreplytext" data-spanreplytext="@item.Id">پاسخ به ديدگاه</span>
+                                                    <span class="spanreplytext" data-spanreplytext="@item.Id">پاسخ به ديدگاه</span>
                                                 </button>
                                                 <div data-replyid="@item.Id" class="row divappend" style="margin-top:20px;"></div>
                                                 <div class="d-none" id="cmId" name="cmId">@item.Id</div>
@@ -165,8 +165,8 @@
                                             @foreach (var replyItem in replyComments.Where(r => r.ReplyID == item.Id))
                                             {
                                                 //پاسخ های که به یک نطر مشخص داده شده را میاورد
-                                //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
-                                                <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;"  data-cm-id="@replyItem">
+                                                //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
+                                                <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;" data-cm-id="@replyItem">
                                                     <div>
                                                         <div class="row" style="padding:0px; margin:0px;">
                                                             <div class="avatar">
@@ -203,13 +203,13 @@
                                                                         <div class="btn-group float-left" data-role="likebox">
 
                                                                             @* Like *@
-                                                                            <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@replyItem.Id)" >
+                                                                            <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@replyItem.Id)">
                                                                                 <span class="fa fa-thumbs-up "></span>
-                                                                                <span  class="span-like" data-commentId="@replyItem.Id">@replyItem.LikeCount</span>
+                                                                                <span class="span-like" data-commentId="@replyItem.Id">@replyItem.LikeCount</span>
                                                                             </button>
 
                                                                             @* DisLike *@
-                                                                            <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@replyItem.Id)" >
+                                                                            <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@replyItem.Id)">
                                                                                 <span class="fa fa-thumbs-down "></span>
                                                                                 <span class="span-Dislike" data-commentId="@replyItem.Id">@replyItem.DisLikeCount</span>
                                                                             </button>
