@@ -21,6 +21,8 @@ namespace Web90TvCore2.Models.Repository
 
         private readonly DbSet<TEntity> _table;    //e.g. _context.categories....
 
+        //private  DbSet<TEntity> _table;    //e.g. _context.categories....
+
         public CrudRepGeneric(ApplicationDbContext context)
         {
             _context = context;

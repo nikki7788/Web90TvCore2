@@ -9,8 +9,9 @@ using Web90TvCore2.Models.UnitOfWork;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
+
     /// <summary>
-    /// 
+    /// کنترلر برای عملیات روی نظرات کاربران
     /// </summary>
     [Area("AdminPanel")]
     public class CommentController : Controller
@@ -34,10 +35,13 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         #region ################################## Dependencies ###################################################
 
 
+
         /// <summary>
         /// نمایش نطرات کاربران برای خبر ها
         /// </summary>
         /// <returns></returns>
+        /// نام جدول کلید خارجی در جدول نظرات TblNews
+        /// یک جوین با جدول خبر زده میشود تا شناسه خبر را هم بدست اوریم (eager loding ===include)
         public async Task<IActionResult> Index()
         {
             ViewBag.ViewTitle = "لیست نظرات";
@@ -79,6 +83,15 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             return PartialView("_AcceptOrRejectPartial", cm);
         }
 
+
+
+
+
+        /// <summary>
+        /// متد پست تایید یارد نمایش نظرات
+        /// </summary>
+        /// <param name="Id">شناسه نظر</param>
+        /// <returns></returns>
         [HttpPost,ActionName("AcceptOrReject")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AcceptOrRejectConfirm(int Id)
@@ -89,6 +102,15 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         }
 
+
+
+
+
+        /// <summary>
+        /// نمایش پارشال ویو حذف که حاوی پیام نطر است
+        /// </summary>
+        /// <param name="id">شناسه نطر</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -107,6 +129,14 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             return PartialView("_DeletePartial", cm);
         }
 
+
+
+
+        /// <summary>
+        /// متد پست حذف
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteComment(int id)
