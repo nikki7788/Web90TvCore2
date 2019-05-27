@@ -31,6 +31,9 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         private CrudRepGeneric<Comment> _commentUW;
 
+        private CrudRepGeneric<Advertise> _advertiseUW;
+
+
         #endregion #######################
 
 
@@ -88,7 +91,7 @@ namespace Web90TvCore2.Models.UnitOfWork
         {
             get
             {
-                if (_categoryRepUW == null)
+                if (_commentUW == null)
                 {
                     _commentUW = new CrudRepGeneric<Comment>(_context);
                 }
@@ -96,6 +99,23 @@ namespace Web90TvCore2.Models.UnitOfWork
             }
         }
 
+
+        /// <summary>
+        /// تبلیغات
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  Advertise برای کلاس و جدول CRUD پیاده سازی کلاس 
+        /// </summary>
+        public CrudRepGeneric<Advertise> AdveriseRepUW
+        {
+            get
+            {
+                if (_advertiseUW == null)
+                {
+                    _advertiseUW = new CrudRepGeneric<Advertise>(_context);
+                }
+                return _advertiseUW;
+            }
+        }
 
 
         /// <summary>

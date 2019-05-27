@@ -19,5 +19,7 @@ namespace Web90TvCore2.Models
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Advertise> Advertises { get; set; }
+
     }
 }

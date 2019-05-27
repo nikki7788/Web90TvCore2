@@ -33,11 +33,23 @@ namespace Web90TvCore2.Models.UnitOfWork
 
 
 
+
+
+        /// <summary>
+        /// تبلیغات
+        /// </summary>
+        CrudRepGeneric<Advertise> AdveriseRepUW { get; }
+
+
+
+
         /// <summary>
         /// یوزر
         /// </summary>
         CrudRepGeneric<ApplicationUsers> UserManagerUW { get; }
 
+
+     
         Task Save();
 
          //void Save();
