@@ -1,0 +1,167 @@
+﻿
+@model Advertise
+
+@{
+    //برای نمایش محل های نمایش تبلیغ به ص.رت لیست بازشو
+    AdvertisePlace IndexModel = new AdvertisePlace();
+    List<AdvertisePlace> IndexVm = IndexModel.AdvertiseDescription();
+}
+
+<link href="~/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+
+<style>
+    .circleInput {
+        border-radius: 3px;
+    }
+</style>
+
+<div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="col-md-4 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
+        <form asp-area="AdminPanel" asp-controller="Advertising" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* از تاريخ *@
+            <div class="form-group">
+                <label asp-for="FromDate" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input asp-for="FromDate" class="form-control circleInput"
+                           placeholder="تاريخ شروع نمايش تبليغ" id="FromDate" name="FromDate"
+                           data-MdDateTimePicker="true" data-trigger="click" data-targetselector="#FromDate" data-groupid="group1"
+                           data-formdate="true" data-enabletimepicker="false" data-placement="bottom" />
+                </div>
+                <span asp-validation-for="FromDate" class="text-danger"></span>
+            </div>
+
+            @* تا تاريخ *@
+            <div class="form-group">
+                <label asp-for="ToDate" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input asp-for="ToDate" class="form-control circleInput"
+                           placeholder="تاريخ پايان نمايش تبليغ" id="ToDate" name="ToDate"
+                           data-MdDateTimePicker="true" data-trigger="click" data-targetselector="#ToDate" data-groupid="group1"
+                           data-formdate="true" data-enabletimepicker="false" data-placement="bottom" />
+                </div>
+                <span asp-validation-for="ToDate" class="text-danger"></span>
+            </div>
+
+            @* تصوير *@
+            <div class="form-group">
+                <label asp-for="GifPath" class="control-label"></label>
+                <div class="form-horizontal">
+                    <input asp-for="GifPath" type="file" id="files" name="files" />
+                    <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info" value="آپلود و نمايش تصوير" />
+                </div>
+                <span asp-validation-for="GifPath" class="text-danger"></span>
+            </div>
+
+            @* لينک *@
+            <div class="form-group">
+                <label asp-for="Link" class="control-label"></label>
+                <input asp-for="Link" class="form-control BorderElement circleInput" style="direction:ltr" placeholder="https://..." />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+
+            @* محل نمايش تبليغ *@
+            <div class="form-group">
+                <label asp-for="AdvLocation" class="control-label"></label>
+                <select asp-for="AdvLocation" asp-items="@(new SelectList(IndexVm, "AdvId", "AdvLocationName"))" class="form-control BorderElement"></select>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="ايجاد" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">بازگشت</a>
+            </div>
+
+            <!---------###############---   دریافت مقادیر از ویو بگ و ایجکس جیکویری-##################----- -->
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="indexImage" name="indexImage" />*@
+            <input type="text" class="hidden" asp-for="GifPath" />
+
+        </form>
+
+
+
+    </div>
+    <div class="col-md-4" style="margin-top:25px; margin-bottom:25px;">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="box box-widget widget-user">
+                <div class="widget-user-header bg-light-blue text-center">
+                    <h3 class="widget-user-username">گيف تبليغاتي</h3>
+                </div>
+            </div>
+
+            @if (ViewBag.ImgNM == null)
+            {
+                <div class="form-group">
+                    <img id="advImg" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                         src="~/image/advdefault.jpg" alt="advertiseImage"
+                          style="height:150px; width:150px; margin:5px auto;"  />
+                </div>
+            }
+            else
+            {
+                //اگر تصویری آپلود شده بود و ولیدشن ها رعایت نشده بود عکس اپلود شده همجنان نمایش داده شود و وجود داشته باشد*
+                <div class="form-group col-md-12" style="margin:0 auto">
+                    <img id="advImg" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                         src="~/upload/advImage/@ViewBag.ImgNM" alt="NewsImage"
+                         style="height:150px; width:150px; margin:5px auto;" />
+                </div>
+            }
+
+            @* نمایش پیام موفقیت امیز بودن آپلود*@
+            <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
+
+
+        </div>
+    </div>
+</div>
+
+@section panelScript{
+    <script src="~/persiandatepicker/calendar.js"></script>
+    <script src="~/persiandatepicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+    <script>
+           var UploadImage = function () {
+            var data = new FormData;
+            var file = $("#files").get(0);
+            var files = file.files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadFile","Advertising", new { area = "AdminPanel"})',
+                data: data,
+                contentType: false,
+                processData: false,
+            }).done(function (result) {
+                if (result.status == "success") {
+
+                    //برای نمایش تصویر کاربر
+
+                    $("#advImg").attr('src', "\\upload\\advImage\\" + result.imageName);
+
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("تصویر با موفقیت آپلود شد");
+
+                    //ذخیره نام تصویر در تگ و پراپرتی جدول خبر
+                    $("#GifPath").val(result.imageName);
+                }
+            }).fail(function (result) {
+                if (result.status != "success") {
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
+
+                }
+            });
+        };
+    </script>
+}

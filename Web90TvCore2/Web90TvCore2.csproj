@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
@@ -2157,6 +2157,7 @@
     <Folder Include="wwwroot\font\" />
     <Folder Include="wwwroot\upload\indexImage\" />
     <Folder Include="wwwroot\upload\contentImage\" />
+    <Folder Include="wwwroot\upload\advImage\" />
     <Folder Include="wwwroot\upload\userImage\" />
     <Folder Include="wwwroot\upload\userImage\thumbnailImage\" />
     <Folder Include="wwwroot\upload\userImage\normalImage\" />

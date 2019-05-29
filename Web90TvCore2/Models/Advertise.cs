@@ -67,17 +67,21 @@ namespace Web90TvCore2.Models
     }
 
 
+
+
+
+
     /// <summary>
     /// تعریف   محل نمایش برای عر تبلیغ
     /// </summary>
-    /// کلاس برای مقداردهی محل نمایش تبلیغات
+    /// کلاس برای مقداردهی محل نمایش تبلیغات و استفاده از ان در لیست بازو در ویو ایجاد تبلیغ
     public class AdvertisePlace
     {
 
         /// <summary>
         /// شناسه هر محل نمایش تبلیغ
         /// </summary>
-        /// مقادیر داده شده در پایین را میگیرد
+        /// مقدار انتخابی توسط کاربر در این فیلد ذخیره میشود
         public int AdvId { get; set; }
 
 
@@ -88,11 +92,13 @@ namespace Web90TvCore2.Models
         public string AdvLocationName { get; set; }
 
 
+        #region ##################### Methods ################
 
         /// <summary>
         /// لیست محل های نمایش تبلیغ
         /// </summary>
         /// <returns></returns>
+        /// از این متد برای نمایش محل ها در لیست بازشو در ایجاد خبر استفاده میکنیم
         public List<AdvertisePlace> AdvertiseDescription()
         {
             var model = new List<AdvertisePlace>
@@ -104,5 +110,7 @@ namespace Web90TvCore2.Models
             };
             return model;
         }
+
+        #endregion ##########################
     }
 }
