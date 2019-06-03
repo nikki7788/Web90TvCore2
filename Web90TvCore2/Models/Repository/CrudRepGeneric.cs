@@ -19,7 +19,9 @@ namespace Web90TvCore2.Models.Repository
 
         private readonly ApplicationDbContext _context;
 
-        private DbSet<TEntity> _table;    //e.g. _context.categories....
+        private readonly DbSet<TEntity> _table;    //e.g. _context.categories....
+
+        //private  DbSet<TEntity> _table;    //e.g. _context.categories....
 
         public CrudRepGeneric(ApplicationDbContext context)
         {
@@ -96,12 +98,16 @@ namespace Web90TvCore2.Models.Repository
             {
                 foreach (var item in joinString.Split(','))
                 {
+                    //مانند جوین عمل میکند
+                    //همه اطلاعات  به یکباره میاورد
+                    //eager loading
                     query = query.Include(item);
                 }
 
             }
+            var model= await query.ToListAsync(); 
 
-            return await query.ToListAsync();
+            return model;
         }
 
 
@@ -142,6 +148,7 @@ namespace Web90TvCore2.Models.Repository
         /// </summary>
         public virtual async Task Save()
         {
+            //todo: را اینجا بنویسیم یا درکنترلر کدام بهتر است؟ try catch 
             await _context.SaveChangesAsync();
         }
         //public virtual async void Save()

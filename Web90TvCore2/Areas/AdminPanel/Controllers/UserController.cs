@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
+using Web90TvCore2.services;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
@@ -26,14 +27,16 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         private readonly IUnitOfWork _iUintOfWork;
 
-        private readonly IHostingEnvironment _appEnvironment;
+        private readonly IUploadingFileService _uploadingFile;
+
         private readonly UserManager<ApplicationUsers> _userManager;
 
-        public UserController(IUnitOfWork iUnitOfWork, IHostingEnvironment appEnvironment, UserManager<ApplicationUsers> userManager)
+
+        public UserController(IUnitOfWork iUnitOfWork, IUploadingFileService uploadingFile, UserManager<ApplicationUsers> userManager)
         {
             _iUintOfWork = iUnitOfWork;
 
-            _appEnvironment = appEnvironment;
+            _uploadingFile = uploadingFile;
 
             _userManager = userManager;
         }
@@ -58,98 +61,23 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// <summary>
         /// اپلود کردن تصویر پروفایل کاربر
         /// </summary>
-        /// <param name="files"></param>
+        /// <param name="files">فایل دریافتی از کاربر برای آپلودکردن</param>
         /// <returns></returns>
         public async Task<IActionResult> UploadFile(IEnumerable<IFormFile> files)
         {
-            //todo:catch - مدیریت خطا به درستی انجام شود
-            //todo:using -try catch - ایا هنگام استفاده از یوزینگ ترای کچ هم نیاز است
             if (files.Count() != 0)
             {
+                //مسر ذخیره تصویر عادی
+                string normalImagePath = "upload//userImage//normalImage//";
 
+                //مسر ذخیره تویر بند انگشنی
+                string thumbnailImagePath = "upload//userImage//thumbnailImage//";
 
-                try
-                {
-                    var upload = Path.Combine(_appEnvironment.WebRootPath, "upload//userImage//normalImage//");
-                    var fileName = "";
+                //دریافت نام فایل آپلود شده از لایه سرویس و متد آپلود کردن تصویر
+                string fileName =await _uploadingFile.UploadFiles(files,normalImagePath,thumbnailImagePath);
 
-                    foreach (var file in files)
-                    {
+                return Json(new { status = "success", message = "تصویر با موفقیت آپلود شد", imageName = fileName });
 
-                        fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-
-                        try
-                        {
-                            using (var fileStream = new FileStream(Path.Combine(upload, fileName), FileMode.Create))
-                            {
-                                await file.CopyToAsync(fileStream);
-                            }
-                        }
-                        catch (NotSupportedException)
-                        {
-
-                            throw;
-                        }
-                        catch (SecurityException)
-                        {
-
-                            throw;
-                        }
-                        catch (FileNotFoundException)
-                        {
-
-                            throw;
-                        }
-                        catch (DirectoryNotFoundException)
-                        {
-
-                            throw;
-                        }
-                        catch (PathTooLongException)
-                        {
-
-                            throw;
-                        }
-
-                        catch (IOException ex)
-                        {
-
-                            throw ex;
-                        }
-                        catch (ArgumentNullException)
-                        {
-
-                            throw;
-                        }
-
-                        ////---------------------- تغییر سایز عکس و ذخیره برای حالت  بندانگشتی ----------------------------////
-
-                        ImageResizer imgThumb = new ImageResizer();
-                        imgThumb.Resize(upload + fileName, Path.Combine(_appEnvironment.WebRootPath, "upload//userImage//thumbnailImage//") + fileName);
-
-                        //----------------------------------------------//
-                    }
-
-                    return Json(new { status = "success", message = "تصویر با موفقیت آپلود شد", imageName = fileName });
-                }
-
-
-
-                catch (ArgumentNullException)
-                {
-
-                    throw;
-                }
-                catch (ArgumentException)
-                {
-
-                    throw;
-                }
-                catch (Exception)
-                {
-                    //ModelState.AddModelError("UserImage", "خطایی رخ داده است");
-                    throw;
-                }
             }
 
             //اگر تصویری برای اپلود انتخاب نشود
@@ -294,12 +222,15 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
         /// <summary>
-        /// Get Method
+        ///  Get Method
         ///---- نمایش صفحه ویرایش کاربر
         /// </summary>
+        /// <param name="id">آیدی کاربر</param>
+        /// وقتی برروی ویرایش کلیک میکنیم آیدی کاربر به اینجا ارسال میشود
         /// <returns></returns>
         public async Task<IActionResult> Edit(string id)
         {
+
             if (id != null)
             {
                 //finding the user
@@ -344,12 +275,14 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// </summary>
         /// <param name="model">ویومدل حاوی اطلاعات ویرایش شده کاربر را برمیگرداند</param>
         /// <param name="id">شناسه کاربر مورد ویرایش را برمیگرداند</param>
+        /// todo:///  دریافت میشود get ايدی بطور خودکار از اکشن
         /// <param name="chekinput">چک بودن یا نبودن چک باکس را برمیگرداند</param>
         /// <param name="imagename">نام عکس اپلود شده را در صورت وجود برمیگرداند</param>
         /// <returns></returns>
+        /// 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditConfirm(EditUserViewModel model, string id, string chekinput, string imageName)
+        public async Task<IActionResult> EditConfirm(EditUserViewModel model, string id, string chekinput/*, string UserImage*/)
         {
             try
             {
@@ -358,19 +291,19 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 {
                     //-------بررسی آپلود شدن عکس ---------
 
-                    if (Request.Cookies["ImgEdit"] != null)
-                    {
-                        //عکس  وقتی که  ولیدیشن رعایت نشده بود  را می اورد
-                        string cookieImg = Request.Cookies["ImgEdit"].ToString();
-                        model.UserImage = cookieImg;
-                        Response.Cookies.Delete("ImgEdit");
+                    //if (Request.Cookies["ImgEdit"] != null)
+                    //{
+                    //    //عکس  وقتی که  ولیدیشن رعایت نشده بود  را می اورد
+                    //    string cookieImg = Request.Cookies["ImgEdit"].ToString();
+                    //    model.UserImage = cookieImg;
+                    //    Response.Cookies.Delete("ImgEdit");
 
-                    }
-                    if (imageName != null)
-                    {
-                        //اگر عکس اپلود شده بود نام ان را در پارپتی نام عکس یوزر بریز
-                        model.UserImage = imageName;
-                    }
+                    //}
+                    //if (imageName != null)
+                    //{
+                    //    //اگر عکس اپلود شده بود نام ان را در پارپتی نام عکس یوزر بریز
+                    //    model.UserImage = imageName;
+                    //}
 
                     //----------------------------------------------
 
@@ -402,53 +335,53 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 }
 
                 //------------------------** استفاده از کوکی برای ذخیره نام تصویر برای بعد از رفرش شدن صفحه بخاطر ولیدیشن ----------------------
-                if (Request.Cookies["ImgEdit"] == null)
-                {
-                    //برای اولین بار لیدیشن ها رعایت نمیشوود
-                    if (imageName == null)
-                    {
+                //if (Request.Cookies["ImgEdit"] == null)
+                //{
+                //    //برای اولین بار لیدیشن ها رعایت نمیشوود
+                //    if (imageName == null)
+                //    {
 
-                        //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
+                //        //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
 
-                        model.UserImage = user.UserImagePath;
+                //        model.UserImage = user.UserImagePath;
 
-                        string cookieImageName = model.UserImage;
-                        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
-                    }
-                    else
-                    {
-                        //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
-                        model.UserImage = imageName;
+                //        string cookieImageName = model.UserImage;
+                //        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+                //    }
+                //    else
+                //    {
+                //        //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
+                //        model.UserImage = imageName;
 
-                        string cookieImageName = imageName;
-                        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+                //        string cookieImageName = imageName;
+                //        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
 
 
-                    }
-                }
-                else if (Request.Cookies["ImgEdit"] != null)
-                {
-                    //وقتی برای بار چندم ولیدیشن ها رعایت نمیشود 
+                //    }
+                //}
+                //else if (Request.Cookies["ImgEdit"] != null)
+                //{
+                //    //وقتی برای بار چندم ولیدیشن ها رعایت نمیشود 
 
-                    if (imageName != null)
-                    {
-                        //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
+                //    if (imageName != null)
+                //    {
+                //        //-----اگر تصویر ویرایش نشده بود و عکسی اپلود نشده بود همان عکس موجود در دیتابیس و قبلی را نمایش دهد---------
 
-                        model.UserImage = imageName;
-                        Response.Cookies.Delete("ImgEdit");
-                        string cookieImageName = imageName;
-                        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
+                //        model.UserImage = imageName;
+                //        Response.Cookies.Delete("ImgEdit");
+                //        string cookieImageName = imageName;
+                //        Response.Cookies.Append("ImgEdit", cookieImageName, new CookieOptions { Expires = DateTime.Now.AddMinutes(30) });
 
-                    }
-                    else
-                    {
-                        //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
+                //    }
+                //    else
+                //    {
+                //        //اگر عکسی اپدیت شده بود عکس جدید را نمایش دهد
 
-                        string cookieImg = Request.Cookies["ImgEdit"].ToString();
-                        model.UserImage = cookieImg;
-                    }
+                //        string cookieImg = Request.Cookies["ImgEdit"].ToString();
+                //        model.UserImage = cookieImg;
+                //    }
 
-                }
+                //}
                 //----------------،***-----------------------
                 ViewBag.viewTitle = "  ویرایش کاربر ";
                 return View(model);

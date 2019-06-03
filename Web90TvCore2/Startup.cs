@@ -14,6 +14,7 @@ using Web90TvCore2.Models;
 using Web90TvCore2.Models.Repository;
 using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
+using Web90TvCore2.services;
 
 namespace Web90TvCore2
 {
@@ -50,6 +51,9 @@ namespace Web90TvCore2
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAspNetUserRolesRepo, AspNetUserRolesRepo>();
+            services.AddScoped<IUploadingFileService, UplodingFileService>();
+            services.AddScoped<INewsService, NewsRepo>();
+            services.AddScoped<ICommentService, CommentRepo>();
 
             //--------------------------------- وجود دشاته باشد در لاگین کردن url(=returnUrl) هدایت به اکشن مورد نطر ما در صورتی که --------------------------------------
             //وقتی کاربر ادرس صفحه یا به مسیری میرود که لاگین نیز دارد

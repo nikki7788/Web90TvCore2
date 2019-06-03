@@ -104,6 +104,32 @@ namespace Web90TvCore2.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Web90TvCore2.Models.Advertise", b =>
+                {
+                    b.Property<int>("AdId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte>("AdvLocation");
+
+                    b.Property<byte>("Flag");
+
+                    b.Property<string>("FromDate")
+                        .IsRequired();
+
+                    b.Property<string>("GifPath")
+                        .IsRequired();
+
+                    b.Property<string>("Link")
+                        .IsRequired();
+
+                    b.Property<string>("ToDate")
+                        .IsRequired();
+
+                    b.HasKey("AdId");
+
+                    b.ToTable("Advertises");
+                });
+
             modelBuilder.Entity("Web90TvCore2.Models.ApplicationRoles", b =>
                 {
                     b.Property<string>("Id")
@@ -211,6 +237,45 @@ namespace Web90TvCore2.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Web90TvCore2.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DisLikeCount");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(60);
+
+                    b.Property<string>("IP");
+
+                    b.Property<int>("LikeCount");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(2000);
+
+                    b.Property<int>("NewsId");
+
+                    b.Property<int>("ReplyID");
+
+                    b.Property<string>("commentDate");
+
+                    b.Property<string>("commentTime");
+
+                    b.Property<bool>("status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("Web90TvCore2.Models.News", b =>
                 {
                     b.Property<int>("NewsId")
@@ -229,7 +294,11 @@ namespace Web90TvCore2.Migrations
 
                     b.Property<string>("NewsDate");
 
+                    b.Property<byte>("NewsPlace");
+
                     b.Property<string>("NewsTime");
+
+                    b.Property<byte>("NewsType");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -290,6 +359,14 @@ namespace Web90TvCore2.Migrations
                     b.HasOne("Web90TvCore2.Models.ApplicationUsers")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Web90TvCore2.Models.Comment", b =>
+                {
+                    b.HasOne("Web90TvCore2.Models.News", "TblNews")
+                        .WithMany()
+                        .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

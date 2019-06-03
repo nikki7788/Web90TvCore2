@@ -1,5 +1,7 @@
-﻿@{
-    ViewData["Title"] = "وب سایت رسمی نود";
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "صفحه اصلی";
 }
 <!-- General container-->
 <div id="container" class="container-fluid">
@@ -15,7 +17,7 @@
             <!--start main content-->
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <!--start slider or carousel-->
-                @await Html.PartialAsync("PartialViews/_SliderPartial")
+                @await Html.PartialAsync("PartialViews/_SliderPartial", Model.SliderNews)
                 <!--end slider or carousel-->
                 <!--start the  advers below slider-->
                 <div class="advers-main-content">
@@ -23,7 +25,7 @@
                 </div>
                 <!--end main advers-->
                 <!-- start special news-->
-                @await Html.PartialAsync("PartialViews/_SpecialNewsPartial")
+                @await Html.PartialAsync("PartialViews/_SpecialNewsPartial", Model.SpecialNews)
                 <!--end special news-->
                 <!--start main advers-->
                 <div class="advers-main-content">
@@ -31,13 +33,14 @@
                 </div>
                 <!--end main advers-->
                 <!--start last-videos-->
-                @await Html.PartialAsync("PartialViews/_LastVideosPartial")
+                @await Html.PartialAsync("PartialViews/_LastVideosPartial", Model.LastVideos)
                 <!--End last videos-->
 
             </div>   <!--end main content-->
             <!--start list second part-->
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                 <!--start last-info-->
+                <!--چون این پارشال ویو از چندین مدل تغذیه میکند مدلی در اینجا به ان معرفی نمیکنیم و در پارشال مدل داینامیک میکیریم-->
                 @await Html.PartialAsync("PartialViews/_LastInfoPartial")
                 <!--end lst-info-->
                 <!--start newspapers-->
@@ -47,7 +50,7 @@
                 @await Html.PartialAsync("PartialViews/_PollPartial")
                 <!--end poll-->
                 <!--start Login-->
-                @await Html.PartialAsync("PartialViews/_LoginPartial")
+                @await Html.PartialAsync("PartialViews/_LoginPartial", Model.LoginVM)
                 <!--end Login-->
 
 
@@ -62,60 +65,61 @@
     <!--End footer-->
 </div><!--end container-->
 @section scripts{
+<script>
+    //$(document).ready(function () {
 
-    <script>
-        //$(document).ready(function () {
+    $("#frmLogin").submit(function (e) {
+        e.preventDefault();  //از عمیلیات پیش فرض سابمیت فرم جلوگیری میکند
+        var form = $(this);    //تمام مقادیر اینپوت های فرم را میاورد و داخل متغیر میریزد.درپاقع اطلاعات فرم را میخواند
 
-            $("#frmLogin").submit(function (e) {
-                e.preventDefault();  //از عمیلیات پیش فرض سابمیت فرم جلوگیری میکند
-                var form = $(this);    //تمام مقادیر اینپوت های فرم را میاورد و داخل متغیر میریزد.درپاقع اطلاعات فرم را میخواند
+        //   میشود  action تگ هلپرهای ادرس دهی هم در اخر تبدیل به اتریبیوت
+        //     asp-area  asp-action   asp-controller  ====> action="/..../.../"
+        var url = $("#frmLogin").attr("action"); //آدرسی(کنترلر و اکشن و اریا) که فرم باید به ان ارسال شود را میخواند از روی اتریبیپت های فرم
 
-                //   میشود  action تگ هلپرهای ادرس دهی هم در اخر تبدیل به اتریبیوت
-                //     asp-area  asp-action   asp-controller  ====> action="/..../.../"
-                var url = $("#frmLogin").attr("action"); //آدرسی(کنترلر و اکشن و اریا) که فرم باید به ان ارسال شود را میخواند از روی اتریبیپت های فرم
+        $.ajax({
 
-                $.ajax({
+            type: "Post",
 
-                    type: "Post",
+            url: url, //     به این روش هم میتوان دستی داد ادرس را '@@Url.Action("action","controller", new { area = ""})'
 
-                    url:url, //     به این روش هم میتوان دستی داد ادرس را '@@Url.Action("action","controller", new { area = ""})'
+            data: form.serialize(),
 
-                    data: form.serialize(),
+            //اکر ایجکس موفقیت امیز بود ئ ارسال موفق بود
+            success: function (msg) {
 
-                    //اکر ایجکس موفقیت امیز بود ئ ارسال موفق بود
-                    success: function (msg) {
+                if (msg.status === "success") {
 
-                        if (msg.status === "success") {
+                    window.location.href = '/Adminpanel/User';
+                    //window.location.href ='@@Url.Action( "Index", "User")';
+                }
+                else if (msg.status === "failInput") {
 
-                             window.location.href ='/Adminpanel/User';
-                            //window.location.href ='@@Url.Action( "Index", "User")'; 
-                                                       }
-                        else if (msg.status === "failInput") {
+                    $("#validationLogin").text("نام کاربری یا رمز عبور اشتباه است");
+                }
+                else if (msg.status === "failEmptyInput") {
 
-                            $("#validationLogin").text("نام کاربری یا رمز عبور اشتباه است");
-                        }
-                        else if (msg.status === "failEmptyInput") {
+                    $("#validationLogin").text("نام کاربری یا رمز عبور وارد نشده است ");
+                }
+            }
 
-                            $("#validationLogin").text("نام کاربری یا رمز عبور وارد نشده است ");
-                        }
-                    }
-
-                });
-
-                
-
-            });
-           
-
-        //});
-
-    </script>
-
-
-    <script>
-        $('#myTabs a').click(function (e) {
-            e.preventDefault()
-            $(this).tab('show')
         });
-    </script>
+
+
+
+    });
+
+
+    //});
+
+</script>
+
+
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+</script>
+
+
 }

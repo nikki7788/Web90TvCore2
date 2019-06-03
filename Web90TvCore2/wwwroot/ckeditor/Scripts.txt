@@ -1,0 +1,19 @@
+  
+    دستوری که باید در تگی که میخواهیم از 
+ckeditor 
+استفاده کنیم بنویسیم
+
+ <script>
+                    //CKEDITOR.replace('Content');
+                    const config = {
+                        filebrowserImageBrowseUrl: "/imagebrowser",
+                        filebrowserImageWindowWidth: 780,
+                        filebrowserImageWindowHeight: 720,
+                        filebrowserBrowseUrl: "/linkbrowser",
+                        filebrowserWindowWidth: 350,
+                        filebrowserWindowHeight: 500
+                    };
+                    const editor = document.getElementById("Content");
+                    CKEDITOR.replace(editor, config);
+
+                </script>

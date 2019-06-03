@@ -1,0 +1,44 @@
+﻿
+راهنمای استفاده از CKEditor ۴ با قابلیت آپدیت فایل
+زبان فارسی در هنگام دانلود انتخاب شده است
+
+پوشه CKEditor را در wwwroot کپی میکنیم
+-----------------------------------------------
+این دستور را هم باید در داخل دیوی اصلی که ادیتور و textareaدر ان قرار دارد بگذاریم
+
+                <script src="~/ckeditor/ckeditor.js"></script>
+
+دستوری که باید در تگی که میخواهیم از 
+ckeditor 
+استفاده کنیم بنویسیم
+<script>
+                    //CKEDITOR.replace('Content');
+                    const config = {
+                        filebrowserImageBrowseUrl: "/imagebrowser",
+                        filebrowserImageWindowWidth: 780,
+                        filebrowserImageWindowHeight: 720,
+                        filebrowserBrowseUrl: "/linkbrowser",
+                        filebrowserWindowWidth: 350,
+                        filebrowserWindowHeight: 500
+                    };
+                    const editor = document.getElementById("Content");
+                    CKEDITOR.replace(editor, config);
+
+                </script>
+--------------------------------------------------------
+پوشه pages را باید به پروژه اضافه کنیم
+این فایل ها برای راه اندازی اپدیت فایل توسط CKEditor استفاده میشود
+باید در بالای هر کدام از دوفایل زیر نام پروژه من باشد
+
+در Appsetting دستورات زیر را باید بنویسیم تا عکس در ادیتور مانمایش داده شود
+ 
+ //--------   و تنظیم ان است CKEditor این دودستور برای مسیر دهی محل ذخیره تصاویر --------
+  "ImageRoot": "/upload/Contentimages/",
+  "FilesRoot": "/files/",
+  //----------------
+این پوشه را در روت اصلی پروژه(یا هرجای دلخواه) کپی میکنیم
+
+پکیج های زیر را نصب میکنیم
+
+Install-Package Imageflow.Net -Version 0.2.6 
+Install-Package Imageflow.NativeRuntime.win-x86_64 -Version 1.1.0-rc18

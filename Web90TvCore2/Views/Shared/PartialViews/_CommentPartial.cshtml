@@ -1,0 +1,251 @@
+﻿
+@{
+    //دریافت  کل نطرات
+    List<Comment> cm = ViewBag.comments;
+
+    //نظر های اصلی- پاسخ نیستند
+    var comments = cm.Where(c => c.ReplyID == -1 && c.status == true);
+
+    //نطرهایی که پاسخ به نطرات دیگر هستند
+    var replyComments = cm.Where(c => c.ReplyID != -1 && c.status == true);
+
+    //دریافت مدل خبر برای ارسال شناسه خبر برای ثبت نطر
+    var n = ViewBag.newsContext;
+
+}
+
+@{
+    //نمایش تعداد کامنت در جزییات خبر
+
+    //پاسخ هایی که نظر اصلی انها تایید نشده شمارش نشوند
+    var cmRpCount = (from rep in replyComments
+                  join cmm in comments on rep.ReplyID equals cmm.Id
+                  where cmm.status == true
+                  select rep.Id);
+
+    //مجموع نظرهای اصلی تایید شده بعلاوه پاسخ هایی که نظر اصلی ان تایید شده باشد و خود انهاهم تایید شده باشند
+    var CmCounter = cmRpCount.Count() + comments.Where(c=>c.status==true).Count();
+}
+
+<style>
+    .comment {
+        border-radius: 2px;
+        border: 1px solid rgb(200,200,200);
+        padding-bottom: 10px;
+        background-color: white;
+    }
+
+    .fontsize-button {
+        font-size: 10px;
+    }
+</style>
+
+<div class="row comment" style="margin:0; margin-bottom:10px;">
+
+    <div class="col-12 col-sm-12">
+        <div class="col-md-12" style="padding:0px;">
+            <section class="widget title-c p-2" id="comments">
+
+                <h3 class="text-left" style="font-size:17px;">
+                    <span class="float-right ">نظرات</span>
+                    <span class="badge " style="background-color:#b6ff00; width:25px; border-radius:5px;">
+
+                        @* تعدادمطرات تایید شده *@
+                        @CmCounter
+
+                    </span>
+                </h3>
+
+                <hr style="background-color:gray; height:1px; width:100%;" />
+                <div class="content">
+
+                    @* فرم ارسال نظر *@
+                    <div class="row" id="maincommentdiv">
+                        <div class="col-sm-12 col-sm-10 col-sm-offset-1" id="commentdiv">
+                            <div id="comment-form-wrap">
+                                <div class="form form-comment">
+                                    <form id="FrmCm">
+                                        <div class="form-group row">
+                                            <div class="col-12 col-sm-6 mb-3">
+
+                                                <label class="sr-only control-label" for="email">
+                                                    <span class="required ">*</span>
+                                                </label>
+                                                <input class="form-control" placeholder="ايميل" id="txtEmail" name="txtEmail" type="text">
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <label class="sr-only control-label" for="fullname">نام</label>
+                                                <input class="form-control" placeholder="نام" name="txtFullname" id="txtFullname" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12 col-sm-12">
+                                                <label class="sr-only control-label" for="message">نظر</label>
+                                                <textarea class="form-control" rows="3" placeholder="ديدگاه شما..." name="txtComment" id="txtComment"></textarea>
+                                            </div>
+                                        </div>
+                                        <!--ارسال شناسه خبر - مشخص کردن شناسه خبری که برای ان نطر ات ثبت میشود-->
+                                        <input class="form-control d-none" name="newsId" id="newsId" type="text" value="@n.NewsId">
+
+                                        <div class="form-group">
+                                            <div class="col-12 col-sm-12">
+                                                <input class="btn btn-default flaot-left" id="submitFrmCm" type="submit" name="submitFrmCm" value="ارسال">
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="successBox" class="alert alert-success d-none alert-dismissible fade show">
+                                    <button type="button" class="close float-left" data-dismiss="alert">&times;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @* ليست نظرات *@
+                    <div class="list-view" style="border-radius:4px; padding-bottom:5px;">
+                        <ul class="items" style="list-style:none;">
+
+                            @foreach (var item in comments)
+                            {
+                                //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
+                                <li style="background-color:#EDEDED; margin-bottom:5px;" data-cm-id="@item.Id">
+
+                                    <div class="row" style="padding:8px; margin-left:0px; margin-right:0px;">
+                                        <div class="avatar  ">
+                                            <figure>
+                                                <img src="~/image/519bf20d.avatar.jpg">
+                                            </figure>
+                                        </div>
+
+                                        <div class="w-100 row ">
+
+                                            @* هدر هر نطر *@
+                                            <header class="col-12">
+
+                                                <span class="float-right" style="font-weight:600;">
+
+                                                    @item.FullName
+
+                                                </span>
+
+                                                <time class="float-left text-secondary">
+                                                    <i class="fa fa-clock-o mx-1" style="font-size:13px;font-weight:bold;">@item.commentTime</i>
+                                                    -  <i class="fa fa-calendar mx-1" style="font-size:13px;font-weight:bold;"> @item.commentDate</i>
+
+
+                                                </time>
+
+                                            </header>
+
+                                            @* متن نظر *@
+                                            <div class="col-12" style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                                <p>
+                                                    @item.Message
+                                                </p>
+                                            </div>
+                                            <footer class="col-12 w-100" style="margin-bottom:10px;">
+                                                <div class="btn-group float-left">
+
+                                                    @* Like *@
+                                                    <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@item.Id)">
+                                                        <span class="fa fa-thumbs-up "></span>
+                                                        <span class="span-like" data-commentId="@item.Id">@item.LikeCount</span>
+                                                    </button>
+
+                                                    @* DisLike *@
+                                                    <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@item.Id)">
+                                                        <span class="fa fa-thumbs-down "></span>
+                                                        <span class="span-Dislike" data-commentId="@item.Id">@item.DisLikeCount</span>
+                                                    </button>
+                                                </div>
+
+                                                @* دکمه پاسخ به نطر *@
+                                                <button class="btn btn-primary fontsize-button btnreply" data-btn="@item.Id" data-status="1"
+                                                        onclick="replyComment(@item.Id)">
+                                                    <span class="fa fa-reply spanfa" data-spanfa="@item.Id"></span>
+                                                    <span class="spanreplytext" data-spanreplytext="@item.Id">پاسخ به ديدگاه</span>
+                                                </button>
+                                                <div data-replyid="@item.Id" class="row divappend" style="margin-top:20px;"></div>
+                                                <div class="d-none" id="cmId" name="cmId">@item.Id</div>
+                                            </footer>
+                                        </div>
+
+
+                                        @* پاسخ *@
+                                        <ul class="mx-auto w-100" style="list-style:none; margin-right:20px;">
+
+                                            @foreach (var replyItem in replyComments.Where(r => r.ReplyID == item.Id))
+                                            {
+                                                //پاسخ های که به یک نطر مشخص داده شده را میاورد
+                                                //  این را خو.دمان دادیم برای بدست او.ردن ایدی هر نظر data-cm-id=""
+                                                <li style="background-color:white; padding:5px; margin:5px; border-radius:4px;" data-cm-id="@replyItem">
+                                                    <div>
+                                                        <div class="row" style="padding:0px; margin:0px;">
+                                                            <div class="avatar">
+                                                                <figure>
+                                                                    <img src="~/image/519bf20d.avatar.jpg">
+                                                                </figure>
+                                                            </div>
+                                                            <div class="body col-12 p-0">
+                                                                <div class="w-100 row">
+                                                                    @* comment header *@
+
+                                                                    <header class="col-12">
+                                                                        <span class="float-right" style="font-weight:600;">
+                                                                            @replyItem.FullName
+                                                                        </span>
+                                                                        <time class="float-left text-secondary">
+                                                                            <i class="fa fa-clock-o  mx-1" style="font-size:13px;font-weight:bold;">@replyItem.commentTime</i>
+                                                                            -
+                                                                            <i class="fa fa-calendar  mx-1 " style="font-size:13px;font-weight:bold;">
+                                                                                @replyItem.commentDate
+                                                                            </i>
+
+                                                                        </time>
+                                                                    </header>
+
+                                                                    @* متن نظر *@
+                                                                    <div class="col-12" style="margin-right:10px; margin-top:7px; font-size:12px;">
+                                                                        <p>
+                                                                            @replyItem.Message
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <footer class="col-12 ">
+                                                                        <div class="btn-group float-left" data-role="likebox">
+
+                                                                            @* Like *@
+                                                                            <button class="btn btn-success fontsize-button like" onclick="LikeSubmit(@replyItem.Id)">
+                                                                                <span class="fa fa-thumbs-up "></span>
+                                                                                <span class="span-like" data-commentId="@replyItem.Id">@replyItem.LikeCount</span>
+                                                                            </button>
+
+                                                                            @* DisLike *@
+                                                                            <button class="btn btn-danger fontsize-button dislike" onclick="DislikeSubmit(@replyItem.Id)">
+                                                                                <span class="fa fa-thumbs-down "></span>
+                                                                                <span class="span-Dislike" data-commentId="@replyItem.Id">@replyItem.DisLikeCount</span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </footer>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            }
+                            @* ---------------------------- *@
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

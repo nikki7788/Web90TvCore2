@@ -1,0 +1,212 @@
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "جزییات خبر";
+}
+
+
+<div id="container" class="container-fluid">
+    <!--start header-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_HeaderPartial.cshtml")
+    <!--start  navbar-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_NavbarPartial.cshtml")
+    <!--End navbar-->
+    <!--start content-->
+    <div class=" mt-3" id="content">
+        <!--start content-body-->
+        <div class="row" id="content-body">
+            <!--start main content-->
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+
+                <div id="newsDetails">
+                    <!--Start NewsDetails-->
+                    @await Html.PartialAsync("~/Views/Shared/PartialViews/_NewsdetailPartial.cshtml", Model.NewsDetails)
+                    <!--End NewsDetails-->
+                </div>
+
+            </div>   <!--end main content-->
+            <!--start list second part-->
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <!--start last-info-->
+                <!--چون این پارشال ویو از چندین مدل تغذیه میکند مدلی در اینجا به ان معرفی نمیکنیم و در پارشال مدل داینامیک میکیریم-->
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_LastInfoPartial.cshtml")
+                <!--end lst-info-->
+                <!--start newspapers-->
+                @await Html.PartialAsync("~/Views/Shared/PartialViews/_NewspapersPartial.cshtml")
+                <!--end newspapers-->
+
+
+
+            </div><!--end list second part-->
+        </div><!--end content-body-->
+    </div> <!--end content-->
+    <!--start footer-->
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/_FooterPartial.cshtml")
+    <!--End footer-->
+</div><!--end container-->
+@section scripts{
+
+    <script>
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+    </script>
+
+    @* ارسال نطر به سرور *@
+    <script type="text/javascript">
+        //به صورت پیش فرض -1 است یعنی نظر پاسخ به نطر دیگری نیست.ولی وقتی روی پاسخ به نطری کلیگ گند آدیدی آن نطر به جای -1 ارسال میشود به اکشن
+        var getcommentId = -1;
+
+        $(document).ready(function () {
+
+        //نظرات
+        //پارشال ویو هارا باید در ویویی که در ان قرار دارند بنویسیم نه خود پارشال  jquery دستورات
+        $("#FrmCm").submit(function (e) {
+
+            //از انجام دستورات و دریافت اطلاعات پیش قرض از دیتابیس خودداری میکند
+            e.preventDefault();
+            //دریافت تمام اطلاعات اینپوت های فرم
+            // formdata روش دوم استفاده
+            var form = $(this);
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("InsertComment", "Home")',
+
+                //اطلاعات کش مرورگر را همراه فرم نفرستد
+                cache: false,
+
+                // اطلاعات سریالایز کردیم برای امنیت
+                //آدی پاسخ نطر را هم فرستادیم .اگر پاسخ باشد آدی نطری که به آن داسخ داده شده و اگر نطر اصلی باشد -1 ارسال میشود
+                data: form.serialize()+"&cmId=" + getcommentId,
+
+
+                beforeSend: function () {
+
+                    $(".se-pre-con").fadeIn('fast');
+                },
+
+                success: function (msg) {
+                    if (msg.status === "failValidation") {
+
+                        $("#successBox").removeClass("d-none").addClass("alert-danger").text("لطفا اطلاعات خواسته شده را کامل کنید");
+                    };
+                    if (msg.status === "success") {
+                        $("#successBox").removeClass("d-none").removeClass("alert-danger").addClass("alter-success").html("نظر شما با موفقیت ثبت شد و پس از تایید نمایش داده می شود");
+                        $("#txtEmail").val("");
+                        $("#txtFullname").val("");
+                        $("#txtComment").val("");
+                    };
+                    if (msg.status === "failSystem") {
+                         //برای حالت هایی که نطر ارسال میشود با موفقیت ولی خطایی وجود دارد مثلا آیدی خبر وجود نداشته باشد
+                        $('#successBox').removeClass('d-none').addClass('alert-danger').text('سیستم موقتا قطع می باشد. لطفا بعدا سعی نمایید');
+
+                        //محو کردن لودینگ   fading out loading
+                        $(".se-pre-con").fadeOut('slow');
+
+                    };
+                }
+
+            }).done(function () {
+                //وقتی عملیات تمام شد
+                //محو کردن لودینگ   fading out loading
+                $(".se-pre-con").fadeOut('slow');
+
+                }).fail(function (msg) {
+                    if (msg.status === "failSystem") {
+                        $('#successBox').removeClass('d-none').addClass('alert-danger').text('سیستم موقتا قطع می باشد. لطفا بعدا سعی نمایید');
+
+                        //محو کردن لودینگ   fading out loading
+                        $(".se-pre-con").fadeOut('slow');
+
+                    };
+
+                });
+
+        });
+
+//todo:buttom loading مانده
+             });
+
+
+
+ // ---------------------- دستورات مربوط به لایک و دیس لایک کامنت ------------------------------------------
+    function LikeSubmit(commentId) {
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("Like", "Home")',
+             data: { cmId: commentId },
+        success:function (msg) {
+            if(msg.status==="success") {
+                $(`.span-like[data-commentId=${msg.backId}]`).text(msg.result);
+         //کاهش تعداد لایک اگر کامنت دیسلایک شده بود قبلا و الان لایک شد توسط یک کاربر
+                $(`.span-Dislike[data-commentId=${msg.backId}]`).text(msg.result2
+                );
+
+            }
+        }
+        });
+
+        };
+
+    function DislikeSubmit(commentId) {
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("Dislike", "Home")',
+            data: { cmId: commentId },
+        success:
+            function(msg) {
+                if (msg.status === "success") {
+                    $(`.span-Dislike[data-commentId=${msg.backId}]`).text(msg.result);
+                    //کاهش تعداد لایک اگر کامنت لایک شده بود قبلا و الان دیسلاک شد توسط یک کاربر
+                   $(`.span-like[data-commentId=${msg.backId}]`).text(msg.result2);
+                };
+            }
+
+        });
+
+        };
+    </script>
+    <script>
+        //-------------------------------------------  دستورات مربوط به پاسخ به دیدگاه-----------------------------------------------
+
+        //-------------------------------------- جابجایی فرم ارسال نطر برای پاسخ به کامنت------------------------------------
+        function replyComment(commentId) {
+
+            //--------اگر کاربر روی پاسخ به کامنت کلیک کرد------------
+            if ($(`.btnreply[data-btn=${[commentId]}]`).attr('data-status') == 1) {
+                ///----------اگر کاربر روی پاسخ به کامنت کلیک کرد و مجدد روی دکمه پاسخ به کامنت دیگری کلیک کرد--------------------
+
+                //استایلهای باقیمانده حذف شود
+                $('.btnreply').css('background-color', '#007bff');
+                $('.spanfa').removeClass('fa-close').addClass('fa-reply');
+                $('.spanreplytext').text('پاسخ به دیدگاه');
+                $('.btnreply').attr('data-status', "1");
+                // وقتی روی پاسخ به دیکر کامنت ها کلیک میکنیم باکس موفقیت امیز بودن ارسال حذف شود اگز از قبل موجود بود 
+                $('#successBox').addClass('d-none');
+                //-------------------
+
+                $('#commentdiv').appendTo(`.divappend[data-replyid=${[commentId]}]`);
+                $(`.spanreplytext[data-spanreplytext=${[commentId]}]`).text('لغو');
+                $(`.spanfa[data-spanfa=${[commentId]}]`).removeClass('fa-reply').addClass('fa-close');
+                $(`.btnreply[data-btn=${[commentId]}]`).css('background-color', '#d9534f');
+                $(`.btnreply[data-btn=${[commentId]}]`).attr('data-status', '2');
+                getcommentId = $(`.btnreply[data-btn=${[commentId]}]`).attr('data-btn');
+
+            }
+            else {
+                //وقتی روی دکمه پاسخ به نظر کلیک نشده است فرم در جای اصلی خود قرار میکیرد
+                $('#commentdiv').appendTo('#maincommentdiv');
+                $(`.spanreplytext[data-spanreplytext=${[commentId]}]`).text('پاسخ به دیدگاه');
+                $(`.spanfa[data-spanfa=${[commentId]}]`).removeClass('fa-close').addClass('fa-reply');
+                $(`.btnreply[data-btn=${[commentId]}]`).css('background-color', '#007bff');
+                $(`.btnreply[data-btn=${[commentId]}]`).attr('data-status', '1');
+                $('#successBox').addClass('d-none');
+            }
+
+        }
+
+
+    </script>
+}

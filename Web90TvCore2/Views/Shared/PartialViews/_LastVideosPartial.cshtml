@@ -1,115 +1,27 @@
-﻿<div id="last-video">
+﻿
+@model IEnumerable<News>
+
+<div id="last-video">
     <div>
         <span class="news-header">اخرین ویدوها</span>
         <div class="hr-divider"></div>
     </div>
     <div id="video-content">
         <div class="row">
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v1.jpg" class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        همه ۱۸ گل رونالدو در تورنمنت های مهم برای تیم ملی پرتغال
-
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v2.jpg " class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        سوپر اسلوموشن جالب از برخورد توپ به صورت
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v3.jpg" class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        همه ۱۸ گل رونالدو در تورنمنت های مهم برای تیم ملی پرتغال
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v1.jpg" class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        همه ۱۸ گل رونالدو در تورنمنت های مهم برای تیم ملی پرتغال
-
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v2.jpg " class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        سوپر اسلوموشن جالب از برخورد توپ به صورت
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v3.jpg" class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        همه ۱۸ گل رونالدو در تورنمنت های مهم برای تیم ملی پرتغال
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v1.jpg" class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        همه ۱۸ گل رونالدو در تورنمنت های مهم برای تیم ملی پرتغال
-
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v2.jpg " class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        سوپر اسلوموشن جالب از برخورد توپ به صورت
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-sm-6 col-xl-4">
-                <a href="#">
-                    <div class="fontawsome-transition">
-                        <img src="image/v3.jpg" class="img-fluid" />
-                        <span class="fa fa-play-circle"></span>
-                    </div>
-                    <div class="video-caption col-lg-12">
-                        همه ۱۸ گل رونالدو در تورنمنت های مهم برای تیم ملی پرتغال
-                    </div>
-                </a>
-            </div>
+            @foreach (var item in Model)
+            {
+                <div class="col-6 col-sm-6 col-xl-4">
+                    <a  asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">
+                        <div class="fontawsome-transition">
+                            <img src="~/upload/indexImage/@item.IndexImage" class="img-fluid" />
+                            <span class="fa fa-play-circle"></span>
+                        </div>
+                        <div class="video-caption col-lg-12">
+                            @item.Abstract
+                        </div>
+                    </a>
+                </div>
+            }
         </div>
         <!--راه۱-->
         <div class="mt-3">

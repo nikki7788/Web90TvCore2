@@ -112,7 +112,8 @@
 
             <!--ان را دریافت و به ان دسترسی داشته باشیم create نام فایل اپلود شده را میریزیم داخل تگ زیر توسط دستور جی کویری تا در اکشن-->
             <!--برای ذخیره نام تصویر در دیتابیس create برای برگرداندن و فرستادن نام عکس آپلود شده به اکشن -->
-            <input type="text" class="hidden" id="imageName" name="imageName" />
+            <input type="text" class="hidden" asp-for="UserImage" />
+            @*<input type="text" class="hidden" id="UserImage" name="UserImage" />*@
 
         </form>
 
@@ -198,7 +199,7 @@
                         $("#divmessage").text("تصویر با موفقیت آپلود شد");
 
                         //ان را دریافت و به ان دسترسی داشته باشیم create نام فایل اپلود شده را از طریق جیسون دریافت و میریزیم داخل تگ زیر تا در اکشن 
-                        $("#imageName").val(result.imageName);
+                        $("#UserImage").val(result.imageName);
                     }
                     //اگر تصویری براای اپلود انتخب نشود
                     if (result.status == "empty") {

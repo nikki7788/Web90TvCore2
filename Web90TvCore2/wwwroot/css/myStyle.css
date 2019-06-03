@@ -6,7 +6,12 @@
     font-style: normal;
     src: url('../font/yekan/yekan.eot') format('embedded-opentype'),url('../font/yekan/yekan.ttf') format('truetype'),url('../font/yekan/yekan.woff') format('woff');
 }
-
+@font-face {
+    font-family: Vazir;
+    src: url('~/fonts/Vazir-FD-WOL.eot');
+    src: url('~/fonts/Vazir-FD-WOL.eot?#iefix') format('embedded-opentype'), url('~/fonts/Vazir-FD-WOL.woff') format('woff'), url('../fonts/Vazir-FD-WOL.ttf') format('truetype');
+    font-weight: normal;
+}
 * {
     padding: 0;
     margin: 0;
@@ -14,7 +19,7 @@
 }
 
 body {
-    font-family:yekan,tahoma !important;
+    font-family:Vazir!important;
     background-color: rgb(251,251,251);
 }
 
@@ -121,6 +126,8 @@ h6 {
         height: 10px;
         padding: 5px;
     }
+
+
 
 #main-carousel {
     border: 1px solid rgb(200,200,200);
@@ -276,3 +283,53 @@ h6 {
     border-top: 1px solid #ccc;
     font-size: 13px;
 }
+
+/*-----------------------------------------------*/
+/*جزییات خبر*/
+#newsDetails {
+    border-radius: 2px;
+    padding-top: 8px;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    padding-right: 12px;
+    padding-left: 10px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+
+
+/**********************   Loading ***************************/
+/*************************************************/
+/*************************************************/
+/* Paste this css to your style sheet file or under head tag */
+/* This only works with JavaScript, 
+if it's not present, don't show loader */
+.no-js #loader {
+    display: none;
+}
+
+.js #loader {
+    display: block;
+    position: absolute;
+    left: 100px;
+    top: 0;
+}
+
+.se-pre-con {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../image/preloader_8.gif') center no-repeat #fff;
+}
+/*************************************************/
+/*************************************************/
+/*************************************************/
+/*************************************************/
+/*************************************************/
+/*************************************************/
+

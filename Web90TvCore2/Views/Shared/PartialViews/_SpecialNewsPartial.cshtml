@@ -1,131 +1,30 @@
-﻿<div class="special-news">
+﻿
+@model IEnumerable<News>
+
+<div class="special-news">
     <div>
         <span class="news-header">اخبار ویژه</span>
         <div class="hr-divider"></div>
     </div>
 
     <div class="row  mb-3">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+        @foreach (var item in Model)
+        {
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
 
-            <a href="#">
-                <div class="media">
-                    <img src="image/s1.jpg" />
+                <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId">
+                    <div class="media">
+                        <img src="~/upload/indexImage/@item.IndexImage" style="width:80px;height:80px;" />
 
-                    <div class="media-body special-content">
-                        بیرانوند: خودم را مدیون پرسپولیس می‌دانم
-
+                        <div class="media-body special-content">
+                            @item.Abstract
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                </a>
+            </div>
+        }
 
-            <a href="#">
-                <div class="media">
-                    <img src="image/s2.jpg" />
-
-                    <div class="media-body special-content ">
-
-                        بسکتبال NBA نتایج روز ۳۰ مهر ۱۳۹۷؛ شکست دور از انتظار
-                        گلدن استیت و اوکلاهاما سیتی تاندر
-
-                    </div>
-                </div>
-            </a>
-        </div>
     </div>
-    <div class="row mb-3">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
 
-            <a href="#">
-                <div class="media">
-                    <img src="image/s9.jpg" />
-
-                    <div class="media-body special-content">
-                        برترین‌های هفته‌ی نهم لیگ برتر/ هافبک ملی‌پوش تراکتورسازی بهترین بازیکن هفته شد
-
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
-            <a href="#">
-                <div class="media">
-                    <img src="image/s10.jpg" />
-
-                    <div class="media-body special-content">
-
-
-                        حضور بانوان در ورزشگاه‌ها در مسابقات باشگاهی کاملا منتفی است
-
-
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="row  mb-3">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
-            <a href="#">
-                <div class="media">
-                    <img src="image/s7.jpg" />
-
-                    <div class="media-body special-content">
-
-                        بیرانوند: خودم را مدیون پرسپولیس می‌دانم
-
-
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
-            <a href="#">
-                <div class="media">
-                    <img src="image/s6.jpg" />
-
-                    <div class="media-body special-content">
-
-                        بسکتبال NBA نتایج روز ۳۰ مهر ۱۳۹۷؛ شکست دور از انتظار
-                        گلدن استیت و اوکلاهاما سیتی تاندر
-
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="row  mb-3">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
-            <a href="#">
-                <div class="media">
-                    <img src="image/s3.jpg" />
-
-                    <div class="media-body special-content">
-
-                        بسکتبال   بیرانوند: خودم را مدیون پرسپولیس می‌دانم
-
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
-            <a href="#">
-                <div class="media">
-                    <img src="image/s4.jpg" />
-
-                    <div class="media-body special-content">
-
-                        بسکتبال NBA نتایج روز ۳۰ مهر ۱۳۹۷؛ شکست دور از انتظار
-                        گلدن استیت و اوکلاهاما سیتی تاندر
-
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
+   
 </div>

@@ -4,15 +4,29 @@
 <!--استفاه از تاریخ شمسی-->
 <!--دراکشن هم میشد نوشت و با ویو بگ در ویو دریافت کرد-->
 @using System.Globalization
+
 @{
     var currenDate = DateTime.Now;
     PersianCalendar pCalendar = new PersianCalendar();
     int year = pCalendar.GetYear(currenDate);
     int month = pCalendar.GetMonth(currenDate);
     int day = pCalendar.GetDayOfMonth(currenDate);
-    string shamsiDate = string.Format("{0:yyyy:MM:dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
-}
+    string shamsiDate = string.Format("{0:yyyy/MM/dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
 
+    string newsTimeNow = string.Format("{0:hh:mm}", Convert.ToDateTime(currenDate.Hour + ":" + currenDate.Minute));
+   //  string NowTime = string.Format("{0:hh:mm}", Convert.ToDateTime(pCalendar.GetHour(currenDate) + ":" + pCalendar.GetMinute(currenDate)));
+}
+@{
+    // دریافت لیست دسته بندی برای نمایش در کمبوباکس
+    var CategoryList = ViewBag.CategoryList;
+
+    // دریافت لیست محل نمایش خبر  برای نمایش در کمبوباکس
+    HomeIndexViewModel IndexVm = new HomeIndexViewModel();
+    List<HomeIndexViewModel> homeIndexVM = IndexVm.GetPlaceInIndex();
+
+    //
+
+}
 <div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
     <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
         <form asp-area="AdminPanel" asp-controller="News" asp-action="Create" method="post" enctype="multipart/form-data">
@@ -30,11 +44,31 @@
 
             @* متن خبر *@
             <div class="form-group">
+                <script src="~/ckeditor/ckeditor.js"></script>
+
                 <label asp-for="Content" class="control-label"></label>
                 <div>
                     <textarea id="Content" name="Content" asp-for="Content" class="form-control"></textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
+
+                <!-------#########---- CKEditor دستورات استفاده از ------############---->
+                <script>
+                    //CKEDITOR.replace('Content');
+                    const config = {
+                        filebrowserImageBrowseUrl: "/imagebrowser",
+                        filebrowserImageWindowWidth: 780,
+                        filebrowserImageWindowHeight: 720,
+                        filebrowserBrowseUrl: "/linkbrowser",
+                        filebrowserWindowWidth: 350,
+                        filebrowserWindowHeight: 500
+                    };
+                    const editor = document.getElementById("Content");
+                    CKEDITOR.replace(editor, config);
+
+                </script>
+                <!------------------################---------->
+
             </div>
 
             @* چکیده خبر *@
@@ -60,21 +94,36 @@
                     <span asp-validation-for="IndexImage" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
-                             src="~/upload/indexImage/defaultpic.jpg" alt="UserImage"
-                             style="height:100px; width:90px; margin:5px auto;" />
-                    </div>
+                <div class="col-md-4" style="margin-right:15px">
+                    <!--برای وقتی که تص.یری آپ.ل.د نشده است تصویر پیش فرض را نشان دهد-->
+                    @if (ViewBag.ImgNM == null)
+                    {
+                        <div class="form-group col-md-12" style="margin:0 auto">
+                            <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                                 src="~/upload/indexImage/defaultpic.jpg" alt="NewsImage"
+                                 style="height:100px; width:90px; margin:5px auto;" />
+                        </div>
+                    }
+                    else
+                    {
+                        //اگر تصویری آپلود شده بود و ولیدشن ها رعایت نشده بود عکس اپلود شده همجنان نمایش داده شود و وجود داشته باشد*
+                        <div class="form-group col-md-12" style="margin:0 auto">
+                            <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                                 src="~/upload/indexImage/@ViewBag.ImgNM" alt="NewsImage"
+                                 style="height:100px; width:90px; margin:5px auto;" />
+                        </div>
+                    }
 
-                    <div id="divmessage" class="text-center hidden" style="color:green;">
-                    </div>
+
+                    <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
+
                 </div>
+
             </div>
 
 
 
-
+            @*  نمایش زمان "@DateTime.Now.Hour:@DateTime.Now.Minute*@
             @* تاریخ و زمان خبر *@
             <div class="form-group" style="height:30px; margin-bottom:25px;">
                 <!--تاریخ خبر-->
@@ -85,9 +134,40 @@
                 <!--زمان خبر-->
                 <div style="font-size:15px;" class="col-md-6">
                     <label asp-for="NewsTime" class="col-md-4 control-label"></label>
-                    <input asp-for="NewsTime" type="text" value="@DateTime.Now.Hour:@DateTime.Now.Minute" style="border:0px;" />
+                    <input asp-for="NewsTime" type="text" value="@newsTimeNow" style="border:0px;" />
                 </div>
             </div>
+
+            @* دسته بندی موضوعات *@
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" asp-items="@(new SelectList(CategoryList,"CategoryId","Title"))" class="form-control"></select>
+            </div>
+
+            @* محل نمایش خبر در صفحه اصلی *@
+            <div class="form-group">
+                <label asp-for="NewsPlace" class="control-label"></label>
+                <select asp-for="NewsPlace" asp-items="@(new SelectList(homeIndexVM,"Id","Title"))" class="form-control"></select>
+            </div>
+
+            @* نوع خبر *@
+            <div class="form-group">
+                <!--radio از پنل ادمین-->
+                <span style="font-weight:700; margin-left:50px;">نوع خبر :</span>
+                <label style="margin-left:45px;">
+                    داخلی
+                    <input type="radio" name="r1" value="0" class="minimal" checked>
+                </label>
+                <label style="margin-left:45px;">
+                    خارجی
+                    <input type="radio" name="r1" value="1" class="minimal">
+                </label>
+                <label>
+                    اختصاصی
+                    <input type="radio" name="r1" value="2" class="minimal">
+                </label>
+            </div>
+
 
 
 
@@ -95,9 +175,16 @@
                 <input type="submit" value="ایجاد" class="btn btn-success" />
                 <a asp-action="Index" class="btn btn-danger">بازگشت</a>
             </div>
+            <!---------###############---   دریافت مقادیر از ویو بگ و ایجکس جیکویری-##################----- -->
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="indexImage" name="indexImage" />*@
+            <input type="text" class="hidden" asp-for="IndexImage" />
 
-            <input type="text" class="hidden" id="imagename" name="imagename" />
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="userId" name="userId" value="@ViewBag.UsersId" />*@
+            <input type="text" class="hidden" asp-for="UserId" value="@ViewBag.UsersId" />
 
+            <!-----------  ###############################-------->
         </form>
 
         @if (ViewBag.SuccessMessage != "")
@@ -113,6 +200,17 @@
 </div>
 
 @section panelScript{
+
+    <script>
+        //iCheck for checkbox and radio inputs
+        //دستورات مربوط به رادیو پنل ادمین
+        $('input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+
+    </script>
+
     <script>
         var UploadImage = function () {
             var data = new FormData;
@@ -132,20 +230,23 @@
             }).done(function (result) {
                 if (result.status == "success") {
 
-                    $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imagename);
+                    //برای نمایش تصویر کاربر
+                    //دریافت نام تصویر آپلود شده
+                    $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imageName);
 
                     $("#divmessage").removeClass('hidden');
                     $("#divmessage").text("تصویر با موفقیت آپلود شد");
 
-                    $("#imagename").val(result.imagename);
-                    }
-                }).fail(function (result) {
-                    if (result.status != "success") {
-                        $("#divmessage").removeClass('hidden');
-                        $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
+                    //ذخیره نام تصویر در تگ و پراپرتی جدول خبر
+                    $("#IndexImage").val(result.imageName);
+                }
+            }).fail(function (result) {
+                if (result.status != "success") {
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
 
-                    }
-                });
-        }
+                }
+            });
+        };
     </script>
 }

@@ -1,0 +1,234 @@
+﻿
+
+@model News
+
+@{
+    // دریافت لیست دسته بندی برای نمایش در کمبوباکس
+    var CategoryList = ViewBag.CategoryList;
+
+    // دریافت لیست محل نمایش خبر  برای نمایش در کمبوباکس
+    HomeIndexViewModel IndexVm = new HomeIndexViewModel();
+    List<HomeIndexViewModel> homeIndexVM = IndexVm.GetPlaceInIndex();
+}
+@Html.AntiForgeryToken()
+<div class="row center-block box box-primary" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="col-md-8 col-md-offset-2" style="margin-bottom:15px; margin-top:15px;">
+        <form asp-area="AdminPanel" asp-controller="News" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span class="text-danger">@Html.ValidationMessage("nullError")</span>
+
+            @* عنوان خبر *@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control circleInput" placeholder="عنوان خبر را وارد نمایید" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+
+
+            @* متن خبر *@
+            <div class="form-group">
+                <script src="~/ckeditor/ckeditor.js"></script>
+
+                <label asp-for="Content" class="control-label"></label>
+                <div>
+                    <textarea id="Content" name="Content" asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+
+                <!-------#########---- CKEditor دستورات استفاده از ------############---->
+                <script>
+                    //CKEDITOR.replace('Content');
+                    const config = {
+                        filebrowserImageBrowseUrl: "/imagebrowser",
+                        filebrowserImageWindowWidth: 780,
+                        filebrowserImageWindowHeight: 720,
+                        filebrowserBrowseUrl: "/linkbrowser",
+                        filebrowserWindowWidth: 350,
+                        filebrowserWindowHeight: 500
+                    };
+                    const editor = document.getElementById("Content");
+                    CKEDITOR.replace(editor, config);
+
+                </script>
+                <!------------------################---------->
+
+            </div>
+
+
+            @* چکیده خبر *@
+            <div class="form-group">
+                <label asp-for="Abstract" class="control-label"></label>
+                <div>
+                    <textarea asp-for="Abstract" class="form-control"></textarea>
+                    <span asp-validation-for="Abstract" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+
+            @* تصویر شاخص *@
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label asp-for="IndexImage" class="control-label"></label>
+                    <div class="form-horizontal">
+                        <input asp-for="IndexImage" type="file" id="files" name="files" />
+                        <input type="button" onclick="UploadImage()" id="btnupload" class="btn btn-info" value="آپلود و نمایش تصویر" />
+                    </div>
+                    <span asp-validation-for="IndexImage" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4" style="margin-right:15px">
+                    <div class="form-group col-md-12" style="margin:0 auto">
+                        <img id="imgindex" class="img-bordered col-md-12 col-xs-12 col-sm-12"
+                             src="~/upload/indexImage/@Model.IndexImage" alt="NewsImage"
+                             style="height:100px; width:90px; margin:5px auto;" />
+                    </div>
+                    <div id="divmessage" class="text-center col-md-12 hidden" style="color:green;margin-right:0"></div>
+
+                </div>
+
+            </div>
+
+
+
+            @*  نمایش زمان "@DateTime.Now.Hour:@DateTime.Now.Minute*@
+            @* تاریخ و زمان خبر *@
+            <div class="form-group" style="height:30px; margin-bottom:25px;">
+                <!--تاریخ خبر-->
+                <div style="font-size:15px;" class="col-md-6">
+                    <label asp-for="NewsDate" class="col-md-4 control-label"></label>
+                    <input asp-for="NewsDate" type="text" value="@Model.NewsDate" style="border:0px;" />
+                </div>
+                <!--زمان خبر-->
+                <div style="font-size:15px;" class="col-md-6">
+                    <label asp-for="NewsTime" class="col-md-4 control-label"></label>
+                    <input asp-for="NewsTime" type="text" value="@Model.NewsTime" style="border:0px;" />
+                </div>
+            </div>
+
+
+            @* دسته بندی موضوعات *@
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" asp-items="@(new SelectList(CategoryList,"CategoryId","Title"))" class="form-control"></select>
+            </div>
+
+
+            @* محل نمایش خبر در صفحه اصلی *@
+            <div class="form-group">
+                <label asp-for="NewsPlace" class="control-label"></label>
+                <select asp-for="NewsPlace" asp-items="@(new SelectList(homeIndexVM,"Id","Title"))" class="form-control"></select>
+            </div>
+
+
+
+            @* نوع خبر *@
+            <!--توسط مدل اطلاعاتشان ارسال نمیشود.اطالاعاتشان در مدل ذخیره نمیشود تا ارسال شود radio button-->
+            <!--مربوط به ان را تیک میزند و انتخاب میکند radio  رابرمیگرداند و دکمه newsType که بنویسیم مقدار  پراپرتی نوع خبر  asp-for-->
+            <div class="form-group">
+                <span style="font-weight:700; margin-left:50px;">نوع خبر :</span>
+                <label style="margin-left:45px;">
+                    داخلی
+                    <input asp-for="NewsType" type="radio" name="r1" value="0" class="minimal">
+                </label>
+                <label style="margin-left:45px;">
+                    خارجی
+                    <input asp-for="NewsType" type="radio" name="r1" value="1" class="minimal">
+                </label>
+                <label>
+                    اختصاصی
+                    <input asp-for="NewsType" type="radio" name="r1" value="2" class="minimal">
+                </label>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <input type="submit" value="ویرایش" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">بازگشت</a>
+            </div>
+            <!---------###############---   دریافت مقادیر از ویو بگ و ایجکس جیکویری-##################----- -->
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="indexImage" name="indexImage" />*@
+            <input type="text" class="hidden" asp-for="IndexImage" />
+
+            <!--میتوان به دوصورت زیر  نوشت تگ .-->
+            @*<input type="text" class="hidden" id="userId" name="userId" value="@ViewBag.UsersId" />*@
+            <input type="text" class="hidden" asp-for="UserId" value="@ViewBag.UsersId" />
+
+
+            <!-- مانند تگ های دیگ مینوسیم تا آدی خبر مقدار دهی شود در مدل ارسالی به اکشن پست ویرایش----ارسال آدی به اکشن پست ویرایش خبر-->
+            <!--اگر این را ننویسیمپ باید از طریق دستور *+ اینکاررادر اکشن انجام دهیم-->
+            <input type="text" class="hidden" asp-for="NewsId" />
+
+            <!-----------  ###############################-------->
+        </form>
+
+        @if (ViewBag.SuccessMessage != "")
+        {
+            <span style="color:green;">
+                @ViewBag.SuccessMessage
+            </span>
+        }
+
+
+    </div>
+
+</div>
+
+@section panelScript{
+
+
+    <script>
+        //iCheck for checkbox and radio inputs
+        //دستورات مربوط به رادیو پنل ادمین
+        $('input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+
+    </script>
+
+    <script>
+        var UploadImage = function () {
+            var data = new FormData;
+            var file = $("#files").get(0);
+            var files = file.files;
+
+            for (var i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UploadFile","News", new { area = "AdminPanel"})',
+                data: data,
+                contentType: false,
+                processData: false,
+            }).done(function (result) {
+                if (result.status == "success") {
+
+                    //برای نمایش تصویر کاربر
+                    //دریافت نام تصویر آپلود شده
+                    $("#imgindex").attr('src', "\\upload\\indexImage\\" + result.imageName);
+
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("تصویر با موفقیت آپلود شد");
+
+                    //ذخیره نام تصویر در تگ و پراپرتی جدول خبر
+                    $("#IndexImage").val(result.imageName);
+                }
+            }).fail(function (result) {
+                if (result.status != "success") {
+                    $("#divmessage").removeClass('hidden');
+                    $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
+
+                }
+            });
+        };
+    </script>
+}

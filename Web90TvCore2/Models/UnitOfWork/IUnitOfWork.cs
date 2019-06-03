@@ -13,12 +13,43 @@ namespace Web90TvCore2.Models.UnitOfWork
     /// </summary>
     public interface IUnitOfWork
     {
+        /// <summary>
+        /// دسته بندی اخبار
+        /// </summary>
         CrudRepGeneric<Category> CategoryRepUW { get; }
 
+
+        /// <summary>
+        /// خبر
+        /// </summary>
         CrudRepGeneric<News> NewsRepUW { get; }
 
-         CrudRepGeneric<ApplicationUsers> UserManagerUW { get; }
 
+
+        /// <summary>
+        /// نظرات کاربران
+        /// </summary>
+        CrudRepGeneric<Comment> CommentRepUW { get; }
+
+
+
+
+
+        /// <summary>
+        /// تبلیغات
+        /// </summary>
+        CrudRepGeneric<Advertise> AdveriseRepUW { get; }
+
+
+
+
+        /// <summary>
+        /// یوزر
+        /// </summary>
+        CrudRepGeneric<ApplicationUsers> UserManagerUW { get; }
+
+
+     
         Task Save();
 
          //void Save();
