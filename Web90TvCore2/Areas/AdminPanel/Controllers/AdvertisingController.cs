@@ -118,6 +118,11 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                 return View(model);
             }
 
+
+            //todo: و تغییر وضعیت تبلیغ به نمایش یا عدم نمایش و حذف تبایغ  و حذف فاییل از روت سایت
+            
+
+
         }
 
 
