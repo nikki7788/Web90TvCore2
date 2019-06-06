@@ -107,6 +107,7 @@ namespace Web90TvCore2.Models
                 new AdvertisePlace {AdvId = 2, AdvLocationName = "زیر اسلایدر"},
                 new AdvertisePlace {AdvId = 3, AdvLocationName = "زیر اخبار ویژه"},
                 new AdvertisePlace {AdvId = 4, AdvLocationName = "زیر آخرین ویدیوها"},
+                 new AdvertisePlace {AdvId = 5, AdvLocationName = "سمت چپ"}
             };
             return model;
         }

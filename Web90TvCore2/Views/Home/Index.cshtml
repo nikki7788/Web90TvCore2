@@ -6,7 +6,8 @@
 <!-- General container-->
 <div id="container" class="container-fluid">
     <!--start header-->
-    @await Html.PartialAsync("PartialViews/_HeaderPartial")
+    @await Html.PartialAsync("PartialViews/_HeaderPartial", Model.Advertises.Where(a => a.AdvLocation == 1))
+
     <!--start  navbar-->
     @await Html.PartialAsync("PartialViews/_NavbarPartial")
     <!--End navbar-->
@@ -16,25 +17,44 @@
         <div class="row" id="content-body">
             <!--start main content-->
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+
                 <!--start slider or carousel-->
                 @await Html.PartialAsync("PartialViews/_SliderPartial", Model.SliderNews)
                 <!--end slider or carousel-->
                 <!--start the  advers below slider-->
-                <div class="advers-main-content">
-                    <img src="image/adv-bootum-mainslider.gif" />
-                </div>
+                @foreach (var item in Model.Advertises.Where(a => a.AdvLocation == 2))
+                {
+                    <div class="advers-main-content">
+                        <img src="~/upload/advImage/@item.GifPath" />
+                    </div>
+                }
                 <!--end main advers-->
                 <!-- start special news-->
                 @await Html.PartialAsync("PartialViews/_SpecialNewsPartial", Model.SpecialNews)
                 <!--end special news-->
-                <!--start main advers-->
-                <div class="advers-main-content">
-                    <img src="image/adv-bootum-mainslider1.gif" />
-                </div>
+
+                @foreach (var item in Model.Advertises.Where(a => a.AdvLocation == 3))
+                {
+                    <!--start main advers-->
+                    <div class="advers-main-content">
+                        <img src="~/upload/advImage/@item.GifPath" />
+                    </div>
+                }
+
+
                 <!--end main advers-->
                 <!--start last-videos-->
                 @await Html.PartialAsync("PartialViews/_LastVideosPartial", Model.LastVideos)
                 <!--End last videos-->
+
+                <!--start the  advers below slider-->
+                @foreach (var item in Model.Advertises.Where(a => a.AdvLocation == 4))
+                {
+                    <div class="advers-main-content">
+                        <img src="image/adv-bootum-mainslider.gif" />
+                    </div>
+                }
+
 
             </div>   <!--end main content-->
             <!--start list second part-->
@@ -56,7 +76,7 @@
 
             </div><!--end list second part-->
             <!--start advers-->
-            @await Html.PartialAsync("PartialViews/_AdvertisingPartial")
+            @await Html.PartialAsync("PartialViews/_AdvertisingPartial", Model.Advertises.Where(a => a.AdvLocation == 5))
             <!--end advers-->
         </div><!--end content-body-->
     </div> <!--end content-->
@@ -65,61 +85,61 @@
     <!--End footer-->
 </div><!--end container-->
 @section scripts{
-<script>
-    //$(document).ready(function () {
+    <script>
+        //$(document).ready(function () {
 
-    $("#frmLogin").submit(function (e) {
-        e.preventDefault();  //از عمیلیات پیش فرض سابمیت فرم جلوگیری میکند
-        var form = $(this);    //تمام مقادیر اینپوت های فرم را میاورد و داخل متغیر میریزد.درپاقع اطلاعات فرم را میخواند
+        $("#frmLogin").submit(function (e) {
+            e.preventDefault();  //از عمیلیات پیش فرض سابمیت فرم جلوگیری میکند
+            var form = $(this);    //تمام مقادیر اینپوت های فرم را میاورد و داخل متغیر میریزد.درپاقع اطلاعات فرم را میخواند
 
-        //   میشود  action تگ هلپرهای ادرس دهی هم در اخر تبدیل به اتریبیوت
-        //     asp-area  asp-action   asp-controller  ====> action="/..../.../"
-        var url = $("#frmLogin").attr("action"); //آدرسی(کنترلر و اکشن و اریا) که فرم باید به ان ارسال شود را میخواند از روی اتریبیپت های فرم
+            //   میشود  action تگ هلپرهای ادرس دهی هم در اخر تبدیل به اتریبیوت
+            //     asp-area  asp-action   asp-controller  ====> action="/..../.../"
+            var url = $("#frmLogin").attr("action"); //آدرسی(کنترلر و اکشن و اریا) که فرم باید به ان ارسال شود را میخواند از روی اتریبیپت های فرم
 
-        $.ajax({
+            $.ajax({
 
-            type: "Post",
+                type: "Post",
 
-            url: url, //     به این روش هم میتوان دستی داد ادرس را '@@Url.Action("action","controller", new { area = ""})'
+                url: url, //     به این روش هم میتوان دستی داد ادرس را '@@Url.Action("action","controller", new { area = ""})'
 
-            data: form.serialize(),
+                data: form.serialize(),
 
-            //اکر ایجکس موفقیت امیز بود ئ ارسال موفق بود
-            success: function (msg) {
+                //اکر ایجکس موفقیت امیز بود ئ ارسال موفق بود
+                success: function (msg) {
 
-                if (msg.status === "success") {
+                    if (msg.status === "success") {
 
-                    window.location.href = '/Adminpanel/User';
-                    //window.location.href ='@@Url.Action( "Index", "User")';
+                        window.location.href = '/Adminpanel/User';
+                        //window.location.href ='@@Url.Action( "Index", "User")';
+                    }
+                    else if (msg.status === "failInput") {
+
+                        $("#validationLogin").text("نام کاربری یا رمز عبور اشتباه است");
+                    }
+                    else if (msg.status === "failEmptyInput") {
+
+                        $("#validationLogin").text("نام کاربری یا رمز عبور وارد نشده است ");
+                    }
                 }
-                else if (msg.status === "failInput") {
 
-                    $("#validationLogin").text("نام کاربری یا رمز عبور اشتباه است");
-                }
-                else if (msg.status === "failEmptyInput") {
+            });
 
-                    $("#validationLogin").text("نام کاربری یا رمز عبور وارد نشده است ");
-                }
-            }
+
 
         });
 
 
+        //});
 
-    });
-
-
-    //});
-
-</script>
+    </script>
 
 
-<script>
-    $('#myTabs a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    });
-</script>
+    <script>
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+    </script>
 
 
 }

@@ -1,4 +1,8 @@
-﻿<!--________________________________  Header  ____________________________________________________-->
+﻿
+@model IEnumerable<Advertise>
+
+
+<!--________________________________  Header  ____________________________________________________-->
 <!--  xs,sm برای اینکه در سایز
  استقاده کردیمd-none d-md-block  وبزرگتر هدر نمایش داده شود از دستورmd  هدر حذف شود و در سایز -->
 
@@ -29,8 +33,12 @@
             <!-- استفاده کردیم  text-cnter برای اینکه وسط چین شوپ محتویات دیو از دستور-->
             <div class="col-md-6 col-lg-6 text-center ">
                 <!--------------------تبلیغات-------------------------------->
-                <!-- استفاده میکنیم  row  برای اینکه زیرهم بیفتند و هر دیو یک سطر از دیو پدر خود را اشال کند از  -->
-                <div class="d-flex justify-content-center"><img src="~/image/logo.gif" alt="Alternate Text" /></div>
+                @foreach (var item in Model)
+                {
+                    <!-- استفاده میکنیم  row  برای اینکه زیرهم بیفتند و هر دیو یک سطر از دیو پدر خود را اشال کند از  -->
+                    <div class="d-flex justify-content-center"><img src="~/image/logo.gif" alt="Alternate Text" /></div>
+                }
+
             </div>
 
             <div class="col-md-3 col-lg-3 ">

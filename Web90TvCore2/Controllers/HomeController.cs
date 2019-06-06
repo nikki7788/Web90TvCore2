@@ -11,6 +11,7 @@ using Web90TvCore2.Models;
 using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
+using Web90TvCore2.PublicClass;
 
 namespace Web90TvCore2.Controllers
 {
@@ -88,9 +89,15 @@ namespace Web90TvCore2.Controllers
             //خبرهای خارجی n => n.NewsType == 1
             model.ForeignNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 1, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
-            //خبرهای اختصاصی n => n.NewsType == 2
+            ///خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
+            string pDate = PersianDateAndTime.PersianDateNow().Item2;
+            ///تمام تبلیغاتی که تاریخ انها در بازه تاریخ ذکر شده قرار داشته باشدو وضعیت نمایش انها روی نمایش یعنی صفر باشد را میاورد
+            model.Advertises = _unitOfWork.AdveriseRepUW.Get(
+                a=>(a.FromDate.CompareTo(pDate)<=0
+                && a.ToDate.CompareTo(pDate) >=0
+                && a.Flag==0)).Result.ToList();
 
             //model.loginVM=
             return View(model);

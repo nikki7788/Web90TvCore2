@@ -12,6 +12,37 @@ namespace Web90TvCore2.PublicClass
     /// برای اینکه کد های تکراری در اکشن ها ننویسیم
     public class PersianDateAndTime
     {
+
+        /// <summary>
+        /// تاریخ شمسی و زمان حال را باهم برمیکرداند
+        /// </summary>
+        /// Tuple<>
+        /// بااین روش کیتوان چندین خروجی را ارسال کرد
+        
+        public static Tuple<string, string> PersianDateNow()
+        {
+            //-------------  بدست اوردن تایخ شمسی و زمان کنونی   -------------
+
+            PersianCalendar persianCalendar = new PersianCalendar();
+            var currentDate = DateTime.Now;
+            int year = persianCalendar.GetYear(currentDate);
+            int month = persianCalendar.GetMonth(currentDate);
+            int day = persianCalendar.GetDayOfMonth(currentDate);
+
+            string pCalendar = String.Format("{00:yyyy/MM/dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
+
+            string currentTime = String.Format("{0:hh:mm}", Convert.ToDateTime(currentDate.Hour + ":" + currentDate.Minute));
+            return new Tuple<string, string>(currentTime, pCalendar);
+
+        }
+
+
+
+
+
+
+
+
         /// <summary>
         /// تاریخ شمسی و زمان حال را باهم برمیکرداند
         /// </summary>
@@ -40,8 +71,8 @@ namespace Web90TvCore2.PublicClass
             return pCalendar;
 
         }
-        
-        
+
+
         ///به روش زیر هم میتوان نوشت دو متد برای زمان وتاریخ 
 
         //public static string DateShamsi()

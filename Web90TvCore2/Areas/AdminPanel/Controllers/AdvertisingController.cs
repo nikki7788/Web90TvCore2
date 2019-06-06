@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.PublicClass;
 using Web90TvCore2.services;
@@ -23,13 +24,17 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUploadingFileService _uploadingFile;
+        private readonly IAdvertiseService _advService;
 
 
-        public AdvertisingController(IUnitOfWork unitOfWork, IUploadingFileService uploadingFile)
+
+        public AdvertisingController(IUnitOfWork unitOfWork, IUploadingFileService uploadingFile
+            , IAdvertiseService advService)
         {
 
             _unitOfWork = unitOfWork;
             _uploadingFile = uploadingFile;
+            _advService = advService;
         }
 
         #endregion #############
@@ -47,6 +52,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             var model = await _unitOfWork.AdveriseRepUW.Get();
             return View(model);
         }
+
 
 
         /// <summary>
@@ -72,6 +78,12 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         }
 
 
+
+
+        /// <summary>
+        /// ایجاد تبلیغ متد خواندنی - نمایش ویو ایجاد
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create()
         {
@@ -80,22 +92,24 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         }
 
 
+
+
         /// <summary>
-        /// 
+        /// ایجاد تبلیغ متد پست
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">مدل دریافتی از ویو </param>
         /// <returns></returns>
         [HttpPost, ActionName("Create")]
         public async Task<IActionResult> CreateConfirm(Advertise model)
         {
-          
+
             if (ModelState.IsValid)
             {
 
                 ///تبدیل فونت و ارقام فارسی تاریخ به انگلیسی برای ذخیره در دیتابیس
                 model.FromDate = ConvertFaToEnDigit.ToEnDigit(model.FromDate);
                 model.ToDate = ConvertFaToEnDigit.ToEnDigit(model.ToDate);
-         
+
 
                 await _unitOfWork.AdveriseRepUW.Create(model);
                 await _unitOfWork.Save();
@@ -120,10 +134,75 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
             //todo: و تغییر وضعیت تبلیغ به نمایش یا عدم نمایش و حذف تبایغ  و حذف فاییل از روت سایت
-            
+
 
 
         }
+
+
+        /// <summary>
+        /// تغییر وضعیت نمای تبلیغ در سایت - متد خواندنی
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult ChangeStatus()
+        {
+            return PartialView("_ChangeStatusPartial");
+        }
+
+        /// <summary>
+        /// تغییر وضعیت نمای تبلیغ در سایت - متد پست
+        /// </summary>
+        /// <param name="id">شناسه تبلیغ</param>
+        /// <returns></returns>
+        [HttpPost, ActionName("ChangeStatus")]
+        public async Task<IActionResult> ChangeStatusConfirm(int Id)
+        {
+            await _advService.ChangeStatus(Id);
+            return RedirectToAction("Index");
+
+        }
+
+
+
+        /// <summary>
+        ///نمایش مودال حذف تبلیغ
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return PartialView("_DeletePartial");
+        }
+
+
+
+        /// <summary>
+        /// حذف تبلیغ - متد پست
+        /// </summary>
+        /// <param name="id">شناسه تبلیغ</param>
+        /// <returns></returns>
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirm(int Id)
+        {
+            ///todo: transaction پیاده سازی 
+            ///برای اینکه اگر حذف از روت یا حذف تبلیغ هردوانجام شوپ
+           
+         
+            
+            ///حذف تصویر تبلیغ از روت سایت
+            await _advService.DeleteRootFile(Id);
+
+            ///حذف تبلیغ از سایت
+            await _unitOfWork.AdveriseRepUW.DeletById(Id);
+            await _unitOfWork.AdveriseRepUW.Save();
+
+          
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
         #endregion ########################
