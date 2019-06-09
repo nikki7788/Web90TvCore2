@@ -81,7 +81,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
         /// <summary>
-        /// 
+        /// ایجاد تبلیغ
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

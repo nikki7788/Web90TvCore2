@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
+using Web90TvCore2.PublicClass;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
@@ -25,14 +26,14 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         #endregion #####################
 
         #region ######## actions  ##########################   
-        
+
         /// <summary>
         /// نمایش تمام نطرسنجی ها
         /// </summary>
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-           IEnumerable<Poll> model=await _unitOfWork.pollRepoUW.Get();
+            IEnumerable<Poll> model = await _unitOfWork.PollRepoUW.Get();
             return View(model);
         }
 
@@ -48,18 +49,44 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             return View();
         }
 
+
+
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost,ActionName("Create")]
+        [HttpPost, ActionName("Create")]
         public async Task<IActionResult> CreateConfirm(AddPollViewModel model)
         {
             if (ModelState.IsValid)
             {
+                using (var transaction = _unitOfWork.BeginTransaction())
+                {
+                    try
+                    {
 
+                        //Poll poll = new Poll
+                        //{
+                        //    Question = model.Question
+                        // //   PollStartDate = PersianDateAndTime.PersianDateNow();
+                        //}
+
+
+                        transaction.Commit();
+                        return View();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw ex;
+
+                    }
+                }
             }
-            return View();
+            return View(model);
+
         }
         #endregion#########################
     }

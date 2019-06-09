@@ -37,8 +37,6 @@ namespace Web90TvCore2.Models.UnitOfWork
 
 
 
-
-
         /// <summary>
         /// تبلیغات
         /// </summary>
@@ -71,7 +69,7 @@ namespace Web90TvCore2.Models.UnitOfWork
         /// مدیریت تراکنش
         /// Transaction
         /// </summary>
-        IEntityDataBaseTransaction BeginTransaction { get; }
+        IEntityDataBaseTransaction BeginTransaction();
 
 
         Task Save();
