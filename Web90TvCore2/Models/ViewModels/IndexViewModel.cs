@@ -84,5 +84,11 @@ namespace Web90TvCore2.Models.ViewModels
         /// نمایش جزییات خبر
         public News NewsDetails { get; set; }
 
+        /// <summary>
+        /// تبلیغات 
+        /// </summary>
+        /// نمایش تبلیغات
+        public List<Advertise> Advertises { get; set; }
+
     }
 }
