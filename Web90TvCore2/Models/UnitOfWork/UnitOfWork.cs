@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web90TvCore2.Models.Repository;
+using Web90TvCore2.Models.Service;
 
 namespace Web90TvCore2.Models.UnitOfWork
 {
@@ -33,6 +34,11 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         private CrudRepGeneric<Advertise> _advertiseUW;
 
+        private CrudRepGeneric<Poll> _pollUW;
+
+        private CrudRepGeneric<PollOption> _pollOptionUW;
+
+
 
         #endregion #######################
 
@@ -61,6 +67,8 @@ namespace Web90TvCore2.Models.UnitOfWork
         }
 
 
+
+
         /// <summary>
         ///  اخبار
         ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
@@ -82,6 +90,8 @@ namespace Web90TvCore2.Models.UnitOfWork
         }
 
 
+
+
         /// <summary>
         /// نطرات کاربران
         ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
@@ -100,6 +110,7 @@ namespace Web90TvCore2.Models.UnitOfWork
         }
 
 
+
         /// <summary>
         /// تبلیغات
         ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
@@ -116,6 +127,60 @@ namespace Web90TvCore2.Models.UnitOfWork
                 return _advertiseUW;
             }
         }
+
+
+
+        /// <summary>
+        /// متن نطرسنجی
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  Poll برای کلاس و جدول CRUD پیاده سازی کلاس 
+        /// </summary>
+        public CrudRepGeneric<Poll> PollRepoUW
+        {
+            get
+            {
+                if (_pollUW == null)
+                {
+                    _pollUW = new CrudRepGeneric<Poll>(_context);
+                }
+                return _pollUW;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// گزینه های نطرسنجی
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  PollOption برای کلاس و جدول CRUD پیاده سازی کلاس 
+        /// </summary>
+        public CrudRepGeneric<PollOption> PollOptionRepoUW
+        {
+            get
+            {
+                if (_pollOptionUW == null)
+                {
+                    _pollOptionUW = new CrudRepGeneric<PollOption>(_context);
+                }
+                return _pollOptionUW;
+            }
+        }
+
+
+
+
+        /// <summary>
+        ///مدیریت تراکنش
+        ///   IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  Transaction پیاده سازی لایه سرویس 
+        /// </summary>
+        public IEntityDataBaseTransaction BeginTransaction()
+        {
+            return new EntityDataBaseTransaction(_context);
+        }
+
+
 
 
         /// <summary>

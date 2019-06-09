@@ -13775,11 +13775,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\MVC Projects\\GitHub\\Web90TvCore2\\Web90TvCore2\\Web90TvCore2.csproj",
+      "projectUniqueName": "C:\\Users\\Nikbakht\\Desktop\\90TV\\Web90TvCore2\\Web90TvCore2.csproj",
       "projectName": "Web90TvCore2",
-      "projectPath": "G:\\MVC Projects\\GitHub\\Web90TvCore2\\Web90TvCore2\\Web90TvCore2.csproj",
+      "projectPath": "C:\\Users\\Nikbakht\\Desktop\\90TV\\Web90TvCore2\\Web90TvCore2.csproj",
       "packagesPath": "C:\\Users\\Nikbakht\\.nuget\\packages\\",
-      "outputPath": "G:\\MVC Projects\\GitHub\\Web90TvCore2\\Web90TvCore2\\obj\\",
+      "outputPath": "C:\\Users\\Nikbakht\\Desktop\\90TV\\Web90TvCore2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

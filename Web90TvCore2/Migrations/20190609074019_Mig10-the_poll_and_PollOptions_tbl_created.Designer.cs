@@ -11,9 +11,10 @@ using Web90TvCore2.Models;
 namespace Web90TvCore2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190609074019_Mig10-the_poll_and_PollOptions_tbl_created")]
+    partial class Mig10the_poll_and_PollOptions_tbl_created
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

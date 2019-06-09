@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<Poll>
+
+<div class="row center-block box box-success" style="box-shadow:2px 2px 7px 3px gray;">
+    <div class="panel panel-primary col-md-10 col-md-offset-1" style="margin-top:25px; margin-bottom:25px;">
+        @* copy index.cshtml from category *@
+        <div class="panel-body">
+            <div>
+                <a class="btn btn-primary" asp-controller="Poll" asp-action="Create">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    افزودن نظرسنجي جديد
+                </a>
+            </div>
+        </div>
+
+        <hr style="height:1px; background-color:gray;" />
+
+        <table class="table table-responsive text-center">
+            <thead>
+                <tr style="font-size:15px; font-weight:600;">
+                    <td>متن سوال</td>
+                    <td>تاريخ شروع نظرسنجي</td>
+                    <td>تاريخ پايان نظرسنجي</td>
+                    <td>وضعيت</td>
+                    <td>عمليات</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Question</td>
+                        <td>@item.PollStartDate</td>
+                        <td>@item.PollEndDate</td>
+
+                        @if (item.Active == true)
+                        {
+                            <td>فعال</td>
+                        }
+                        else
+                        {
+                            <td>غيرفعال</td>
+                        }
+
+
+                        <td>
+                            @if (item.Active == true)
+                            {
+                                <a class="btn btn-info" asp-controller="Poll" asp-action="ClosePoll" asp-route-id="@item.PollId"
+                                   data-toggle="modal" data-target="#modal-action-poll">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                    بستن
+                                </a>
+
+
+                            }
+
+                            <a class="btn btn-danger" asp-controller="Poll" asp-action="Delete"
+                               asp-route-id="@item.PollId" data-toggle="modal" data-target="#modal-action-poll">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                حذف
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalPartial.cshtml",
+    new BootstrapModel { Id = "modal-action-poll", Size = ModalSize.Medium })
+
+@section panelScript{
+    <script src="~/js/modal-js/all-index.js"></script>
+}
