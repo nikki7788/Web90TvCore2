@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.Service;
@@ -14,6 +15,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
     /// کنترلر برای عملیات روی نظرات کاربران
     /// </summary>
     [Area("AdminPanel")]
+    [Authorize(Roles = "Comment")]
     public class CommentController : Controller
     {
 

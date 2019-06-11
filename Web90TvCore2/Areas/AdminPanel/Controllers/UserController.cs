@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
+using Web90TvCore2.PublicClass;
 using Web90TvCore2.services;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
@@ -146,7 +147,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         PhoneNumber = model.PhoneNumber,
                         UserName = model.UserName,
                         Email = model.Email,
-                        BirthDayDate = model.BirthDayDate,
+                        BirthDayDate = ConvertFaToEnDigit.ToEnDigit( model.BirthDayDate),
                         UserImagePath = model.UserImage,
                         Gender = model.Gender,
                     };
@@ -245,7 +246,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         LastName = user.LastName,
                         Email = user.Email,
                         PhoneNumber = user.PhoneNumber,
-                        BirthDayDate = user.BirthDayDate,
+                        BirthDayDate = ConvertFaToEnDigit.ToEnDigit( user.BirthDayDate),
                         Gender = user.Gender,
                         UserImage = user.UserImagePath
                     };
@@ -395,7 +396,9 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         }
 
 
-
+        ///todo:password
+        ///123aS@
+        ///AQAAAAEAACcQAAAAEMDljZsvwyQXs9ktSmss1EK8iOKtzNpYUd2HvR5n45Iv3PEYGDuHJHg/e1jGQO/gyg==
         #endregion ################################
 
 

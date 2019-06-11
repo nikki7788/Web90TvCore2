@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
     /// <summary>
     /// نطرسنجی
     /// </summary>
+    [Area("AdminPanel")]
+    [Authorize(Roles = "poll")]
     public class PollController : Controller
     {
 

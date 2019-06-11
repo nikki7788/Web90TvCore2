@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -17,6 +18,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
     /// </summary>
 
     [Area("AdminPanel")]
+    [Authorize(Roles = "User")]
     public class RoleController : Controller
     {
         #region ################### dependencies #############################

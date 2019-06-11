@@ -39,6 +39,12 @@
     <Compile Remove="Migrations\20190527184957_Mig9-created_Advertise_table.Designer.cs" />
     <Compile Remove="Migrations\20190609070814_Mig10-the_poll_and_PollOptions_tbl_created.cs" />
     <Compile Remove="Migrations\20190609070814_Mig10-the_poll_and_PollOptions_tbl_created.Designer.cs" />
+    <Compile Remove="Migrations\20190609074019_Mig10-the_poll_and_PollOptions_tbl_created.cs" />
+    <Compile Remove="Migrations\20190609074019_Mig10-the_poll_and_PollOptions_tbl_created.Designer.cs" />
+    <Compile Remove="Migrations\20190611150915_Mig10-the_poll_and_PollOptions_tbl_created..cs" />
+    <Compile Remove="Migrations\20190611150915_Mig10-the_poll_and_PollOptions_tbl_created..Designer.cs" />
+    <Compile Remove="Migrations\20190611150950_Mig10-the_poll_and_PollOptions_tbl_created.cs" />
+    <Compile Remove="Migrations\20190611150950_Mig10-the_poll_and_PollOptions_tbl_created.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

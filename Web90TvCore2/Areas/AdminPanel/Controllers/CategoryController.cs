@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web90TvCore2.Models;
@@ -10,6 +11,7 @@ using Web90TvCore2.Models.UnitOfWork;
 namespace Web90TvCore2.Areas.AminPanel.Controllers
 {
     [Area("AdminPanel")]
+    [Authorize(Roles = "Category")]
     public class CategoryController : Controller
     {
         #region ############## Dependencies ###########################

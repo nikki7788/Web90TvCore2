@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web90TvCore2.Models;
@@ -17,6 +18,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
     /// </summary>
 
     [Area("AdminPanel")]
+    [Authorize(Roles = "Advertise")]
+
     public class AdvertisingController : Controller
     {
 
@@ -95,11 +98,8 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
         /// <summary>
-<<<<<<< HEAD
         /// ایجاد تبلیغ
-=======
         /// ایجاد تبلیغ متد پست
->>>>>>> 42a28b29056cd534ef456fc291d73933b2826a4d
         /// </summary>
         /// <param name="model">مدل دریافتی از ویو </param>
         /// <returns></returns>
