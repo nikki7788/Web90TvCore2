@@ -21,5 +21,9 @@ namespace Web90TvCore2.Models
 
         public DbSet<Advertise> Advertises { get; set; }
 
+        public DbSet<Poll> Polls { get; set; }
+
+        public DbSet<PollOption> PollOptions { get; set; }
+
     }
 }

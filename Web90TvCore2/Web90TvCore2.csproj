@@ -17,8 +17,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190227133343_Mig1-creating_database.cs" />
+    <Compile Remove="Migrations\20190227133343_Mig1-creating_database.Designer.cs" />
+    <Compile Remove="Migrations\20190306092016_Mig2_Creating_News_CategoryTable.cs" />
+    <Compile Remove="Migrations\20190306092016_Mig2_Creating_News_CategoryTable.Designer.cs" />
     <Compile Remove="Migrations\20190308142923_Mig3-ApplicatiuonUserChanged_adding_Properties.cs" />
     <Compile Remove="Migrations\20190308142923_Mig3-ApplicatiuonUserChanged_adding_Properties.Designer.cs" />
+    <Compile Remove="Migrations\20190308164814_Mig3-changing_ApplicationUsers_Properties.cs" />
+    <Compile Remove="Migrations\20190308164814_Mig3-changing_ApplicationUsers_Properties.Designer.cs" />
+    <Compile Remove="Migrations\20190312151936_Mig4-Editing_ApplicationUser_props.cs" />
+    <Compile Remove="Migrations\20190312151936_Mig4-Editing_ApplicationUser_props.Designer.cs" />
+    <Compile Remove="Migrations\20190318161341_Mig5-Adding_Prop_to_the_ApplicationRoles.cs" />
+    <Compile Remove="Migrations\20190318161341_Mig5-Adding_Prop_to_the_ApplicationRoles.Designer.cs" />
+    <Compile Remove="Migrations\20190407153909_Mig6_Add_NewsPlace_to_NewsTbl.cs" />
+    <Compile Remove="Migrations\20190407153909_Mig6_Add_NewsPlace_to_NewsTbl.Designer.cs" />
+    <Compile Remove="Migrations\20190412114659_Mig7_Add_NewsType_To_NewsTable.cs" />
+    <Compile Remove="Migrations\20190412114659_Mig7_Add_NewsType_To_NewsTable.Designer.cs" />
+    <Compile Remove="Migrations\20190418183355_Mig8-Add_Comment_Table.cs" />
+    <Compile Remove="Migrations\20190418183355_Mig8-Add_Comment_Table.Designer.cs" />
+    <Compile Remove="Migrations\20190527184957_Mig9-created_Advertise_table.cs" />
+    <Compile Remove="Migrations\20190527184957_Mig9-created_Advertise_table.Designer.cs" />
+    <Compile Remove="Migrations\20190609070814_Mig10-the_poll_and_PollOptions_tbl_created.cs" />
+    <Compile Remove="Migrations\20190609070814_Mig10-the_poll_and_PollOptions_tbl_created.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

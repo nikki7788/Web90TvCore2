@@ -31,3 +31,14 @@ G:\MVC Projects\GitHub\Web90TvCore2\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90Tv
 G:\MVC Projects\GitHub\Web90TvCore2\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.AssemblyInfo.cs
 G:\MVC Projects\GitHub\Web90TvCore2\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.dll
 G:\MVC Projects\GitHub\Web90TvCore2\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.pdb
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\bin\Debug\netcoreapp2.0\Web90TvCore2.deps.json
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\bin\Debug\netcoreapp2.0\Web90TvCore2.runtimeconfig.json
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\bin\Debug\netcoreapp2.0\Web90TvCore2.runtimeconfig.dev.json
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\bin\Debug\netcoreapp2.0\Web90TvCore2.dll
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\bin\Debug\netcoreapp2.0\Web90TvCore2.pdb
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.csprojAssemblyReference.cache
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.csproj.CoreCompileInputs.cache
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.AssemblyInfoInputs.cache
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.AssemblyInfo.cs
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.dll
+C:\Users\Nikbakht\Desktop\90TV\Web90TvCore2\obj\Debug\netcoreapp2.0\Web90TvCore2.pdb
