@@ -8,17 +8,20 @@ namespace Web90TvCore2.PublicClass
 {
     /// <summary>
     /// تاریخ و زمان شمسی
+    /// --item1=currentDate--
+    /// --item2=currentTime--
     /// </summary>
     /// برای اینکه کد های تکراری در اکشن ها ننویسیم
     public class PersianDateAndTime
     {
 
+
         /// <summary>
         /// تاریخ شمسی و زمان حال را باهم برمیکرداند
+        ///--item1=currentDate--
+        /// --item2=currentTime--
         /// </summary>
-        /// Tuple<>
-        /// بااین روش کیتوان چندین خروجی را ارسال کرد
-        
+        ///بااین روش کیتوان چندین خروجی را ارسال کرد
         public static Tuple<string, string> PersianDateNow()
         {
             //-------------  بدست اوردن تایخ شمسی و زمان کنونی   -------------
@@ -54,23 +57,23 @@ namespace Web90TvCore2.PublicClass
         ///  string TimeNow;
         ///string shamsiDate = PersianDateAndTime.PersianDateNow(out TimeNow);
 
-        public static string PersianDateNow(out string currentTime)
-        {
-            //-------------  بدست اوردن تایخ شمسی و زمان کنونی   -------------
+        //public static string PersianDateNow(out string currentTime)
+        //{
+        //    //-------------  بدست اوردن تایخ شمسی و زمان کنونی   -------------
 
-            PersianCalendar persianCalendar = new PersianCalendar();
-            var currentDate = DateTime.Now;
-            int year = persianCalendar.GetYear(currentDate);
-            int month = persianCalendar.GetMonth(currentDate);
-            int day = persianCalendar.GetDayOfMonth(currentDate);
+        //    PersianCalendar persianCalendar = new PersianCalendar();
+        //    var currentDate = DateTime.Now;
+        //    int year = persianCalendar.GetYear(currentDate);
+        //    int month = persianCalendar.GetMonth(currentDate);
+        //    int day = persianCalendar.GetDayOfMonth(currentDate);
 
-            string pCalendar = String.Format("{00:yyyy/MM/dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
+        //    string pCalendar = String.Format("{00:yyyy/MM/dd}", Convert.ToDateTime(year + "/" + month + "/" + day));
 
-            currentTime = String.Format("{0:hh:mm}", Convert.ToDateTime(currentDate.Hour + ":" + currentDate.Minute));
+        //    currentTime = String.Format("{0:hh:mm}", Convert.ToDateTime(currentDate.Hour + ":" + currentDate.Minute));
 
-            return pCalendar;
+        //    return pCalendar;
 
-        }
+        //}
 
 
         ///به روش زیر هم میتوان نوشت دو متد برای زمان وتاریخ 

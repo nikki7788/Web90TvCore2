@@ -56,6 +56,10 @@ namespace Web90TvCore2
             services.AddScoped<ICommentService, CommentRepo>();
             services.AddScoped<IEntityDataBaseTransaction, EntityDataBaseTransaction>();
             services.AddScoped<IAdvertiseService, AdvertiseRepo>();
+<<<<<<< HEAD
+=======
+
+>>>>>>> a623eda4aee2261035980a4f25504562bd1d71a2
 
             //--------------------------------- وجود دشاته باشد در لاگین کردن url(=returnUrl) هدایت به اکشن مورد نطر ما در صورتی که --------------------------------------
             //وقتی کاربر ادرس صفحه یا به مسیری میرود که لاگین نیز دارد
