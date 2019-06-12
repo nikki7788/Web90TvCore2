@@ -1,0 +1,26 @@
+﻿@model string
+
+@{
+    Layout = null;
+}
+
+    <form asp-controller="Poll" asp-action="Delete">
+     
+        @await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalHeaderPartial.cshtml",
+        new ModalHeader { Heading = "حذف نطرسنجی", BootstrapVersion = BootstrapVr.version3 })
+
+        <div class="modal-body form-horizontal">
+            <span> آیا از حذف بستن نطرسنجی </span>
+            <span class="text-danger">" @Model "</span>
+            <span> مطمئن هستید؟</span>
+        </div>
+
+
+        <div class="modal-footer" style="text-align:left;">
+            <button class="btn btn-default" type="button" data-dismiss="modal">برگشت</button>
+            <button class="btn btn-danger" type="submit">
+                حذف
+            </button>
+        </div>
+
+    </form>
