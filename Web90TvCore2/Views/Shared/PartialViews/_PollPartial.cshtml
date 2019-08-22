@@ -1,36 +1,43 @@
-﻿@model Poll
-@inject Web90TvCore2.Models.UnitOfWork.IUnitOfWork Context
-
-@{
-    var answerList =await Context.PollOptionRepoUW.Get(a => a.PollID == Model.PollId);
-}
-
-
-<div id="poll">
+﻿<div id="poll">
     <span class="news-header ul-title-tabs-color">نظر سنجی</span>
     <div class="hr-divider"></div>
     <form>
         <!--start "poll-content-->
         <div id="poll-content">
             <div id="poll-statement">
-                <span>@Model.Question</span>
+                نتیجه بازی پرپولیس - تراکتور سازی
             </div>
             <table>
-                @foreach (var item in answerList)
-                {
-
-                    <tr>
-                        <td>
-                            <div class="form-group form-check-inline">
-                                <label class="form-check-label">
-                                    <input value="" type="radio" name="p" class="form-check-input" />
-                                    @item.Answer
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                }
-
+                <tr>
+                    <td>
+                        <div class="form-group form-check-inline">
+                            <label class="form-check-label">
+                                <input value="" type="radio" name="p" class="form-check-input" />
+                                برد پرسپولیس
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" name="p" class="form-check-input" />
+                                مساوی
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group form-check-inline">
+                            <label class="form-check-label">
+                                <input value="" type="radio" name="p" class="form-check-input" />
+                                برد تراکتورسازی
+                            </label>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div> <!--end poll-content-->
     </form>

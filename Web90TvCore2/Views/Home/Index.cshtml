@@ -3,13 +3,10 @@
 @{
     ViewData["Title"] = "صفحه اصلی";
 }
-@{ 
-   var adv4= Model.Advertises.Where(a => a.AdvLocation == 4).ToList();
-}
 <!-- General container-->
 <div id="container" class="container-fluid">
     <!--start header-->
-        @await Html.PartialAsync("PartialViews/_HeaderPartial", Model.Advertises.Where(a => a.AdvLocation == 1))
+    @await Html.PartialAsync("PartialViews/_HeaderPartial", Model.Advertises.Where(a => a.AdvLocation == 1))
 
     <!--start  navbar-->
     @await Html.PartialAsync("PartialViews/_NavbarPartial")
@@ -49,16 +46,15 @@
                 <!--start last-videos-->
                 @await Html.PartialAsync("PartialViews/_LastVideosPartial", Model.LastVideos)
                 <!--End last videos-->
-                <!--start the  advers below lastvideo-->
-                <!--یک تبلیغ را نشان میدهد-->
 
-                @if (adv4.Count()>0)
+                <!--start the  advers below slider-->
+                @foreach (var item in Model.Advertises.Where(a => a.AdvLocation == 4))
                 {
                     <div class="advers-main-content">
-                        <a href="@adv4[0].Link"><img src="~/upload/advImage/@adv4[0]" /></a>
+                        <img src="image/adv-bootum-mainslider.gif" />
                     </div>
                 }
-            
+
 
             </div>   <!--end main content-->
             <!--start list second part-->
@@ -71,11 +67,7 @@
                 @await Html.PartialAsync("PartialViews/_NewspapersPartial")
                 <!--end newspapers-->
                 <!--start poll-->
-                @if (Model.Poll != null)
-                {
-                    @await Html.PartialAsync("PartialViews/_PollPartial", Model.Poll)
-
-                }
+                @await Html.PartialAsync("PartialViews/_PollPartial")
                 <!--end poll-->
                 <!--start Login-->
                 @await Html.PartialAsync("PartialViews/_LoginPartial", Model.LoginVM)

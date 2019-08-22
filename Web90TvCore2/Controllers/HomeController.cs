@@ -95,22 +95,9 @@ namespace Web90TvCore2.Controllers
             string pDate = PersianDateAndTime.PersianDateNow().Item2;
             ///تمام تبلیغاتی که تاریخ انها در بازه تاریخ ذکر شده قرار داشته باشدو وضعیت نمایش انها روی نمایش یعنی صفر باشد را میاورد
             model.Advertises = _unitOfWork.AdveriseRepUW.Get(
-                a => (a.FromDate.CompareTo(pDate) <= 0
-                && a.ToDate.CompareTo(pDate) >= 0
-                && a.Flag == 0)).Result.ToList();
-
-            ///  نظرسنجی
-            var poll = _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.ToList();
-            if (poll.Count() == 1)
-            {
-                //نمایش نظرسنجی
-                model.Poll = poll.SingleOrDefault();
-            }
-            //else
-            //{
-            //    //نظر سنجی فعالی وجود ندارد
-            //    model.Poll = null;
-            //}
+                a=>(a.FromDate.CompareTo(pDate)<=0
+                && a.ToDate.CompareTo(pDate) >=0
+                && a.Flag==0)).Result.ToList();
 
             //model.loginVM=
             return View(model);
@@ -146,12 +133,6 @@ namespace Web90TvCore2.Controllers
             //خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
-            string pDate = PersianDateAndTime.PersianDateNow().Item2;
-            ///تمام تبلیغاتی که تاریخ انها در بازه تاریخ ذکر شده قرار داشته باشدو وضعیت نمایش انها روی نمایش یعنی صفر باشد را میاورد
-            model.Advertises = _unitOfWork.AdveriseRepUW.Get(
-                a => (a.FromDate.CompareTo(pDate) <= 0
-                && a.ToDate.CompareTo(pDate) >= 0
-                && a.Flag == 0)).Result.ToList();
 
             //به روز رسانی تعدا بازدید خبر
             await _newsService.RefreshVisitCounter(id);
@@ -174,7 +155,7 @@ namespace Web90TvCore2.Controllers
         /// شناسه خبری که درمورد ان نظرات ثبت میشود
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId, int cmId)
+        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId,int cmId)
         {
 
 
@@ -268,14 +249,14 @@ namespace Web90TvCore2.Controllers
 
                     await _comentService.IncreaseLike(cmId);
                     //اگر کامنت دیسلایک شده باشد قبلا توسط این کابر و الان لایک کند از تعداد دیسلایک کم میشود و به لایک اضافه میشود
-                    return Json(new { status = "success", result = IsExistCm.LikeCount, result2 = IsExistCm.DisLikeCount, backId = cmId });
+                    return Json(new { status = "success", result = IsExistCm.LikeCount,result2=IsExistCm.DisLikeCount, backId = cmId });
                 }
                 else
-                {
+                { 
                     //اگر کوکی از قبل وجود داشت
-
+                   
                     string cookieContent = Request.Cookies["_cm"].ToString();
-
+                    
                     if (cookieContent.Contains("," + cmId + ","))
                     {
                         //اگر کاربر خواست یک کامنت را 2 بار لایک کند
@@ -365,7 +346,7 @@ namespace Web90TvCore2.Controllers
 
                     await _comentService.IncreaseDislike(cmId);
                     //اگر کامنت لایک شده باشد قبلا توسط این کابر و الان دیسلایک کند از تعداد لایک کم میشود و به دیسلایم اضافه میشود
-                    return Json(new { status = "success", result = IsExistCm.DisLikeCount, result2 = IsExistCm.LikeCount, backId = cmId });
+                    return Json(new { status = "success", result = IsExistCm.DisLikeCount,result2= IsExistCm.LikeCount, backId = cmId });
                 }
                 else
                 {
@@ -400,7 +381,7 @@ namespace Web90TvCore2.Controllers
 
                         await _comentService.IncreaseDislike(cmId);
                         //اگر کامنت لایک شده باشد قبلا توسط این کابر و الان دیسلایک کند از تعداد لایک کم میشود و به دیسلایم اضافه میشود
-                        return Json(new { status = "success", result = IsExistCm.DisLikeCount, result2 = IsExistCm.LikeCount, backId = cmId });
+                        return Json(new { status = "success", result = IsExistCm.DisLikeCount,result2 = IsExistCm.LikeCount, backId = cmId });
                     }
                 }
             }

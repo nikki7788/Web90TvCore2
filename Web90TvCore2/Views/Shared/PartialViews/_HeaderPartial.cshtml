@@ -1,5 +1,6 @@
 ﻿
- @model IEnumerable<Advertise>
+@model IEnumerable<Advertise>
+
 
 <!--________________________________  Header  ____________________________________________________-->
 <!--  xs,sm برای اینکه در سایز
@@ -32,15 +33,11 @@
             <!-- استفاده کردیم  text-cnter برای اینکه وسط چین شوپ محتویات دیو از دستور-->
             <div class="col-md-6 col-lg-6 text-center ">
                 <!--------------------تبلیغات-------------------------------->
-                
-
-                    @foreach (var item in Model)
-                    {
-                        <!-- استفاده میکنیم  row  برای اینکه زیرهم بیفتند و هر دیو یک سطر از دیو پدر خود را اشال کند از  -->
-                        <div class="d-flex justify-content-center"><img src="~/upload/advImage/@item.GifPath" alt="Alternate Text" /></div>
-                    }
-
+                @foreach (var item in Model)
+                {
                     <!-- استفاده میکنیم  row  برای اینکه زیرهم بیفتند و هر دیو یک سطر از دیو پدر خود را اشال کند از  -->
+                    <div class="d-flex justify-content-center"><img src="~/image/logo.gif" alt="Alternate Text" /></div>
+                }
 
             </div>
 

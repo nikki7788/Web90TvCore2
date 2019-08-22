@@ -90,11 +90,5 @@ namespace Web90TvCore2.Models.ViewModels
         /// نمایش تبلیغات
         public List<Advertise> Advertises { get; set; }
 
-        /// <summary>
-        /// متن نظرسنجی
-        /// </summary>
-        /// نمایش نطرسنجی متن نطرسنجی
-        public Poll Poll { get; set; }
-
     }
 }

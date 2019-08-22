@@ -48,6 +48,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\upload\userImage\normalImage\0f5e7501840c4638ad0c2f04f2b84996.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\124023e3e27841fe803f0d652a1506a4.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\4e38bb0c700a4efb8ac8bd1282552a4f.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\5bf4aa3cac164e4ead7162cdc1625e11.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\7c5e669e3c164f4a9683b4ce60df1226.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\81103f4fc47a4bb7b03ec0bd63661d27.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\8b37d4c0cec648f4a68f19491d0c3a46.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\910e0a86737840d4948c10b69f69ad8c.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\f67f1745704842128c41fa23aee31c6f.jpg" />
+    <Content Remove="wwwroot\upload\userImage\normalImage\f97435dc785b4909adbb325786aa4b83.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\124023e3e27841fe803f0d652a1506a4.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\4e38bb0c700a4efb8ac8bd1282552a4f.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\5bf4aa3cac164e4ead7162cdc1625e11.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\7c5e669e3c164f4a9683b4ce60df1226.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\8b37d4c0cec648f4a68f19491d0c3a46.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\910e0a86737840d4948c10b69f69ad8c.jpg" />
+    <Content Remove="wwwroot\upload\userImage\thumbnailImage\f67f1745704842128c41fa23aee31c6f.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-grid.min.css" />
     <Content Include="node_modules\bootstrap\dist\css\bootstrap-reboot.css" />
@@ -2161,10 +2181,12 @@
     <Folder Include="Areas\AdminPanel\Data\" />
     <Folder Include="Areas\AdminPanel\Models\" />
     <Folder Include="wwwroot\font\" />
+    <Folder Include="wwwroot\upload\indexImage\" />
     <Folder Include="wwwroot\upload\contentImage\" />
     <Folder Include="wwwroot\upload\advImage\" />
+    <Folder Include="wwwroot\upload\userImage\" />
     <Folder Include="wwwroot\upload\userImage\thumbnailImage\" />
-    <Folder Include="wwwroot\upload\userImage\thumbnailImage\" />
+    <Folder Include="wwwroot\upload\userImage\normalImage\" />
   </ItemGroup>
 
   <ItemGroup>
