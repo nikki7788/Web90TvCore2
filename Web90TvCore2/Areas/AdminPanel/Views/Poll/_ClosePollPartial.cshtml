@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-<form asp-controller="News" asp-action="Delete">
+<form asp-controller="Poll" asp-action="ClosePoll">
 
     @await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalHeaderPartial.cshtml",
     new ModalHeader { Heading = "بستن نطرسنجی", BootstrapVersion = BootstrapVr.version3 })

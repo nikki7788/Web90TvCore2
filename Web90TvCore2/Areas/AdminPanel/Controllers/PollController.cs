@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
 using Web90TvCore2.PublicClass;
@@ -16,16 +17,18 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
     /// نطرسنجی
     /// </summary>
     [Area("AdminPanel")]
-    [Authorize(Roles = "poll")]
+    [Authorize(Roles = "Poll")]
     public class PollController : Controller
     {
 
         #region ######## Dependencies  ##########################
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IpollRepoService   _pollRepoService;
 
-        public PollController(IUnitOfWork unitOfWork)
+        public PollController(IUnitOfWork unitOfWork,IpollRepoService pollRepoService)
         {
             _unitOfWork = unitOfWork;
+            _pollRepoService = pollRepoService;
         }
         #endregion #####################
 
@@ -82,7 +85,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         Poll poll = new Poll
                         {
                             Question = model.Question,
-                            PollStartDate = PersianDateAndTime.PersianDateNow().Item1,
+                            PollStartDate = PersianDateAndTime.PersianDateNow().Item2,
                             Active = true
                         };
                         await _unitOfWork.PollRepoUW.Create(poll);
@@ -194,7 +197,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         }
 
         /// <summary>
-        /// 
+        /// بستن نطر سنجی ===نمایش مودل
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
@@ -210,12 +213,20 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
             {
                 return NotFound();
             }
-            return PartialView("_closepoll", pl);
+            return PartialView("_ClosePollPartial", pl.Question);
         }
 
-        public IActionResult ClosePoll(int id)
+
+        /// <summary>
+        /// بستن نظرسنجی
+        /// </summary>
+        /// <param name="id">شناسه نظرسنجی</param>
+        /// <returns></returns>
+        [HttpPost,ActionName("ClosePoll")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ClosePollConfirm(int id)
         {
-            _ipr.ClosePoll(id);
+            _pollRepoService.ClosePoll(id);
             return RedirectToAction("Index");
         }
 

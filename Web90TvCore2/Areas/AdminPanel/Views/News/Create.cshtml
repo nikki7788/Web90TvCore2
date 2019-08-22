@@ -85,7 +85,7 @@
 
             @* تصویر شاخص *@
             <div class="form-group row">
-                <div class="col-md-4">
+                <div class="col-md-4 col-lg-4">
                     <label asp-for="IndexImage" class="control-label"></label>
                     <div class="form-horizontal">
                         <input asp-for="IndexImage" type="file" id="files" name="files" />
@@ -94,7 +94,7 @@
                     <span asp-validation-for="IndexImage" class="text-danger"></span>
                 </div>
 
-                <div class="col-md-4" style="margin-right:15px">
+                <div class="col-md-4 col-lg-6" style="margin-right:15px">
                     <!--برای وقتی که تص.یری آپ.ل.د نشده است تصویر پیش فرض را نشان دهد-->
                     @if (ViewBag.ImgNM == null)
                     {

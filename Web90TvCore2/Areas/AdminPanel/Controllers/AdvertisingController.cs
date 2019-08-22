@@ -97,13 +97,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
 
-<<<<<<< HEAD
-        /// <summary>
-        /// ایجاد تبلیغ
-        /// ایجاد تبلیغ متد پست
-=======
 
->>>>>>> a623eda4aee2261035980a4f25504562bd1d71a2
         /// </summary>
         /// <param name="model">مدل دریافتی از ویو </param>
         /// <returns></returns>
