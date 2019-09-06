@@ -1,47 +1,68 @@
-﻿<div id="poll">
-    <span class="news-header ul-title-tabs-color">نظر سنجی</span>
-    <div class="hr-divider"></div>
-    <form>
-        <!--start "poll-content-->
-        <div id="poll-content">
-            <div id="poll-statement">
-                نتیجه بازی پرپولیس - تراکتور سازی
+﻿
+@model Poll
+
+@inject Web90TvCore2.Models.UnitOfWork.IUnitOfWork Context
+@inject IHttpContextAccessor httpCo
+
+@{
+    ///دریافت گزینه های نظرسنجی
+    var answerList = Context.PollOptionRepoUW.Get(a => a.PollID == Model.PollId);
+}
+<style>
+    tr > td > div > label {
+        font-size: 18px !important;
+        font-weight: 500 !important;
+    }
+</style>
+
+@if (httpCo.HttpContext.Request.Cookies["poll" + Model.PollId] == null)
+{
+    ///--------------  اگر به نظر سنجی رای داده نشده بود -----------
+    <div id="poll" class="p-2">
+        <span class="news-header ul-title-tabs-color">نظر سنجی</span>
+        <div class="hr-divider"></div>
+        <form>
+            <!--start "poll-content-->
+            <div id="poll-content">
+                <div id="poll-statement" class="font-weight-bold">
+                    <span>    @Model.Question</span>
+                </div>
+                <table>
+                    @foreach (var item in answerList.Result.ToList())
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-group form-check-inline">
+                                    <label class="form-check-label ">
+                                        <input value="" type="radio" name="r1" class=" form-check-input ml-2" id="@item.PolloptionID" />
+                                        @item.Answer
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+
+                </table>
+            </div> <!--/poll-content-->
+
+            <div class="d-none" id="getpollid">@Model.PollId</div>
+            <div class="d-flex justify-content-end mb-3 ml-4">
+                <button id="btnpolling" type="button" class="btn btn-success pt-1 pb-1">ثبت نطر</button>
             </div>
-            <table>
-                <tr>
-                    <td>
-                        <div class="form-group form-check-inline">
-                            <label class="form-check-label">
-                                <input value="" type="radio" name="p" class="form-check-input" />
-                                برد پرسپولیس
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" name="p" class="form-check-input" />
-                                مساوی
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group form-check-inline">
-                            <label class="form-check-label">
-                                <input value="" type="radio" name="p" class="form-check-input" />
-                                برد تراکتورسازی
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div> <!--end poll-content-->
-    </form>
-    <div class="d-flex justify-content-end mb-3 ml-4">
-        <button type="button" class="btn btn-success pt-1 pb-1">ثبت نطر</button>
+
+        </form>
+
     </div>
-</div>
+}
+else
+{
+    ///------------  گر به نظر سنجی رای داده شده بود نمودار رانمایش میدهد ------------
+    <div id="poll" class="p-2">
+        <span class="news-header ul-title-tabs-color">نظر سنجی</span>
+        <div class="hr-divider"></div>
+
+        نمایش نمودار نتایج
+
+    </div>
+}

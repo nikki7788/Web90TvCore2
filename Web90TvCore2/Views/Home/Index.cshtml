@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "صفحه اصلی";
 }
+@* sweetalert *@
+<link href="~/node_modules/sweetalert2/dist/sweetalert2.css" rel="stylesheet" />
 <!-- General container-->
 <div id="container" class="container-fluid">
     <!--start header-->
@@ -46,7 +48,6 @@
                 <!--start last-videos-->
                 @await Html.PartialAsync("PartialViews/_LastVideosPartial", Model.LastVideos)
                 <!--End last videos-->
-
                 <!--start the  advers below slider-->
                 @foreach (var item in Model.Advertises.Where(a => a.AdvLocation == 4))
                 {
@@ -67,7 +68,11 @@
                 @await Html.PartialAsync("PartialViews/_NewspapersPartial")
                 <!--end newspapers-->
                 <!--start poll-->
-                @await Html.PartialAsync("PartialViews/_PollPartial")
+                @if (Model.Poll != null)
+                {
+                    @await Html.PartialAsync("PartialViews/_PollPartial", Model.Poll)
+
+                }
                 <!--end poll-->
                 <!--start Login-->
                 @await Html.PartialAsync("PartialViews/_LoginPartial", Model.LoginVM)
@@ -84,7 +89,11 @@
     @await Html.PartialAsync("PartialViews/_FooterPartial")
     <!--End footer-->
 </div><!--end container-->
+
 @section scripts{
+    @* sweetaalert *@
+    <script src="~/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+
     <script>
         //$(document).ready(function () {
 
@@ -132,6 +141,56 @@
         //});
 
     </script>
+
+    <script>
+        $('#btnpolling').on('click', function (e) {
+            e.preventDefault();
+
+            var answerId = $('input[name=r1]:checked').attr('id');
+            var pollId = $('#getpollid').text();
+
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("SetVote","Home")',
+                data: { answerId: answerId, pollId: pollId },
+                success: function (msg) {
+                    if (msg.status == 'success') {
+                       Swal.fire({
+                        type: "success",
+                        html: "<span class='text-dark ' style:'font-weight: bold'>نظر شما باموفقیت ثبت شد</span>",
+                        animation: false,
+                        confirmButtonColor: '#28a745',
+                        confirmButtonText: 'تایید',
+                    });
+                        $('#poll').html('از اینکه در نظرسنجی شرکت کردید متشکریم');
+                    }
+                }
+            }).done(function (msg) {
+                if (msg.status == 'fail') {
+                    Swal.fire({
+                        type: "warning",
+                        html: "<span class='text-dark ' style:'font-weight: bold'>لطفا برای شرکت در نظرسنجی یکی از گزینه ها را انتخاب نمایید</span>"
+                        ,
+                        animation: false,
+                        confirmButtonColor: 'rgb(236, 155, 84)',
+                        confirmButtonText: 'تایید',
+                    });
+
+                } else if (msg.status==="duplicate") {
+                        Swal.fire({
+                        type: "warning",
+                        html: "<span class='text-dark ' style:'font-weight: bold'>شما قبلا در این نظر سنجی شرکت کرده اید</span>"
+                        ,
+                        animation: false,
+                        confirmButtonColor: 'rgb(236, 155, 84)',
+                        confirmButtonText: 'تایید',
+                    });
+                }
+            });
+        });
+    </script>
+
+
 
 
     <script>

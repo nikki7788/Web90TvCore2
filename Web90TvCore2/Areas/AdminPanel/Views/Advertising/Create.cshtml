@@ -102,7 +102,7 @@
                 <div class="form-group">
                     <img id="advImg" class="img-bordered col-md-12 col-xs-12 col-sm-12"
                          src="~/image/advdefault.jpg" alt="advertiseImage"
-                          style="height:150px; width:150px; margin:5px auto;"  />
+                         style="height:150px; width:150px; margin:5px auto;" />
                 </div>
             }
             else
@@ -129,39 +129,39 @@
     <script>
            var UploadImage = function () {
             var data = new FormData;
-            var file = $("#files").get(0);
+                 var file = $("#files").get(0);
             var files = file.files;
 
             for (var i = 0; i < files.length; i++) {
                 data.append('files', files[i]);
             }
 
-            $.ajax({
+
+               $.ajax({
                 type: "post",
                 url: '@Url.Action("UploadFile","Advertising", new { area = "AdminPanel"})',
                 data: data,
                 contentType: false,
                 processData: false,
-            }).done(function (result) {
-                if (result.status == "success") {
+
+
+               }).done(function (result) {
+
+                   if (result.status == "success") {
 
                     //برای نمایش تصویر کاربر
-
                     $("#advImg").attr('src', "\\upload\\advImage\\" + result.imageName);
-
                     $("#divmessage").removeClass('hidden');
                     $("#divmessage").text("تصویر با موفقیت آپلود شد");
-
                     //ذخیره نام تصویر در تگ و پراپرتی جدول خبر
                     $("#GifPath").val(result.imageName);
-                }
-            }).fail(function (result) {
-                if (result.status != "success") {
-                    $("#divmessage").removeClass('hidden');
-                    $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
-
-                }
-            });
-        };
+                   }
+               }).fail(function (result) {
+                   if (result.status != "success") {
+                       $("#divmessage").removeClass('hidden');
+                       $("#divmessage").text("در هنگام آپلود مشکلی رخ داد");
+                   }
+               });
+           };
     </script>
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web90TvCore2.Models;
+using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
 using Web90TvCore2.Models.ViewModels;
 using Web90TvCore2.PublicClass;
@@ -16,16 +17,19 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
     /// نطرسنجی
     /// </summary>
     [Area("AdminPanel")]
-    [Authorize(Roles = "poll")]
+    [Authorize(Roles = "Poll")]
     public class PollController : Controller
     {
 
         #region ######## Dependencies  ##########################
         private readonly IUnitOfWork _unitOfWork;
 
-        public PollController(IUnitOfWork unitOfWork)
+        private readonly IPollService _pollService;
+
+        public PollController(IUnitOfWork unitOfWork, IPollService pollService)
         {
             _unitOfWork = unitOfWork;
+            _pollService = pollService;
         }
         #endregion #####################
 
@@ -82,7 +86,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         Poll poll = new Poll
                         {
                             Question = model.Question,
-                            PollStartDate = PersianDateAndTime.PersianDateNow().Item1,
+                            PollStartDate = PersianDateAndTime.PersianDateNow().Item2,
                             Active = true
                         };
                         await _unitOfWork.PollRepoUW.Create(poll);
@@ -194,28 +198,35 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         }
 
         /// <summary>
-        /// 
+        /// نمایش مودال بستن نظرسنجی
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task< IActionResult> ClosePoll(int? Id)
+        public async Task<IActionResult> ClosePoll(int? Id)
         {
             if (Id == null)
             {
                 return NotFound();
             }
-            Poll pl =await _unitOfWork.PollRepoUW.GetById(Id);
+            Poll pl = await _unitOfWork.PollRepoUW.GetById(Id);
             if (pl == null)
             {
                 return NotFound();
             }
-            return PartialView("_closepoll", pl);
+            return PartialView("_ClosePollPatial", pl);
         }
 
-        public IActionResult ClosePoll(int id)
+
+        /// <summary>
+        /// بستن نظرسنجی
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPost,ActionName("ClosePoll")]
+        public IActionResult ClosePollConfirm(int Id)
         {
-            _ipr.ClosePoll(id);
+            _pollService.ClosePoll(Id);
             return RedirectToAction("Index");
         }
 

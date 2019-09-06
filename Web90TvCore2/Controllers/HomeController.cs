@@ -27,15 +27,18 @@ namespace Web90TvCore2.Controllers
         private readonly SignInManager<ApplicationUsers> _signInManager;
         private readonly INewsService _newsService;
         private readonly ICommentService _comentService;
+        private readonly IPollService _pollService;
+
 
         public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork,
-            UserManager<ApplicationUsers> userManager, INewsService newsService, ICommentService commentService)
+            UserManager<ApplicationUsers> userManager, INewsService newsService, ICommentService commentService,IPollService pollService)
         {
             _userManager = userManager;
             _unitOfWork = UnitOfWork;
             _signInManager = signInManager;
             _newsService = newsService;
             _comentService = commentService;
+            _pollService = pollService;
         }
 
 
@@ -100,6 +103,20 @@ namespace Web90TvCore2.Controllers
                 && a.Flag==0)).Result.ToList();
 
             //model.loginVM=
+
+
+            ///نظرسنجی
+            if ( _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Count() == 1)
+            {
+                ///نمایش نظرسنجی
+                var pollresult = _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Single();
+                model.Poll = pollresult;
+            }
+            else
+            {
+                //نظر سنجی فعالی وجود ندارد
+                model.Poll = null;
+            }
             return View(model);
 
 
@@ -211,7 +228,11 @@ namespace Web90TvCore2.Controllers
         }
 
 
-
+        /// <summary>
+        /// لایک کامنت
+        /// </summary>
+        /// <param name="cmId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Like(int cmId)
         {
@@ -308,7 +329,11 @@ namespace Web90TvCore2.Controllers
         }
 
 
-
+        /// <summary>
+        /// دیسلایک کامنت
+        /// </summary>
+        /// <param name="cmId"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Dislike(int cmId)
         {
@@ -404,6 +429,41 @@ namespace Web90TvCore2.Controllers
 
         }
 
+
+        /// <summary>
+        /// ثبت رای نظرسنجی
+        /// </summary>
+        /// <param name="answerId"></param>
+        /// <param name="pollId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult SetVote(int answerId, int pollId)
+        {
+            if (answerId != 0 && pollId != 0)
+            {
+                //یعنی کاربر یک گزینه را انتخاب کرده است
+                if (Request.Cookies["poll" + pollId] == null)
+                {
+                    //یعنی کاربر اولین بار است که می خواهد در این رای گیری شرکت نماید
+                    Response.Cookies.Append("poll" + pollId, "kjdhsfkshfsdkjfhs",
+                        new Microsoft.AspNetCore.Http.CookieOptions() { Expires = DateTime.Now.AddMonths(1) });
+
+                    //ثبت رای
+                    _pollService.SetVote(answerId);
+                    return Json(new { status = "success" });
+                }
+                else
+                {
+                    //کاربر قبلا رای داده است
+                    return Json(new { status = "duplicate" });
+                }
+            }
+            else
+            {
+                //کاربر هیچ گزینه ای را انتخاب نکرده است و روی ثبت نظر کلیک کرده است
+                return Json(new { status = "fail" });
+            }
+        }
 
 
 
