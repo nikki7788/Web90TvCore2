@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,6 +132,43 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> PollResult(int Id)
+        {
+            ///------------ آوردن اطلاعات نظرسنجی ----------------------
+            var pollResult = _unitOfWork.PollRepoUW.Get(p => p.PollId == Id).Result.Single();
+
+
+            //نمایش نتایج به صورت نمودار
+            List<PollResultViewModel> pollRes = new List<PollResultViewModel>();
+            foreach (PollOption vr in await _unitOfWork.PollOptionRepoUW.Get(p => p.PollID == pollResult.PollId))
+            {
+                ///-------  مقدار دهی ویو مدل نمایش نایج نظر سنجی -------
+                PollResultViewModel pRes = new PollResultViewModel()
+                {
+                    /// حتما باید با حروف کوچک باشد نام پاپرتی ها تا خطا ندهد در نمایش
+                    label = vr.Answer ,
+                    data = vr.VouteCount
+                };
+                ///-------- افزودن هرگزینه و نتیجه ان به لیستی از ویو مدل برای ارسال به ویو برای نمایش نتایج -------
+                pollRes.Add(pRes);
+            }
+
+            ///------- برای اینکه نال به ویو ارسال نشود و باکس نمایش داده شود .نظر سنجی فعال را به ویو ارسال گردیم -------------
+            ///---------------  تبدیل لیست ویو مدل نمایش نتایج به فرمت جیسان بای ارسال به ویو  پارشال نظر سنجی ----------------
+            ViewBag.getListOfAnswer = JsonConvert.SerializeObject(pollRes);
+            return PartialView("_PollResultPartial", pollResult);
+        }
+
+
+
+
+
+        /// <summary>
         /// نمایش مودال حذف نطر سنجی
         /// </summary>
         /// <param name="Id"></param>
@@ -223,7 +261,7 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpPost,ActionName("ClosePoll")]
+        [HttpPost, ActionName("ClosePoll")]
         public IActionResult ClosePollConfirm(int Id)
         {
             _pollService.ClosePoll(Id);

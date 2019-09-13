@@ -6,12 +6,14 @@
     font-style: normal;
     src: url('../font/yekan/yekan.eot') format('embedded-opentype'),url('../font/yekan/yekan.ttf') format('truetype'),url('../font/yekan/yekan.woff') format('woff');
 }
+
 @font-face {
     font-family: Vazir;
     src: url('~/fonts/Vazir-FD-WOL.eot');
     src: url('~/fonts/Vazir-FD-WOL.eot?#iefix') format('embedded-opentype'), url('~/fonts/Vazir-FD-WOL.woff') format('woff'), url('../fonts/Vazir-FD-WOL.ttf') format('truetype');
     font-weight: normal;
 }
+
 * {
     padding: 0;
     margin: 0;
@@ -19,7 +21,7 @@
 }
 
 body {
-    font-family:Vazir!important;
+    font-family: Vazir !important;
     background-color: rgb(251,251,251);
 }
 
@@ -80,15 +82,16 @@ a {
     padding-left: 3px;
     margin-bottom: 10px;
 }
-.last-info>ul>li{
-    font-size:14px;
-}
+
+    .last-info > ul > li {
+        font-size: 14px;
+    }
 
 #newspapers {
     border-radius: 2px;
     border: 1px solid rgb(200,200,200);
     background-color: white;
-    padding:8px 6px 10px  6px;
+    padding: 8px 6px 10px 6px;
     /*padding-top: 8px 6px;
     padding-right: 6px;
     padding-left: 6px;
@@ -100,7 +103,7 @@ h6 {
     color: rgb(248, 248, 248);
 }
 
-#poll, #login {
+#poll, #poll-res, #login {
     border-radius: 2px;
     border: 1px solid rgb(200,200,200);
     background-color: white;
@@ -159,10 +162,10 @@ h6 {
 }
 
 
-.advers>div>img {
-/*تبلیغات ست چپ-هم راستا کردن با منو بار*/
-    width:100%;
-} 
+.advers > div > img {
+    /*تبلیغات ست چپ-هم راستا کردن با منو بار*/
+    width: 100%;
+}
 
 .special-news {
     border-radius: 2px;
@@ -273,7 +276,7 @@ h6 {
     }
 
 /*div.row + div*/
-.asd{
+.asd {
     margin-top: 15px;
     margin-bottom: 20px;
 }

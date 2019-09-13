@@ -13,6 +13,13 @@
         font-size: 18px !important;
         font-weight: 500 !important;
     }
+
+    .chartClass {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        font-size:25px !important;
+    }
 </style>
 
 @if (httpCo.HttpContext.Request.Cookies["poll" + Model.PollId] == null)
@@ -54,15 +61,27 @@
         </form>
 
     </div>
+
+    ///-----------------------   وقتی کاربر روی ارسال نطر کلیک کزد نتایج نظر سنجی نمایش داده شود --------------------------
+   ///----------  در ابتدا مخفی است بعد از رای دادن نمایش داده میشود و لعد از رفرش صفحه دیگر نمایش داده نمیشود میرو.د ب بلاک پایین ----------------
+    <div id="poll-res" class="d-none">
+        <span class="news-header ul-title-tabs-color">نظر سنجی</span>
+        <div class="hr-divider"></div>
+        <div id="pie-chart" class="chartClass"></div>
+    </div>
+
+
 }
 else
 {
+
+
     ///------------  گر به نظر سنجی رای داده شده بود نمودار رانمایش میدهد ------------
-    <div id="poll" class="p-2">
+    <div id="poll" class="">
         <span class="news-header ul-title-tabs-color">نظر سنجی</span>
         <div class="hr-divider"></div>
-
-        نمایش نمودار نتایج
-
+        <div id="pie-chart" class="chartClass"></div>
     </div>
 }
+
+

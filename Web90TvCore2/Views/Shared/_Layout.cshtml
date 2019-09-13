@@ -11,7 +11,7 @@
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="~/css/myStyle.css" rel="stylesheet" />
-
+        
         <!--loading on button   لودینگ روی دکمه نمایش داده شود-->
 
 
@@ -41,11 +41,19 @@
 
 
     <environment include="Development">
-        <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
 
+        <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!--flot chart-->
+        <script src="~/node_modules/flot/dist/es5/jquery.flot.js"></script>
+        <script src="~/node_modules/flot/source/jquery.flot.pie.js"></script>
+
+        <!--/-->
+        <script src="~/js/site.js" asp-append-version="true"></script>
         <!--loading on button   لودینگ روی دکمه نمایش داده شود-->
+        <!--/-->
 
     </environment>
     @*<environment exclude="Development">

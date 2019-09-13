@@ -89,11 +89,15 @@
     @await Html.PartialAsync("PartialViews/_FooterPartial")
     <!--End footer-->
 </div><!--end container-->
+<!-- دریافت ویو مدل نمایش نتایج نظر سنجی  -->
+<div class="d-none" id="getListOfAnswer">@ViewBag.getListofAnswer</div>
+
 
 @section scripts{
     @* sweetaalert *@
     <script src="~/node_modules/sweetalert2/dist/sweetalert2.js"></script>
 
+    @* ارسال فرم لاگین *@
     <script>
         //$(document).ready(function () {
 
@@ -142,6 +146,7 @@
 
     </script>
 
+    @* ثبت رای نطر سنجی *@
     <script>
         $('#btnpolling').on('click', function (e) {
             e.preventDefault();
@@ -155,15 +160,34 @@
                 data: { answerId: answerId, pollId: pollId },
                 success: function (msg) {
                     if (msg.status == 'success') {
-                       Swal.fire({
-                        type: "success",
-                        html: "<span class='text-dark ' style:'font-weight: bold'>نظر شما باموفقیت ثبت شد</span>",
-                        animation: false,
-                        confirmButtonColor: '#28a745',
-                        confirmButtonText: 'تایید',
-                    });
-                        $('#poll').html('از اینکه در نظرسنجی شرکت کردید متشکریم');
-                    }
+                        Swal.fire({
+                            type: "success",
+                            html: "<span class='text-dark ' style:'font-weight: bold'>نظر شما باموفقیت ثبت شد</span>",
+                            animation: false,
+                            confirmButtonColor: '#28a745',
+                            confirmButtonText: 'تایید',
+                        }).then(function () {
+                            $('#poll').remove();
+                            $("#poll-res").removeClass("d-none");
+                            ///---------flot نمایش نتایج نطظر سنجی به صورت نمودار*-------------------
+
+                            ///---------- دریافت نتایج نظر سنجی که به  فرمت جیسان است و تبدیل ان ارایه  ------------
+                            var data = msg.getListOfAnswer;
+                            ///--------تبدیل آرایه ریافتی از کنترلر به نوعع آبجکت -------------
+                            var dataObject = $.parseJSON(data);
+                            ///  flot تنظیمات پلاگین نمایش نمودار
+                            var options = {
+                                series: {
+                                    pie: { show: true }
+                                },
+                                legend: {
+                                    show: false
+                                }
+                            };
+                            ///------- قبول میکند data فقط نوع آبجکت برای  -----------
+                            $.plot($("#pie-chart"), dataObject, options);
+                        })
+                            };
                 }
             }).done(function (msg) {
                 if (msg.status == 'fail') {
@@ -190,9 +214,43 @@
         });
     </script>
 
+    @* chart*@
+    @*flot نمایش نتایج نطظر سنجی به صورت نمودار*@
+    <script>
+
+        ///---------- دریافت نتایج نظر سنجی که به  فرمت جیسان است و تبدیل ان ارایه  ------------
+        var data = $('#getListOfAnswer').text();
+
+        ///--------تبدیل آرایه ریافتی از کنترلر به نوعع آبجکت -------------
+        //var dataObject = JSON.stringify(data);
+        var dataObject = $.parseJSON(data);
+        //var dataObject = JSON.parse(data);
+
+        //var dataObject = [
+        //    { label: "Pause", data: 150 },
+        //    { label: "No Pause", data: 100 },
+        //    { label: "Sleeping", data: 250 }
+        //];
+        ///  flot تنظیمات پلاگین نمایش نمودار
+        var options = {
+            series: {
+                pie: { show: true }
+            },
+            legend: {
+                show: false
+            }
+        };
+
+        ///------- قبول میکند data فقط نوع آبجکت برای  -----------
+        $.plot($("#pie-chart"), dataObject, options);
+        //var plot = $("#pie-chart").plot(dataObject, options).data("plot");
+    </script>
 
 
 
+
+
+    @* نمایش تب ها *@
     <script>
         $('#myTabs a').click(function (e) {
             e.preventDefault()

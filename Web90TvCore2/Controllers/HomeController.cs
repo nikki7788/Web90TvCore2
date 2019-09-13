@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.Service;
 using Web90TvCore2.Models.UnitOfWork;
@@ -31,7 +32,7 @@ namespace Web90TvCore2.Controllers
 
 
         public HomeController(SignInManager<ApplicationUsers> signInManager, IUnitOfWork UnitOfWork,
-            UserManager<ApplicationUsers> userManager, INewsService newsService, ICommentService commentService,IPollService pollService)
+            UserManager<ApplicationUsers> userManager, INewsService newsService, ICommentService commentService, IPollService pollService)
         {
             _userManager = userManager;
             _unitOfWork = UnitOfWork;
@@ -98,31 +99,62 @@ namespace Web90TvCore2.Controllers
             string pDate = PersianDateAndTime.PersianDateNow().Item2;
             ///تمام تبلیغاتی که تاریخ انها در بازه تاریخ ذکر شده قرار داشته باشدو وضعیت نمایش انها روی نمایش یعنی صفر باشد را میاورد
             model.Advertises = _unitOfWork.AdveriseRepUW.Get(
-                a=>(a.FromDate.CompareTo(pDate)<=0
-                && a.ToDate.CompareTo(pDate) >=0
-                && a.Flag==0)).Result.ToList();
+                a => (a.FromDate.CompareTo(pDate) <= 0
+                && a.ToDate.CompareTo(pDate) >= 0
+                && a.Flag == 0)).Result.ToList();
 
             //model.loginVM=
 
 
-            ///نظرسنجی
-            if ( _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Count() == 1)
+            ///---------------- نظر سنجی --------------
+            if (_unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Count() == 1)
             {
-                ///نمایش نظرسنجی
-                var pollresult = _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Single();
-                model.Poll = pollresult;
+                ///------------نظرسنجی فعالی وجود داشت--------------------------
+                ///------------ آوردن اطلاعات نظرسنجی ----------------------
+                var pollResult = _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Single();
+
+                if (Request.Cookies["poll" + pollResult.PollId] == null)
+                {
+                    ///کابر رای نداده است 
+                    ///نمایش نظرسنجی
+                    model.Poll = pollResult;
+
+                }
+                else
+                {
+                    //کاربر در نظرسنجی شرکت کرده است
+                    //نمایش نتایج به صورت نمودار
+                    List<PollResultViewModel> pollRes = new List<PollResultViewModel>();
+                    foreach (PollOption vr in await _unitOfWork.PollOptionRepoUW.Get(p => p.PollID == pollResult.PollId))
+                    {
+                        ///-------  مقدار دهی ویو مدل نمایش نایج نظر سنجی -------
+                        PollResultViewModel pRes = new PollResultViewModel()
+                        {
+                            ///todo:مهم
+                            /// حتما باید با حروف کوچک باشد نام پاپرتی ها تا خطا ندهد در نمایش
+                            data = vr.VouteCount,
+                            label = vr.Answer
+                        };
+                        ///-------- افزودن هرگزینه و نتیجه ان به لیستی از ویو مدل برای ارسال به ویو برای نمایش نتایج -------
+                        pollRes.Add(pRes);
+
+                    }
+                    ///------- برای اینکه نال به ویو ارسال نشود و باکس نمایش داده شود .نظر سنجی فعال را به ویو ارسال گردیم -------------
+                    model.Poll = pollResult;
+                    ///---------------  تبدیل لیست ویو مدل نمایش نتایج به فرمت جیسان بای ارسال به ویو  پارشال نظر سنجی ----------------
+                    ViewBag.getListOfAnswer = JsonConvert.SerializeObject(pollRes);
+
+                }
+
             }
             else
             {
-                //نظر سنجی فعالی وجود ندارد
+                ///نظر سنجی فعالی وجود ندارد
+                ///۰---- برای ویو نال ارسال میشود و به خاطر شرط در ویو چیزی نمایش داده نمیشود-----
                 model.Poll = null;
             }
             return View(model);
-
-
         }
-
-
 
 
         /// <summary>
@@ -172,7 +204,7 @@ namespace Web90TvCore2.Controllers
         /// شناسه خبری که درمورد ان نظرات ثبت میشود
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId,int cmId)
+        public async Task<IActionResult> InsertComment(string txtEmail, string txtFullname, string txtComment, int newsId, int cmId)
         {
 
 
@@ -270,14 +302,14 @@ namespace Web90TvCore2.Controllers
 
                     await _comentService.IncreaseLike(cmId);
                     //اگر کامنت دیسلایک شده باشد قبلا توسط این کابر و الان لایک کند از تعداد دیسلایک کم میشود و به لایک اضافه میشود
-                    return Json(new { status = "success", result = IsExistCm.LikeCount,result2=IsExistCm.DisLikeCount, backId = cmId });
+                    return Json(new { status = "success", result = IsExistCm.LikeCount, result2 = IsExistCm.DisLikeCount, backId = cmId });
                 }
                 else
-                { 
+                {
                     //اگر کوکی از قبل وجود داشت
-                   
+
                     string cookieContent = Request.Cookies["_cm"].ToString();
-                    
+
                     if (cookieContent.Contains("," + cmId + ","))
                     {
                         //اگر کاربر خواست یک کامنت را 2 بار لایک کند
@@ -371,7 +403,7 @@ namespace Web90TvCore2.Controllers
 
                     await _comentService.IncreaseDislike(cmId);
                     //اگر کامنت لایک شده باشد قبلا توسط این کابر و الان دیسلایک کند از تعداد لایک کم میشود و به دیسلایم اضافه میشود
-                    return Json(new { status = "success", result = IsExistCm.DisLikeCount,result2= IsExistCm.LikeCount, backId = cmId });
+                    return Json(new { status = "success", result = IsExistCm.DisLikeCount, result2 = IsExistCm.LikeCount, backId = cmId });
                 }
                 else
                 {
@@ -406,7 +438,7 @@ namespace Web90TvCore2.Controllers
 
                         await _comentService.IncreaseDislike(cmId);
                         //اگر کامنت لایک شده باشد قبلا توسط این کابر و الان دیسلایک کند از تعداد لایک کم میشود و به دیسلایم اضافه میشود
-                        return Json(new { status = "success", result = IsExistCm.DisLikeCount,result2 = IsExistCm.LikeCount, backId = cmId });
+                        return Json(new { status = "success", result = IsExistCm.DisLikeCount, result2 = IsExistCm.LikeCount, backId = cmId });
                     }
                 }
             }
@@ -437,7 +469,7 @@ namespace Web90TvCore2.Controllers
         /// <param name="pollId"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult SetVote(int answerId, int pollId)
+        public async Task<IActionResult> SetVote(int answerId, int pollId)
         {
             if (answerId != 0 && pollId != 0)
             {
@@ -448,9 +480,31 @@ namespace Web90TvCore2.Controllers
                     Response.Cookies.Append("poll" + pollId, "kjdhsfkshfsdkjfhs",
                         new Microsoft.AspNetCore.Http.CookieOptions() { Expires = DateTime.Now.AddMonths(1) });
 
-                    //ثبت رای
+                    ///ثبت رای
                     _pollService.SetVote(answerId);
-                    return Json(new { status = "success" });
+
+                    ///-------------------*****************نمایش نتایج به صورت نمودار-*****************----------------------------
+                    var pollResult = _unitOfWork.PollRepoUW.Get(p => p.Active == true).Result.Single();
+
+                    List<PollResultViewModel> pollRes = new List<PollResultViewModel>();
+                    foreach (PollOption vr in await _unitOfWork.PollOptionRepoUW.Get(p => p.PollID == pollResult.PollId))
+                    {
+                        ///-------  مقدار دهی ویو مدل نمایش نایج نظر سنجی -------
+                        PollResultViewModel pRes = new PollResultViewModel()
+                        {
+                            ///todo:مهم
+                            /// حتما باید با حروف کوچک باشد نام پاپرتی ها تا خطا ندهد در نمایش
+                            data = vr.VouteCount,
+                            label = vr.Answer
+                        };
+                        ///-------- افزودن هرگزینه و نتیجه ان به لیستی از ویو مدل برای ارسال به ویو برای نمایش نتایج -------
+                        pollRes.Add(pRes);
+
+                    }
+                    ///------- برای اینکه نال به ویو ارسال نشود و باکس نمایش داده شود .نظر سنجی فعال را به ویو ارسال گردیم -------------
+                    ///---------------  تبدیل لیست ویو مدل نمایش نتایج به فرمت جیسان بای ارسال به ویو  پارشال نظر سنجی ----------------
+                    return Json(new { status = "success", getListOfAnswer = JsonConvert.SerializeObject(pollRes) });
+
                 }
                 else
                 {

@@ -58,6 +58,11 @@
                                 <i class="glyphicon glyphicon-trash"></i>
                                 حذف
                             </a>
+                            <a class="btn btn-secondary" asp-controller="Poll" asp-action="PollResult"
+                               asp-route-id="@item.PollId" id="poll-id" data-toggle="modal" data-target="#modal-action-poll">
+                                <i class="glyphicon glyphicon-glass"></i>
+                                نتیجه نطر سنجی
+                            </a>
                         </td>
                     </tr>
                 }
@@ -66,9 +71,14 @@
     </div>
 </div>
 
+
 @await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalPartial.cshtml",
     new BootstrapModel { Id = "modal-action-poll", Size = ModalSize.Medium })
 
 @section panelScript{
     <script src="~/js/modal-js/all-index.js"></script>
+    <!--flot chart-->
+    <script src="~/node_modules/flot/dist/es5/jquery.flot.js"></script>
+    <script src="~/node_modules/flot/source/jquery.flot.pie.js"></script>
 }
+

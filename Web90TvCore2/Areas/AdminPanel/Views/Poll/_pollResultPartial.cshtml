@@ -1,0 +1,102 @@
+﻿
+
+@model Poll
+
+@inject Web90TvCore2.Models.UnitOfWork.IUnitOfWork Context
+
+@{
+    var answerList = Context.PollOptionRepoUW.Get(a => a.PollID == Model.PollId).Result;
+}
+
+
+@{
+    Layout = null;
+}
+<style>
+    .chartClass {
+        width: 350px;
+        height: 300px;
+        margin: 0 auto;
+    }
+
+    .poll-res {
+        padding-right: 15px;
+    }
+</style>
+<div class="poll-res">
+
+    @await Html.PartialAsync("~/Views/Shared/PartialViews/ModalPartial/_ModalHeaderPartial.cshtml",
+    new ModalHeader { Heading = "نتیجه نظر سنجی", BootstrapVersion = BootstrapVr.version3 })
+
+    <div class="modal-body form-horizontal">
+        <div class="text-dark modal-title">" @Model.Question "</div>
+
+        <hr style="height:1px; color:gray;" />
+
+        @*------------  گر به نظر سنجی رای داده شده بود نمودار رانمایش میدهد ------------*@
+        <div id="poll" class=".poll-res">
+            <div id="pie-chart" class="chartClass"></div>
+        </div>
+        <div class="hr-divider"></div>
+
+        <hr style="height:1px; color:gray;" />
+
+
+        <span style="margin-right:20px; color:green">نمایش تعداد آرا به ازای هر پاسخ</span>
+        @foreach (var item in answerList)
+        {
+            <div style="margin-right:15px;">
+                @item.Answer : @item.VouteCount رای
+
+            </div>
+        }
+
+    </div>
+        <div class="modal-footer" style="text-align:left;">
+            <button class="btn btn-default" type="button" data-dismiss="modal">برگشت</button>
+        </div>
+
+    </div>
+
+<div class="hidden" id="getListOfAnswer">@ViewBag.getListOfAnswer</div>
+
+@* chart*@
+@*flot نمایش نتایج نطظر سنجی به صورت نمودار*@
+<script>
+
+    ///---------- دریافت نتایج نظر سنجی که به  فرمت جیسان است و تبدیل ان ارایه  ------------
+
+    //var data = $('#getListOfAnswer').text().split(",");
+    var data = $('#getListOfAnswer').text();
+
+    ///--------تبدیل آرایه ریافتی از کنترلر به نوعع آبجکت -------------
+    ///todo:مهم
+    /// حتما باید با حروف کوچک باشد نام پاپرتی های مدل ارسالی برای چارت تا خطا ندهد در نمایش
+    var dataObject = JSON.parse(data);
+    //var dataObject = $.parseJSON(data);
+
+    //var dataObject = [
+    //    { label: "Pause", data: 150 },
+    //    { label: "No Pause", data: 100 },
+    //    { label: "Sleeping", data: 250 }
+    //];
+
+
+    ///  ---------------flot تنظیمات پلاگین نمایش نمودار-----------------------
+    var options = {
+        series: {
+            pie: {
+                show: true,
+            },
+        },
+        legend: {
+            show: false,
+
+        }
+    };
+
+    ///------- قبول میکند data فقط نوع آبجکت برای  -----------
+    debugger;
+    //$.plot($("#pie-chart"), dataObject, options);
+    var plot = $("#pie-chart").plot(dataObject, options).data("plot");
+</script>
