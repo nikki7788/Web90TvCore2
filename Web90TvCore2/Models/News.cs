@@ -110,6 +110,30 @@ namespace Web90TvCore2.Models
         /// خبر مربوط به چه دسته بندی است
         [Display(Name ="دسته بندی ")]
         public int CategoryId { get; set; }
+
+
+
+        /// <summary>
+        /// متاتگ - Seo
+        /// </summary>
+        /// مرتبط با سیو
+        [Display(Name ="متاتگ")]
+        public string  MetaTag { get; set; }
+
+
+
+        /// <summary>
+        /// متای توضیحات - Seo
+        /// </summary>
+        /// مرتبط با سیو
+        [Display(Name = "متای توضیحات")]
+        public string MetaDescription { get; set; }
+
+
+
+
+
+
         #endregion
 
 

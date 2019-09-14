@@ -95,5 +95,19 @@ namespace Web90TvCore2.Models.ViewModels
         /// </summary>
         public Poll Poll { get; set; }
 
+        /// <summary>
+        /// متاتگ
+        /// </summary>
+        public string Metatag { get; set; }
+
+
+
+        /// <summary>
+        /// متای توضیحات
+        /// </summary>
+
+        public string MetaDescription { get; set; }
+
+
     }
 }

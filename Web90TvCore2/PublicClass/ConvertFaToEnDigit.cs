@@ -31,5 +31,23 @@ namespace Web90TvCore2.PublicClass
 
             return input;
         }
+
+        /// <summary>
+        ///تبدیل اعداد انگلیسی به فارسی
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static string EnToFaDigit(string input)
+        {
+            string[] persian = new string[10] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+
+            for (int j = 0; j < persian.Length; j++)
+                input = input.Replace(persian[j], j.ToString());
+
+            return input;
+        }
+
+
+
     }
 }

@@ -10,29 +10,40 @@
    var newsContext= ViewBag.newsContext;
 }
 
+    <style>
+        .font-big span{
+            font-weight:bolder;
+            padding-right:10px;
+            color:#808080;
+            font-size:18px;
+        }
+        .font-big i{
+            color:#808080;
+        }
+    </style>
 
 
 @* متن خبر *@
 <div id="newsDetails">
     <article class="no-gutter separator-left">
 
-        <section class="meta meta-top">
-            <div class="content-infos float-left">
+        <section class="meta meta-top ">
+            <div class="content-infos float-left font-big">
                 <span>
                     <i class="fa fa-calendar"></i>
-                    <span class="numbers">
+                    <span class="numbers persianumber">
                         @newsContext.NewsDate
                     </span>
                 </span>
                 <span>
                     <i class="fa fa-time"></i>
-                    <span class="numbers">
+                    <span class="numbers persianumber">
                         @newsContext.NewsTime
                     </span>
                 </span>
                 <span>
-                    <i class="fa fa-user"></i>
-                    <span class="numbers">@newsContext.VisitCount</span>
+                    <i class="fa fa-user "></i>
+                    <span class="numbers persianumber">@newsContext.VisitCount</span>
                 </span>
             </div>
         </section>

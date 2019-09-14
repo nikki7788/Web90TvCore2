@@ -122,6 +122,21 @@
                 <select asp-for="NewsPlace" asp-items="@(new SelectList(homeIndexVM,"Id","Title"))" class="form-control"></select>
             </div>
 
+            @** متاتگ *@
+            <div class="form-group">
+                <label asp-for="MetaTag" class="control-label"></label>
+                <div>
+                    <textarea asp-for="MetaTag" class="form-control"></textarea>
+                </div>
+            </div>
+
+            @* متای توضیحات *@
+            <div class="form-group">
+                <label asp-for="MetaDescription" class="control-label"></label>
+                <div>
+                    <textarea asp-for="MetaDescription" class="form-control"></textarea>
+                </div>
+            </div>
 
 
             @* نوع خبر *@

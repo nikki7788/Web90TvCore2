@@ -148,7 +148,9 @@ namespace Web90TvCore2.Areas.AdminPanel.Controllers
                         CategoryId = model.CategoryId,
                         UserId = model.UserId,
                         IndexImage = model.IndexImage,
-                        NewsType = r1
+                        NewsType = r1,
+                        MetaTag=model.MetaTag,
+                        MetaDescription=model.MetaDescription
                     };
                     await _iUintOfWork.NewsRepUW.Create(news);
                     await _iUintOfWork.Save();

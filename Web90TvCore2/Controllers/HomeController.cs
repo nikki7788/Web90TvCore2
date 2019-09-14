@@ -182,13 +182,25 @@ namespace Web90TvCore2.Controllers
             //خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
+          
 
             //به روز رسانی تعدا بازدید خبر
             await _newsService.RefreshVisitCounter(id);
 
             //ارسال مدل متن و جزییات خبر 
             //model.NewsDetails = await _unitOfWork.NewsRepUW.GetById(id);
-            ViewBag.newsContext = await _unitOfWork.NewsRepUW.GetById(id);
+            var newsInfo = await _unitOfWork.NewsRepUW.GetById(id);
+            ViewBag.newsContext = newsInfo;
+
+            
+            //ارسال اطلاعات متاتگ ها
+            ViewData["metaKey"] = newsInfo.MetaTag;
+            ViewData["metadescription"] = newsInfo.MetaDescription;
+            ViewData["Title"] = newsInfo.Title;
+
+            model.Advertises = _unitOfWork.AdveriseRepUW.Get(a => (a.FromDate.CompareTo(PersianDateAndTime.PersianDateNow().Item2)) <= 0
+            && a.ToDate.CompareTo(PersianDateAndTime.PersianDateNow().Item2) >= 0 && a.Flag == 0).Result.ToList();
+
 
             //ارسال مدل نطرات 
             ViewBag.comments = await _unitOfWork.CommentRepUW.Get(n => n.NewsId == id);
