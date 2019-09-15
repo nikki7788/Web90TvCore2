@@ -117,7 +117,7 @@
 
                         @* log Out *@
                         @* todo:logout doesnt work *@
-                        <form action="/Account/LogOut" method="post">
+                        <form action="@Url.Action("Account", "LogOut", new { Area = ""})" method="post">
                             <div class="pull-right">
                                 <button type="submit" class="btn btn-default btn-flat">خروج</button>
                             </div>

@@ -95,7 +95,10 @@ namespace Web90TvCore2.Models.ViewModels
         /// </summary>
         public Poll Poll { get; set; }
 
-
+        /// <summary>
+        /// جستجوی خبر
+        /// </summary>
+        public List<News> NewsSearch { get; set; }
 
 
     }

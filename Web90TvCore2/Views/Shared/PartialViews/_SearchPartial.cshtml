@@ -1,0 +1,92 @@
+﻿@model IEnumerable<News>
+
+<style>
+    .list-content-body figure {
+        float: right;
+        margin-left: 10px
+    }
+
+    #news-page-list { /*end*/
+        border-radius: 2px;
+        padding-top: 2px;
+        border: 1px solid rgb(200,200,200);
+        background-color: white;
+        padding-right: 5px;
+        padding-left: 3px;
+        margin-bottom: 10px;
+    }
+         .font-big span{
+            font-weight:bolder;
+            padding-right:10px;
+            color:#808080;
+            font-size:18px;
+        }
+        .font-big i{
+            color:#808080;
+        }
+</style>
+@if (Model != null)
+{
+
+    <div id="news-page-list" class="widget widget-bordered title-a widget-page">
+        @if (ViewBag.searchVal != null)
+        {
+            <h2 style="font-size:18px;font-weight:800 ; margin:10px;">
+                نتايج جستجو براي عبارت 
+                <span style="font-size:20px;font-weight:bold; color:#e39790;">" @ViewBag.searchVal "</span>
+            </h2>
+            <hr class="hr" />
+        }
+        @foreach (var item in Model)
+        {
+            <article style="padding:5px;">
+                <section class="list-content-body">
+                    <div class="small text-left font-big" style="float:left; position:relative; top:3px; width:100%; margin-bottom:10px;">
+                        <span>
+                            <i class="fa fa-calendar"></i>
+                            <span class="numbers persianumber">
+                                @item.NewsDate
+                            </span>
+                        </span>
+                        <span>
+                            <i class="fa fa-time"></i>
+                            <span class="numbers persianumber">
+                                @item.NewsTime
+                            </span>
+                        </span>
+                        <span>
+                            <i class="fa fa-user "></i>
+                            <span class="numbers persianumber">@item.VisitCount</span>
+                        </span>
+                    </div>
+
+                    <figure>
+                        <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId" >
+                            <img alt="@item.Title" width="150" height="105" src="~/upload/indexImage/@item.IndexImage">
+                        </a>
+                    </figure>
+                    <div style="max-width:80%;">
+                        <h3>
+                            <a asp-controller="Home" asp-action="NewsDetails" asp-route-id="@item.NewsId" style="font-size:16px; font-weight:bold;color:rgb(173, 142, 142)">
+                                @item.Title
+                            </a>
+                        </h3>
+                    </div>
+                    <summary>
+                        @item.Abstract
+                    </summary>
+                    <div class="clearfix"></div>
+                </section>
+            </article>
+
+            <hr style="margin:0;" />
+        }
+
+    </div>
+}
+else
+
+{<div id="news-page-list" class="widget widget-bordered title-a widget-page">
+    <duv class="text-danger col-md-12" style="font-size:18px; text-align:center;">جستجو نتيجه اي نداشت!!!</duv>
+    </div>
+    }

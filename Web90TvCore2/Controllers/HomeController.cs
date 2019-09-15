@@ -106,7 +106,7 @@ namespace Web90TvCore2.Controllers
             ///model.loginVM=
             ///ارسال اطلاعات متاتگ ها
             var siteSetting = _unitOfWork.SiteSettingRepoUW.Get().Result.SingleOrDefault();
-            if (siteSetting!=null)
+            if (siteSetting != null)
             {
                 ViewData["metaKey"] = siteSetting.MetaTag;
                 ViewData["metadescription"] = siteSetting.MetaDescription;
@@ -537,6 +537,40 @@ namespace Web90TvCore2.Controllers
                 //کاربر هیچ گزینه ای را انتخاب نکرده است و روی ثبت نظر کلیک کرده است
                 return Json(new { status = "fail" });
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="txtSearch"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> NewsSearch(string txtSearch)
+        {
+            IndexViewModel model = new IndexViewModel();
+            string pDate = PersianDateAndTime.PersianDateNow().Item2;
+
+            ///تمام تبلیغاتی که تاریخ انها در بازه تاریخ ذکر شده قرار داشته باشدو وضعیت نمایش انها روی نمایش یعنی صفر باشد را میاورد
+            model.Advertises = _unitOfWork.AdveriseRepUW.Get(a => (a.FromDate.CompareTo(pDate) <= 0
+               && a.ToDate.CompareTo(pDate) >= 0 && a.Flag == 0)).Result.ToList();
+
+
+            if (txtSearch != null)
+            {
+                txtSearch = txtSearch.TrimStart().TrimEnd();
+                model.NewsSearch = _unitOfWork.NewsRepUW.Get(n => n.Title.Contains(txtSearch)).Result.ToList();
+
+                if (model.NewsSearch.Count()>0)
+                {
+                    ViewBag.searchVal = txtSearch;
+                    return View(model);
+
+                }
+
+                ///----------- نتیجه ای برای جستجو یافت نشد ------------
+                model.NewsSearch = null;
+            }
+
+            return View(model);
         }
 
 

@@ -1,0 +1,27 @@
+﻿@model IndexViewModel
+
+
+<div id="container" class="container-fluid" style="background-color: white;">
+
+    <!--Start Header-->
+    @await Html.PartialAsync("PartialViews/_HeaderPartial", Model.Advertises.Where(a => a.AdvLocation == 1))
+
+    <!--End Header-->
+    <!--Start Menu-->
+    @await Html.PartialAsync("PartialViews/_NavbarPartial")
+    <!--End Menu-->
+    <!--Start Content-->
+    <div class="row" id="content">
+            <div class="col-xl-10 col-lg-10 col-md-10 col-xs-12 col-sm-12">
+                @Html.Partial("PartialViews/_SearchPartial", Model.NewsSearch)
+            </div>
+            <!--پایان محتوا-->
+            <!--پایان دسته بندی-->
+            <!--start advers-->
+            @await Html.PartialAsync("PartialViews/_AdvertisingPartial", Model.Advertises.Where(a => a.AdvLocation == 5))
+            <!--end tabligh-->
+    </div>
+    <!--End Content-->
+
+
+</div>
