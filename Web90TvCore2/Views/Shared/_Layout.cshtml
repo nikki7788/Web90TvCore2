@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿
+@inject Web90TvCore2.Models.UnitOfWork.IUnitOfWork _context
+
+@{ 
+    var MainTitle = _context.SiteSettingRepoUW.Get().Result.SingleOrDefault().SiteTitle;
+    ViewData["MainTitle"] = MainTitle;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - وبسایت 90</title>
+    <title>@ViewData["MainTitle"] -  @ViewData["Title"]</title>
    
     <!--Seo Meta Tag-->
     <meta name="keywords" content="@ViewData["metaKey"]" />
@@ -50,13 +57,13 @@
         <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
 
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
+        <!--persian number فارسی کردن اعداد -->
+        <script src="~/js/persianNumber/persianumber.min.js"></script>
         <!--flot chart-->
         <script src="~/node_modules/flot/dist/es5/jquery.flot.js"></script>
         <script src="~/node_modules/flot/source/jquery.flot.pie.js"></script>
 
-        <!--persian number فارسی کردن اعداد -->
-        <script src="~/js/persianNumber/persianumber.min.js"></script>
+
         <!--/-->
         <script src="~/js/site.js" asp-append-version="true"></script>
         <!--loading on button   لودینگ روی دکمه نمایش داده شود-->

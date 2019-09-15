@@ -38,6 +38,8 @@ namespace Web90TvCore2.Models.UnitOfWork
 
         private CrudRepGeneric<PollOption> _pollOptionUW;
 
+        private CrudRepGeneric<SiteSetting> _siteSettingUW;
+
 
 
         #endregion #######################
@@ -167,6 +169,23 @@ namespace Web90TvCore2.Models.UnitOfWork
             }
         }
 
+
+        /// <summary>
+        /// تنظیمات سایت
+        /// </summary>
+        /// IUnitOfWork پیاده سازی اعضای اینترفیس   
+        ///  sitesetting برای کلاس و جدول CRUD پیاده سازی کلاس 
+        public CrudRepGeneric<SiteSetting> SiteSettingRepoUW
+        {
+            get
+            {
+                if (_siteSettingUW == null)
+                {
+                    _siteSettingUW = new CrudRepGeneric<SiteSetting>(_context);
+                }
+                return _siteSettingUW;
+            }
+        }
 
 
 

@@ -25,5 +25,7 @@ namespace Web90TvCore2.Models
 
         public DbSet<PollOption> PollOptions { get; set; }
 
+        public DbSet<SiteSetting> SiteSettings { get; set; }
+
     }
 }

@@ -63,6 +63,10 @@ namespace Web90TvCore2.Models.UnitOfWork
         /// </summary>
         CrudRepGeneric<Poll> PollRepoUW { get; }
 
+        /// <summary>
+        /// تنظیمات سایت
+        /// </summary>
+        CrudRepGeneric<SiteSetting> SiteSettingRepoUW { get; }
 
 
         /// <summary>

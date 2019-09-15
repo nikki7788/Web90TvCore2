@@ -103,7 +103,15 @@ namespace Web90TvCore2.Controllers
                 && a.ToDate.CompareTo(pDate) >= 0
                 && a.Flag == 0)).Result.ToList();
 
-            //model.loginVM=
+            ///model.loginVM=
+            ///ارسال اطلاعات متاتگ ها
+            var siteSetting = _unitOfWork.SiteSettingRepoUW.Get().Result.SingleOrDefault();
+            if (siteSetting!=null)
+            {
+                ViewData["metaKey"] = siteSetting.MetaTag;
+                ViewData["metadescription"] = siteSetting.MetaDescription;
+                //ViewData["Title"] = siteSetting.SiteTitle;
+            }
 
 
             ///---------------- نظر سنجی --------------
@@ -182,7 +190,7 @@ namespace Web90TvCore2.Controllers
             //خبرهای اختصاصی n => n.NewsType == 2
             model.ExclusiveNews = _unitOfWork.NewsRepUW.Get(n => n.NewsType == 2, ne => ne.OrderByDescending(n => n.NewsId)).Result.Take(15).ToList();
 
-          
+
 
             //به روز رسانی تعدا بازدید خبر
             await _newsService.RefreshVisitCounter(id);
@@ -192,7 +200,7 @@ namespace Web90TvCore2.Controllers
             var newsInfo = await _unitOfWork.NewsRepUW.GetById(id);
             ViewBag.newsContext = newsInfo;
 
-            
+
             //ارسال اطلاعات متاتگ ها
             ViewData["metaKey"] = newsInfo.MetaTag;
             ViewData["metadescription"] = newsInfo.MetaDescription;
