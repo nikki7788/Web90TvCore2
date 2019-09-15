@@ -1,10 +1,20 @@
 ﻿
-@inject  Web90TvCore2.Models.UnitOfWork.IUnitOfWork Context
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
 
-@{ 
-    // باشد var  حتما بایدازنوع  
-    //نطرات ایید نشده را در ایکون  زنگ اعلان نمایش میدهد
-     var cmList =await Context.CommentRepUW.Get(c => c.status == false);
+@inject UserManager<ApplicationUsers> _userManager
+@inject Web90TvCore2.Models.UnitOfWork.IUnitOfWork Context
+@inject IHttpContextAccessor _hc
+
+@{
+    // باشد var  حتما بایدازنوع
+    //نطرات دیده نشده را در ایکون  زنگ اعلان نمایش میدهد
+    var cmList = await Context.CommentRepUW.Get(c => c.status == false);
+
+    //بدست آوردن اطلاعات کاربری که لاگین کرده در ویو
+    var user = await _userManager.GetUserAsync(_hc.HttpContext.User);
+}
+
 }
 
 <nav class="navbar navbar-static-top">
@@ -71,17 +81,17 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="~/adminpanelfiles/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                    <span class="hidden-xs">حسین نیکبخت</span>
+                    <img src="~/upload/userImage/normalImage/@user.UserImagePath" class="user-image" alt="User Image">
+                    <span class="hidden-xs">@user.FirstName @user.LastName</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header">
-                        <img src="~/adminpanelfiles/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="~/upload/userImage/normalImage/@user.UserImagePath" class="img-circle" alt="User Image">
 
                         <p>
-                            حسین نیکبخت
-                            <small>مدیریت کل سایت</small>
+                            @user.FirstName @user.LastName
+                            <small>خوش آمدید</small>
                         </p>
                     </li>
                     <!-- Menu Body -->
@@ -104,9 +114,15 @@
                         <div class="pull-left">
                             <a href="#" class="btn btn-default btn-flat">پروفایل</a>
                         </div>
-                        <div class="pull-right">
-                            <a href="#" class="btn btn-default btn-flat">خروج</a>
-                        </div>
+
+                        @* log Out *@
+                        @* todo:logout doesnt work *@
+                        <form action="/Account/LogOut" method="post">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-default btn-flat">خروج</button>
+                            </div>
+                        </form>
+
                     </li>
                 </ul>
             </li>

@@ -2231,9 +2231,7 @@
     <Folder Include="wwwroot\upload\contentImage\" />
     <Folder Include="wwwroot\upload\indexImage\" />
     <Folder Include="wwwroot\upload\advImage\" />
-    <Folder Include="wwwroot\upload\userImage\normalImage\" />
     <Folder Include="wwwroot\upload\userImage\thumbnailImage\" />
-    <Folder Include="wwwroot\upload\userImage\normalImage\" />
   </ItemGroup>
 
   <ItemGroup>

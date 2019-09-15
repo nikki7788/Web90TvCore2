@@ -66,14 +66,14 @@ namespace Web90TvCore2.Controllers
 
                     //نقش ها و دسترسی های کاربر را برکردان
                     //var roles=string []roles
-                   string[] userRroles = _userManager.GetRolesAsync(user).Result.ToArray();
+                    string[] userRroles = _userManager.GetRolesAsync(user).Result.ToArray();
 
 
                     //اگرلاگین موفق بود
-                    return Json(new { status="success" });
+                    return Json(new { status = "success" });
 
                     // اگر وجود داشت به متد زیر Url ارسال نقش ها و 
-                   // return RedirectToLocal(userRroles, returnUrl);
+                    // return RedirectToLocal(userRroles, returnUrl);
 
                 }
 
@@ -119,11 +119,11 @@ namespace Web90TvCore2.Controllers
 
 
         [HttpPost]
-       [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
         {
 
-          await  _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return Redirect("/Home");
         }
 

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://barnamenevisan.org/Articles/Article3403.html -->
+<html class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" dir="rtl" lang="fa-IR"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="description" content="در این مقاله، مفاهیم Localization و Globalization را با یک مثال مرور کرده و به تفاوت این دو در ASP.Net می پردازیم.
+">
+    <meta name="keywords">
+    <title>بررسی Globalization و Localization در ASP.Net</title>
+    <meta name="googlebot" content="index,follow">
+    <meta name="robots" content="noodp,noydir">
+    
+    <meta name="google-site-verification" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+        <meta property="og:image" content="https://barnamenevisan.org/ImagesArticle/a868fa4b7f6c4093b080fc5c11a5fdc8.jpg">
+        <meta property="og:image:secure_url" content="https://barnamenevisan.org/ImagesArticle/a868fa4b7f6c4093b080fc5c11a5fdc8.jpg">
+    <meta name="author" content="برنامه نویسان">
+
+    <link rel="stylesheet" type="text/css" href="./بررسی Globalization و Localization در ASP.Net_files/style.css">
+    <link rel="stylesheet" type="text/css" href="./بررسی Globalization و Localization در ASP.Net_files/animate.css">
+    <link rel="stylesheet" type="text/css" href="./بررسی Globalization و Localization در ASP.Net_files/carousel.css">
+    <link href="./بررسی Globalization و Localization در ASP.Net_files/Custom.css" rel="stylesheet">
+    
+    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="/Content/assets/front/ie7.css"><![endif]-->
+    <!--[if lte IE 8]><script src="/Content/assets/js/respond.min.js"></script><![endif]-->
+<script type="text/javascript" src="chrome-extension://aggiiclaiamajehmlfpkjmlbadmkledi/popup.js" async=""></script><script type="text/javascript" src="chrome-extension://aggiiclaiamajehmlfpkjmlbadmkledi/tat_popup.js" async=""></script></head>
+<body datasqstyle="{&quot;top&quot;:0,&quot;position&quot;:&quot;static&quot;}" datasquuid="8cbafb2d-6780-4656-8503-f9ea8f45e554" style="top: 40px; position: relative;">
+    <script async="" src="./بررسی Globalization و Localization در ASP.Net_files/analytics.js.download"></script><script src="./بررسی Globalization و Localization در ASP.Net_files/modernizr.js.download"></script>
+    <div id="pagewrap">
+        <!-- start header -->
+        <header>
+    <div class="mi-container">
+        <div class="logo-area">
+            <a href="https://barnamenevisan.org/" class="logo"></a>
+            <h2> مرجع تخصصی برنامه نویسان</h2>
+            <h3> بزرگترین انجمن برنامه نویسان فارسی زبان</h3>
+            <div class="clr"></div>
+        </div>
+
+        <div class="client-area">
+                <a href="https://barnamenevisan.org/Login" class="login-butt"><i class="icon-lock"></i> ورود به سایت </a>
+                <a href="https://barnamenevisan.org/Register" class="register-butt"><i class="icon-user-add"></i> ثبت نام کنید </a>
+            <form action="https://barnamenevisan.org/Search" method="GET" class="search-form" novalidate="novalidate">
+                <input type="text" name="srch" placeholder=" عبارت مورد نظر ..." required="">
+                <input type="submit" value="">
+                <i class="icon-search"></i>
+            </form>
+        </div>
+        <div class="clr"></div>
+    </div>
+</header>
+<div class="top-nav">
+    <div class="mi-container">
+        <nav>
+            <span class="icon-th-list"></span>
+            <ul style="display: block;">
+                <li><a href="https://barnamenevisan.org/">&nbsp;<i class="icon-home"></i>&nbsp;</a></li>
+                <li><a href="http://barnamenevisan.info/" target="_blank">دوره های آموزشی</a></li>
+                <li>
+                    <span>مقاله ها</span>
+                    <ul>
+                        
+
+        <li><a href="https://barnamenevisan.org/ArticleGroup/2/Csharp">C#.net</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/4/Asp-Net">ASP.net</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/5/Asp-Net-MVC">ASP.net MVC</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/6/WCF">WCF</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/7/WPF">WPF</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/9/Silver-Light">SilverLight</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/11/SharePoint">SharePoint</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/12/Sql-Server">SQL Server</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/14/Delphi">Delphi</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/15/C">C</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/16/Cplusplus">C++</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/17/Java">Java</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/18/JavaScript">Java Script</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/19/Jquery">Jquery</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/20/PHP">PHP</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/21/Web-Design">Web Design</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/22/NetWork">NetWork</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/23/Windows">Windows</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/25/Html">HTML</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/26/Android">Android</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/27/AngularJs">AngularJs</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/28/Barnamenevisan">برنامه نویسان</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/29/Xamarin">Xamarin</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/31/VisualStudio">VisualStudio</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/32/NodeJs">NodeJs</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/33/ActionScript2">Action Script 3</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/34/Seo">Seo</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/35/Python">Python</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/36/VisualBasic">Visual Basic</a></li>
+        <li><a href="https://barnamenevisan.org/ArticleGroup/37/Asp-Net-Core">Asp.Net Core</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="https://toplearn.com/" target="_blank">ویدئوها</a></li>
+                <li><a href="https://barnamenevisan.org/Forum">پرسش و پاسخ</a></li>
+                <li><a href="http://themeshop.ir/" target="_blank">قالب سایت</a></li>
+                <li><a href="https://barnamenevisan.org/ContactUs">تماس با ما</a></li>
+            </ul>
+        </nav>
+        <span class="calendar-layer">
+            <i class="icon-calendar"></i>  امروز : یکشنبه, 24 شهریور 1398
+        </span>
+        <div class="clr"></div>
+    </div>
+</div>
+        <!-- end header -->
+
+
+        <div class="mi-container main-page-content">
+            <!-- start top ads -->
+            
+            
+            <div class="clr"></div>
+            <!-- end top ads -->
+            <!--  start right side -->
+            <div class="right-index-side">
+                
+                            <div class="text-center" style="margin-bottom: 10px">
+                <a href="https://barnamenevisan.info/" target="_blank">
+                    <img src="./بررسی Globalization و Localization در ASP.Net_files/baa312daec6646f8a89b1cd95abd12db.jpg" class="thumbnail  marginbootom5" alt="آموزش برنامه نویسی در آموزشگاه برنامه نویسان">
+                </a>
+            </div>
+
+
+               
+                
+
+
+<section class="right-section single-post">
+    <header><span><i class="icon-doc-text-inv"></i></span><h1><a href="https://barnamenevisan.org/Articles/Article3403.html"> بررسی Globalization و Localization در ASP.Net </a> </h1> <label>جمعه, 16 مرداد 1394</label></header>
+    <ul class="detail-post-layer">
+        <li>
+            <i class="icon-user"></i>
+            <a href="https://barnamenevisan.org/Profile/3760">برنامه نویسان</a>
+        </li>
+        <li>
+            <i class="icon-folder-open"></i>
+            <a href="https://barnamenevisan.org/ArticleGroup/4/Asp-Net">ASP.net</a>
+        </li>
+        <li><i class="icon-eye"></i> 1523 بازدید </li>
+        <li><i class="icon-thumbs-up-alt"></i> 1 تشکر </li>
+        <li><i class="icon-chat"></i> 1 نظر </li>
+    </ul>
+    <article>
+        <p>
+            در این مقاله، مفاهیم Localization و Globalization را با یک مثال مرور کرده و به تفاوت این دو در ASP.Net می پردازیم.
+
+        </p>
+            <div class="imgCenter">
+                <img class="thumbnail" src="./بررسی Globalization و Localization در ASP.Net_files/a868fa4b7f6c4093b080fc5c11a5fdc8.jpg" alt="بررسی Globalization و Localization در ASP.Net">
+            </div>
+        <h4>Localization و Globalization چیست؟</h4>
+
+<p>Globalization، فرایند طراحی برنامه های کاربردی به ازای زبان های مختلف کاربران در سراسر دنیا&nbsp;می باشد، در حالی که Localization فرایند طراحی برنامه های کاربردی است به طوری که بتوان محتوای آن را به زبان موردنیاز&nbsp;کاربر نمایش داد.</p>
+
+<h4>Language و Locale چیست؟</h4>
+
+<p>منظور از Language یک طبقه بندی گسترده از&nbsp;زبان های گفتاری است مانند انگلیسی، فرانسه و... به عنوان مثال، در حال حاضر، انگلیسی زبان گفتاری&nbsp;United Kingdom و United States است اما هر یک از این کشورها، واژگان مخصوص خود را دارند که به آن Locale می گویند.</p>
+
+<p>en-GB نام Culture مربوط به United Kingdom است درحالی که&nbsp;en-US متعلق به&nbsp;United States می باشد.</p>
+
+<p>Resources های Global و Local در <a href="http://barnamenevisan.net/search?q=ASP.Net">ASP.Net</a>:</p>
+
+<p>ASP.Net دو سری فایل Resource دارد، Global و Local.</p>
+
+<h4>Global Resources:</h4>
+
+<p>این فایل ها در تمام صفحات برنامه، قابل دسترسی هستند.</p>
+
+<h4>Local Resources:</h4>
+
+<p>این فایل ها برای هر صفحه، یکتا و مخصوص هستند و تنها در همان صفحه خاص، استفاده می شوند.</p>
+
+<p>در <a href="https://msdn.microsoft.com/en-us/library/ms227427.aspx">MSDN article</a> می توانید بیشتر درباره Global و Local بخوانید.</p>
+
+<h4>ایجاد یک وب سایت چند زبانه در ASP.Net:</h4>
+
+<p>در این مقاله، ایجاد یک وب سایت چند زبانه با استفاده از Global Resources را آموزش خواهیم داد.</p>
+
+<h4>اضافه کردن یک فایل Global Resource:</h4>
+
+<p>اولین کاری که باید انجام دهیم، این است که دو فایل Global Resource، یکی برای انگلیسی و دیگری برای فارسی به نام های زیر به پروژه اضافه کنیم.</p>
+
+<p>انگلیسی: Resource.resx</p>
+
+<p>فارسی: Resource.fa.resx</p>
+
+<p>به محض اینکه، اولین فایل را اضافه کنیم، پیامی به شکل زیر ظاهر می شود که از ما می خواهد فولدری به نام App_GlobalResources اضافه کنیم، بنابراین روی دکمه Yes کلیک می کنیم.</p>
+
+<p><img alt="" src="./بررسی Globalization و Localization در ASP.Net_files/57a52d75ac914cc89d07c446030e195f.png" style="height:249px; width:489px"></p>
+
+<p>زمانی که هر دو فایل به پروژه اضافه شوند، فولدر App_GlobalResources به شکل زیر درمی آید.</p>
+
+<p><img alt="" src="./بررسی Globalization و Localization در ASP.Net_files/af4e76a5ccdb40318071831144d54b2e.png" style="height:103px; width:325px"></p>
+
+<p>حالا باید برای هر دو فایل Resource یک مجموعه نام و مقدار اضافه کنیم. توجه داشته باشید که نام در تمام فایل های انگلیسی، فارسی و هر زبان دیگری باید یکسان باشد.</p>
+
+<p>فایل مربوط به زبان انگلیسی:</p>
+
+<p><img alt="englishValue" src="./بررسی Globalization و Localization در ASP.Net_files/efa2d3ec818046828bd4e0de8aaf69dd.jpg" style="height:152px; width:714px"></p>
+
+<p>فایل مربوط به زبان فارسی:</p>
+
+<h4><img alt="PersianValue" src="./بررسی Globalization و Localization در ASP.Net_files/a7dc9a9fc9d84d10a23eb885a667d0d8.jpg" style="height:155px; width:690px">ایجاد MasterPage:</h4>
+
+<p>حالا یک Master Page به پروژه اضافه می کنیم و یک DropDownList با دو آیتم که قسمت متنی آن، نام زبان و قسمت value، نام Culture زبان است، بالای&nbsp;ContentPlaceHolder اضافه می کنیم.</p>
+
+<p>این DropDownList برای تغییر زبان استفاده خواهد شد.</p>
+
+<div><div id="highlighter_914948" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">Language:</code></div><div class="line number2 index1 alt1"><code class="csharp plain">&lt;asp:DropDownList ID=</code><code class="csharp string">"ddlLanguages"</code> <code class="csharp plain">runat=</code><code class="csharp string">"server"</code> <code class="csharp plain">AutoPostBack=</code><code class="csharp string">"true"</code><code class="csharp plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;asp:ListItem Text=</code><code class="csharp string">"English"</code> <code class="csharp plain">Value=</code><code class="csharp string">"en-us"</code> <code class="csharp plain">/&gt;</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;asp:ListItem Text=</code><code class="csharp string">"Persian"</code> <code class="csharp plain">Value=</code><code class="csharp string">"fa"</code> <code class="csharp plain">/&gt;</code></div><div class="line number5 index4 alt2"><code class="csharp plain">&lt;/asp:DropDownList&gt;</code></div><div class="line number6 index5 alt1"><code class="csharp plain">&lt;hr /&gt;</code></div><div class="line number7 index6 alt2"><code class="csharp plain">&lt;asp:ContentPlaceHolder ID=</code><code class="csharp string">"ContentPlaceHolder1"</code> <code class="csharp plain">runat=</code><code class="csharp string">"server"</code><code class="csharp plain">&gt;</code></div><div class="line number8 index7 alt1"><code class="csharp plain">&lt;/asp:ContentPlaceHolder&gt;</code></div></div></td></tr></tbody></table></div></div>
+
+<p>در اینجا، نیاز داریم که فضای نام زیر را به پروژه اضافه کنیم.</p>
+
+<p>در #C:</p>
+
+<div><div id="highlighter_991820" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">System.Globalization;</code></div></div></td></tr></tbody></table></div></div>
+
+<p>در VB.Net:</p>
+
+<div><div id="highlighter_974915" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">Imports System.Globalization</code></div></div></td></tr></tbody></table></div></div>
+
+<p>در MasterPage، داخل بدنه Page Load event، آیتم انتخاب شده(Selected Item) در Language DropDownList براساس نام Current Culture تنظیم می شود.</p>
+
+<p>در #C:</p>
+
+<div><div id="highlighter_284590" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">protected</code> <code class="csharp keyword">void</code> <code class="csharp plain">Page_Load(</code><code class="csharp keyword">object</code> <code class="csharp plain">sender, EventArgs e)</code></div><div class="line number2 index1 alt1"><code class="csharp plain">{</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(!</code><code class="csharp keyword">this</code><code class="csharp plain">.IsPostBack)</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(ddlLanguages.Items.FindByValue(CultureInfo.CurrentCulture.Name) != </code><code class="csharp keyword">null</code><code class="csharp plain">)</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">ddlLanguages.Items.FindByValue(CultureInfo.CurrentCulture.Name).Selected = </code><code class="csharp keyword">true</code><code class="csharp plain">;</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number10 index9 alt1"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<p>&nbsp;در <a href="http://barnamenevisan.org/Search?srch=VB.Net">VB.Net</a>:</p>
+
+<div><div id="highlighter_946651" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load</code></div><div class="line number2 index1 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">If Not Me.IsPostBack Then</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">If ddlLanguages.Items.FindByValue(CultureInfo.CurrentCulture.Name) IsNot Nothing Then</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">ddlLanguages.Items.FindByValue(CultureInfo.CurrentCulture.Name).Selected = True</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">End If</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">End If</code></div><div class="line number7 index6 alt2"><code class="csharp plain">End Sub</code></div></div></td></tr></tbody></table></div></div>
+
+<p>ایجاد Base Class:</p>
+
+<p>حال یک کلاس جدید به نام BasePage، به پروژه اضافه می کنیم که تمام صفحات پروژه از آن ارث بری می کنند.</p>
+
+<p><img alt="BassClass" src="./بررسی Globalization و Localization در ASP.Net_files/a4a8d065451542f5ad5c0eeed4950bdf.png" style="height:253px; width:454px"></p>
+
+<p>به محض ایجاد کلاس، پیامی به شکل زیر ظاهر می شود که از ما می خواهد فولدری به نام App_Code اضافه کنیم، بنابراین روی دکمه Yes کلیک می کنیم.</p>
+
+<p><img alt="" src="./بررسی Globalization و Localization در ASP.Net_files/60ad0160a5114b818a6a031981a7004f.png" style="height:249px; width:496px"></p>
+
+<p>کلاس BasePage توسط همه صفحات داخل برنامه، ارث بری می شود. از این رو، از کلاس Page در ASP.Net ارث می بری می کند.</p>
+
+<p>این کلاس، InitializeCulture event متعلق به کلاس Page را override کرده و در داخل بدنه آن، در ابتدا زبان پیش فرض کاربر مشخص می شود و اگر زبانی با استفاده از DropDownList انتخاب نشد، زبان پیش فرض کاربر به عنوان Current Culture تنظیم می شود.</p>
+
+<p>توجه داشته باشید که زبان پیش فرض کاربر، تنها زمانی نمایش داده می شود که Resource File آن را اضافه کرده باشیم.</p>
+
+<p>اگر زبان با استفاده از DropDownList انتخاب شود، Current Culture با استفاده از مقدار انتخاب شده که از مجموعه Request.Form واکشی می شود، تنظیم می شود.</p>
+
+<p>در #C:</p>
+
+<div><div id="highlighter_577490" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">using</code> <code class="csharp plain">System.Threading;</code></div><div class="line number2 index1 alt1"><code class="csharp keyword">using</code> <code class="csharp plain">System.Globalization;</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number4 index3 alt1"><code class="csharp color1">///&lt;summary&gt;</code></div><div class="line number5 index4 alt2"><code class="csharp color1">/// Summary description for BasePage</code></div><div class="line number6 index5 alt1"><code class="csharp color1">///&lt;/summary&gt;</code></div><div class="line number7 index6 alt2"><code class="csharp keyword">public</code> <code class="csharp keyword">class</code> <code class="csharp plain">BasePage : System.Web.UI.Page</code></div><div class="line number8 index7 alt1"><code class="csharp plain">{</code></div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">protected</code> <code class="csharp keyword">override</code> <code class="csharp keyword">void</code> <code class="csharp plain">InitializeCulture()</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">string</code> <code class="csharp plain">language = </code><code class="csharp string">"en-us"</code><code class="csharp plain">;</code></div><div class="line number12 index11 alt1"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number13 index12 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp comments">//Detect User's Language.</code></div><div class="line number14 index13 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(Request.UserLanguages != </code><code class="csharp keyword">null</code><code class="csharp plain">)</code></div><div class="line number15 index14 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number16 index15 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp comments">//Set the Language.</code></div><div class="line number17 index16 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">language = Request.UserLanguages[0];</code></div><div class="line number18 index17 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number19 index18 alt2"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number20 index19 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp comments">//Check if PostBack is caused by Language DropDownList.</code></div><div class="line number21 index20 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">if</code> <code class="csharp plain">(Request.Form[</code><code class="csharp string">"__EVENTTARGET"</code><code class="csharp plain">] != </code><code class="csharp keyword">null</code> <code class="csharp plain">&amp;&amp; Request.Form[</code><code class="csharp string">"__EVENTTARGET"</code><code class="csharp plain">].Contains(</code><code class="csharp string">"ddlLanguages"</code><code class="csharp plain">))</code></div><div class="line number22 index21 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number23 index22 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp comments">//Set the Language.</code></div><div class="line number24 index23 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">language = Request.Form[Request.Form[</code><code class="csharp string">"__EVENTTARGET"</code><code class="csharp plain">]];</code></div><div class="line number25 index24 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number26 index25 alt1"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number27 index26 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp comments">//Set the Culture.</code></div><div class="line number28 index27 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Thread.CurrentThread.CurrentCulture = </code><code class="csharp keyword">new</code> <code class="csharp plain">CultureInfo(language);</code></div><div class="line number29 index28 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Thread.CurrentThread.CurrentUICulture = </code><code class="csharp keyword">new</code> <code class="csharp plain">CultureInfo(language);</code></div><div class="line number30 index29 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number31 index30 alt2"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<p>در VB.Net:</p>
+
+<div><div id="highlighter_922078" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">Imports System.Threading</code></div><div class="line number2 index1 alt1"><code class="csharp plain">Imports System.Globalization</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number4 index3 alt1"><code class="csharp plain">Public Class BasePage</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Inherits System.Web.UI.Page</code></div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Protected Overrides Sub InitializeCulture()</code></div><div class="line number7 index6 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Dim language As String = </code><code class="csharp string">"en-us"</code></div><div class="line number8 index7 alt1"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number9 index8 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp string">'Detect User'</code><code class="csharp plain">s Language.</code></div><div class="line number10 index9 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">If Request.UserLanguages IsNot Nothing Then</code></div><div class="line number11 index10 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">'Set the Language.</code></div><div class="line number12 index11 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">language = Request.UserLanguages(0)</code></div><div class="line number13 index12 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">End If</code></div><div class="line number14 index13 alt1"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number15 index14 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">'Check </code><code class="csharp keyword">if</code> <code class="csharp plain">PostBack </code><code class="csharp keyword">is</code> <code class="csharp plain">caused </code><code class="csharp keyword">by</code> <code class="csharp plain">Language DropDownList.</code></div><div class="line number16 index15 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">If Request.Form(</code><code class="csharp string">"__EVENTTARGET"</code><code class="csharp plain">) IsNot Nothing AndAlso Request.Form(</code><code class="csharp string">"__EVENTTARGET"</code><code class="csharp plain">).Contains(</code><code class="csharp string">"ddlLanguages"</code><code class="csharp plain">) Then</code></div><div class="line number17 index16 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">'Set the Language.</code></div><div class="line number18 index17 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">language = Request.Form(Request.Form(</code><code class="csharp string">"__EVENTTARGET"</code><code class="csharp plain">))</code></div><div class="line number19 index18 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">End If</code></div><div class="line number20 index19 alt1"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number21 index20 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">'Set the Culture.</code></div><div class="line number22 index21 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Thread.CurrentThread.CurrentCulture = New CultureInfo(language)</code></div><div class="line number23 index22 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Thread.CurrentThread.CurrentUICulture = New CultureInfo(language)</code></div><div class="line number24 index23 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">End Sub</code></div><div class="line number25 index24 alt2"><code class="csharp plain">End Class</code></div></div></td></tr></tbody></table></div></div>
+
+<p>توجه داشته باشید که در تمام صفحات پروژه، باید از BasePage ارث بری شود.</p>
+
+<p>در #C:</p>
+
+<div><div id="highlighter_420488" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp keyword">public</code> <code class="csharp keyword">partial</code> <code class="csharp keyword">class</code> <code class="csharp plain">_Default : BasePage</code></div><div class="line number2 index1 alt1"><code class="csharp plain">{</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp keyword">protected</code> <code class="csharp keyword">void</code> <code class="csharp plain">Page_Load(</code><code class="csharp keyword">object</code> <code class="csharp plain">sender, EventArgs e)</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">{</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">}</code></div><div class="line number7 index6 alt2"><code class="csharp plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<p>در VB.Net:</p>
+
+<div><div id="highlighter_960604" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">Partial Class _Default</code></div><div class="line number2 index1 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Inherits BasePage</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;</code>&nbsp;</div><div class="line number6 index5 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">End Sub</code></div><div class="line number7 index6 alt2"><code class="csharp plain">End Class</code></div></div></td></tr></tbody></table></div></div>
+
+<p>نمایش محتوا با استفاده از Resource file:</p>
+
+<p>کد HTML زیر، شامل یک Lable و یک المنت Span است که Lable، مقدار Greetings را نمایش خواهد داد و المنت Span، مقدار Introduction را نمایش می دهد.</p>
+
+<div><div id="highlighter_608730" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">&lt;asp:Content ID=</code><code class="csharp string">"Content2"</code> <code class="csharp plain">ContentPlaceHolderID=</code><code class="csharp string">"ContentPlaceHolder1"</code> <code class="csharp plain">runat=</code><code class="csharp string">"Server"</code><code class="csharp plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;asp:Label ID=</code><code class="csharp string">"Label1"</code> <code class="csharp plain">Text=</code><code class="csharp string">"&lt;%$Resources:Resource, Greetings %&gt;"</code> <code class="csharp plain">runat=</code><code class="csharp string">"server"</code> <code class="csharp plain">Font-Bold=</code><code class="csharp string">"true"</code> <code class="csharp plain">/&gt;</code></div><div class="line number3 index2 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;br /&gt;</code></div><div class="line number4 index3 alt1"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;br /&gt;</code></div><div class="line number5 index4 alt2"><code class="csharp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="csharp plain">&lt;span&gt;&lt;%=Resources.Resource.Introduction %&gt;&lt;/span&gt;</code></div><div class="line number6 index5 alt1"><code class="csharp plain">&lt;/asp:Content&gt;</code></div></div></td></tr></tbody></table></div></div>
+
+<p>کدهای زیر، نحوه انتساب Resource File به یک کنترل ASP.Net و یک المنت HTML را نشان می دهد.</p>
+
+<p>کنترل ASP.Net:</p>
+
+<div><div id="highlighter_334661" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">&lt;asp:Label ID=</code><code class="csharp string">"Label1"</code> <code class="csharp plain">Text=</code><code class="csharp string">"&lt;%$Resources:Resource, &lt;Resource Name&gt; %&gt;"</code> <code class="csharp plain">runat=</code><code class="csharp string">"server"</code> <code class="csharp plain">Font-Bold=</code><code class="csharp string">"true"</code> <code class="csharp plain">/&gt;</code></div></div></td></tr></tbody></table></div></div>
+
+<p>HTML SPAN:</p>
+
+<div><div id="highlighter_664847" class="syntaxhighlighter  csharp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="csharp plain">&lt;span&gt;&lt;%=Resources.Resource.&lt;Resource Name&gt; %&gt;&lt;/span&gt;</code></div></div></td></tr></tbody></table></div></div>
+
+<h4>تست وب سایت چندزبانه ASP.Net:</h4>
+
+<p>سایت چندزبانه ما آماده است و در ادامه آن را در دو حالت تست خواهیم کرد:</p>
+
+<p>1. بارگزاری زبان پیش فرض کاربر از طریق مرورگر</p>
+
+<p>برای تست اینکه، وب سایت چندزبانه، زبان پیش فرض کاربر را پیدا کرده و بارگزاری می کند. باید Options را از منوی Tools مرورگر باز کرده و روی content و سپس Languages کلیک کرده و در نهایت زبان فارسی را به عنوان پیش فرض انتخاب کنیم.</p>
+
+<p><img alt="" src="./بررسی Globalization و Localization در ASP.Net_files/fe25bd2867eb486183c896c86f791787.jpg" style="height:801px; width:1285px"></p>
+
+<p>توجه داشته باشید که تصویر بالا، مربوط به مرورگر فایرفاکس می باشد و اگر از مرورگر دیگری استفاده می کنید، با کمی تفاوت می توانید زبان پیش فرض دلخواه خود را اضافه کنید.</p>
+
+<p>حال اگر برنامه را اجرا کنیم، محتوای صفحه به زبان فارسی نشان داده می شود و زبان فارسی به عنوان زبان انتخاب شده در DropDownList نمایش داده می شود.</p>
+
+<p><img alt="" src="./بررسی Globalization و Localization در ASP.Net_files/2da6c4eaf2f54e59b525c1b5ea614d10.jpg" style="height:371px; width:409px"></p>
+
+<h4>تغییر زبان با استفاده از DropDownList:</h4>
+
+<p>زمانی که یک زبان با استفاده از DropDownList انتخاب می شود، محتوای سایت به آن زبان نمایش داده می شود.</p>
+
+<p>&nbsp;</p>
+
+
+
+
+
+                <section class="download-layer">
+                    <h6> فایل های ضمیمه </h6>
+                    <ul>
+                            <li><a href="https://barnamenevisan.org/Downloads/Examples/3403_MultiLingual_ASP.Net.rar"> <i class="icon-download-alt"></i> 3403_MultiLingual_ASP.Net.rar </a></li>
+                    </ul>
+                </section>
+
+
+        <div class="share-article">
+            <span> به اشتراک بگذارید : </span>
+            <a target="_blank" href="https://plus.google.com/share?url=https://barnamenevisan.org/Articles/Article3403.html" onclick="ShareArticle(3403,2)" class="gplus-link"><i class="icon-gplus"></i></a>
+            <a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://barnamenevisan.org/Articles/Article3403.html&amp;title=%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C%20Globalization%20%D9%88%20Localization%20%D8%AF%D8%B1%20ASP.Net" onclick="ShareArticle(3403,7)" class="linkedin-link"><i class="icon-linkedin"></i></a>
+            <a href="http://facebook.com/sharer.php?u=https://barnamenevisan.org/Articles/Article3403.html&amp;t=%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C%20Globalization%20%D9%88%20Localization%20%D8%AF%D8%B1%20ASP.Net" onclick="ShareArticle(3403,1)" target="_blank" class="facebook-link"><i class="icon-facebook"></i></a>
+            <a target="_blank" href="http://twitter.com/home?status=https://barnamenevisan.org/Articles/Article3403.html&amp;title=%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C%20Globalization%20%D9%88%20Localization%20%D8%AF%D8%B1%20ASP.Net" onclick="ShareArticle(3403,6)" class="twitter-link"><i class="icon-twitter"></i></a>
+        </div>
+
+    </article>
+</section>
+
+
+
+
+
+<div class="post-alert">
+    <a href="https://barnamenevisan.org/forum">اگر سوالی در رابطه با این مطلب دارید ، لطفا در قسمت پرسش و پاسخ مطرح نمایید.</a>
+    <p>به سوالات در قسمت نظرات پاسخ داده نخواهد شد.</p>
+</div>
+
+
+<section class="like-person-layer">
+    <h6> کاربرانی که از این پست تشکر کرده اند </h6>
+    <p id="likesarticle">
+        
+
+        <a href="https://barnamenevisan.org/Profile/10533">farshid6420</a>,
+
+
+    </p>
+</section>
+
+    <i class="glyphicon glyphicon-warning-sign pull-left icodanger MouseHand" onclick="Reports(3403,6)" rel="tooltip" data-placement="bottom" data-original-title="گزارش تخلف"></i>
+    <div class="tags-layer">
+        <i class="icon-tag"></i>
+            <a href="https://barnamenevisan.org/Tag/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-%D9%85%D9%81%D9%87%D9%88%D9%85-Localization">آشنایی با مفهوم Localization</a>,
+            <a href="https://barnamenevisan.org/Tag/%D8%A2%D8%B4%D9%86%D8%A7%DB%8C%DB%8C-%D8%A8%D8%A7-%D9%85%D9%81%D9%87%D9%88%D9%85-Globalization">آشنایی با مفهوم Globalization</a>,
+            <a href="https://barnamenevisan.org/Tag/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D9%81%D8%A7%D9%88%D8%AA-Localization-%D9%88-Globalization">بررسی تفاوت Localization و Globalization</a>,
+            <a href="https://barnamenevisan.org/Tag/%D8%A7%DB%8C%D8%AC%D8%A7%D8%AF-%DB%8C%DA%A9-%D8%B3%D8%A7%DB%8C%D8%AA-%DA%86%D9%86%D8%AF-%D8%B2%D8%A8%D8%A7%D9%86%D9%87-%D8%AF%D8%B1-ASP.Net">ایجاد یک سایت چند زبانه در ASP.Net</a>,
+
+    </div>
+
+
+
+<script>
+    function ShareArticle(articleid, typeid) {
+        $.ajax({
+            url: "/Home/ShareArticleSocialNetworks",
+            type: "Get",
+            data: { articleid: articleid, typeid: typeid }
+        });
+    }
+
+
+
+    function PrintPanel() {
+        var panel = document.getElementById("contentarticle");
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write("</head><body>");
+        printWindow.document.write(panel.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        setTimeout(function () {
+            printWindow.print();
+        }, 500);
+        return false;
+    }
+
+
+
+
+</script>
+
+
+            </div>
+            <!--  end right side -->
+            <!--  start left side -->
+            <aside class="left-index-side">
+            
+              
+              
+
+           
+                
+                
+
+
+
+<section class="left-section last-forums">
+    <header><span><i class="icon-users"></i></span><h2>آخرین ارسالی های انجمن</h2></header>
+    <ul>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15442.html">راه حلی برای ثبت عکس بصورت پویا</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/4527">
+                        sg.programmer
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum13.html">ASP.NET</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15440.html">اسلایدر در سایت</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/4821">
+                        ahmadi
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum13.html">ASP.NET</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15439.html">مشکل  نمایش تصویر آپلود شده</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/5653">
+                        حیدرعلی نوری
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum48.html">ASP.NET Core</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15436.html">اجرای چندباره متد فراخوانی اطلاعات در signalR</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/5268">
+                        morteza.cs
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum12.html">ASP.NET MVC</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15435.html">آیا کارآموزی آنلاین برنامه نویسی وجود داره؟</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/62583">
+                        mina_ma
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum31.html">برنامه نویسی IOS</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15434.html">عمل نکردن دکمه در وب فرم</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/4527">
+                        sg.programmer
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum13.html">ASP.NET</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15433.html">لینک دانلود</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/46265">
+                        emilly2018
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum13.html">ASP.NET</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15432.html">چگونه پیاده سازی سیستم مدیا استریمینگ</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/57942">
+                        reza2000
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum13.html">ASP.NET</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15429.html">ارور هنگام ایجاد یا باز کردن پروژه در vs2019</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/9728">
+                        iran
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum12.html">ASP.NET MVC</a>
+                </span>
+
+            </li>
+            <li>
+                <i class="icon-chat-2"></i>
+                <h2><a href="https://barnamenevisan.org/Forums/Post15428.html">بهترین نرم افزار های مدیریت پروژه کدام است؟</a></h2>
+                <span class="font11">
+                    <span class="flotright">توسط :&nbsp;</span><a class="font11 flotright" href="https://barnamenevisan.org/Profile/62409">
+                        elahee
+                    </a> <span class="flotright">
+                        &nbsp;
+                        در بخش&nbsp;
+                    </span>
+                    <a class="flotright font11" href="https://barnamenevisan.org/Forums/Forum7.html">معرفی محصولات نرم افزاری</a>
+                </span>
+
+            </li>
+    </ul>
+</section>
+
+
+
+                <a href="https://telegram.me/barnamenevisan_org" title="کانال تلگرام برنامه نویسان" class="telegram-link">
+                    <img src="./بررسی Globalization و Localization در ASP.Net_files/telegram.png" alt="کانال تلگرام برنامه نویسان" title="کانال تلگرام برنامه نویسان">
+                </a>
+                
+                            <a href="https://barnamenevisan.org/Ads/72" target="_blank">
+                <img src="./بررسی Globalization و Localization در ASP.Net_files/eb199148c764494c918a02dea3d6216e.jpg" class="thumbnail  marginbootom5" alt="تم شاپ - قالب رایگان سایت">
+            </a>
+            <a href="https://barnamenevisan.org/Ads/73" target="_blank">
+                <img src="./بررسی Globalization و Localization در ASP.Net_files/adffae84d1eb47698c313ceca4960bfd.jpg" class="thumbnail  marginbootom5" alt="برنامه نویس - سورس رایگان برنامه نویسی">
+            </a>
+            <a href="https://barnamenevisan.org/Ads/74" target="_blank">
+                <img src="./بررسی Globalization و Localization در ASP.Net_files/491885e2c2604cdeac392ab28b14d03b.jpg" class="thumbnail  marginbootom5" alt="تاپ لرن - آموزش برنامه نویسی">
+            </a>
+
+
+                           
+            </aside>
+            <!--  end left side -->
+            <div class="clr"></div>
+        </div>
+
+        <!-- start newsletter -->
+        
+        <!-- end newsletter -->
+      <footer>
+    <div class="top-footer">
+        <div class="mi-container">
+            <section class="order-project">
+                <header><h3> سفارش پروژه </h3></header>
+                <p> برنامه های تحت محیط DotNet : Winforms , WPF , WebForms , MVC , WCF , Windows Mobil 8 Application , ...  </p>
+                <p>                   ما حرفه ای ترین برنامه نویس ها را برای پروژه شما انتخاب کرده ایم که قبل و بعد از پروژه در کنار شما هستند و اطمینان از انجام پروژه را برای شما تامین میکنند.</p>
+                <a href="https://barnamenevisan.org/Articles/Article3403.html"> جهت سفارش پروژه کلیک کنید </a>
+            </section>
+            <section class="links-section">
+                <header><h3> لینک های مفید دیگر </h3></header>
+                <ul>
+                                        <li><a href="https://toplearn.com/c/OYp" target="_blank">آموزش سئو</a></li>
+            <li><a href="https://agahidooni.com/" rel="nofollow" target="_blank">تبلیغات رایگان</a></li>
+            <li><a href="https://toplearn.com/" rel="nofollow" target="_blank">تاپ لرن</a></li>
+            <li><a href="https://themeshop.ir/" rel="nofollow" target="_blank">قالب رایگان سایت</a></li>
+            <li><a href="https://barnamenevis.ir/" rel="nofollow" target="_blank">برنامه نویس</a></li>
+            <li><a href="http://getwork.ir/" rel="nofollow" target="_blank">گت ورک - فریلسنر</a></li>
+<li><a href="https://barnamenevisan.org/NewSite/4">[ تبادل لینک با برنامه نویسان ]</a></li>
+
+
+
+
+                </ul>
+            </section>
+            <section class="contact-section">
+                <header><h3> تماس با برنامه نویسان </h3></header>
+                <p> نشانی : میدان توحید ، ابتدای ستارخان کوچه لادن پلاک 28 طبقه دوم</p>
+                <p> تلفن تماس : 66439346-021</p>
+                <p> ایمیل : info[@]barnamenevisan.org</p>
+                <div>
+                    <span>شبکه های اجتماعی </span>
+                    <a href="https://barnamenevisan.org/rss" class="rss-link"><i class="icon-rss"></i></a>
+                    <a rel="Publisher" href="https://plus.google.com/113212031367907853944" class="gplus-link"><i class="icon-gplus"></i></a>
+                    <a href="https://barnamenevisan.org/" class="linkedin-link"><i class="icon-linkedin"></i></a>
+                    <a href="https://www.facebook.com/barnamenevisanGroup" class="facebook-link"><i class="icon-facebook"></i></a>
+                    <a href="https://twitter.com/Barnamenevisan" class="twitter-link"><i class="icon-twitter"></i></a>
+                </div>
+            </section>
+            <div class="clr"></div>
+        </div>
+    </div>
+    <div class="bottom-footer">
+        <div class="mi-container">
+            <ul>
+                <li><a href="https://barnamenevisan.org/">صفحه نخست </a></li>
+                <li><a href="https://barnamenevisan.org/Forum">تالار گفتمان برنامه نویسان </a></li>
+                <li><a href="http://barnamenevisan.info/" target="_blank">دوره های آموزش برنامه نویسی  </a></li>
+                <li><a href="http://barnamenevisan.info/AboutUs.html" target="_blank">درباره برنامه نویسان </a></li>
+                <li><a href="https://barnamenevisan.org/Articles/Article3403.html">سفارش پروژه </a></li>
+                <li><a href="https://barnamenevisan.org/NewSite/3">تبلیغات در برنامه نویسان </a></li>
+            </ul>
+            <p>کلیه حقوق مادی و معنوی برای مجموعه برنامه نویسان محفوظ می باشد . هر گونه کپی برداری از محتوای آموزشی با ذکر منبع مجاز می باشد.</p>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/jquery.min.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/carousel.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/script.js.download"></script>
+
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/jquery.validate.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/jquery.validate.unobtrusive.js.download"></script>
+<script src="./بررسی Globalization و Localization در ASP.Net_files/jquery.blockui.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/MyScript.js.download"></script>
+    
+    <link type="text/css" rel="stylesheet" href="./بررسی Globalization و Localization در ASP.Net_files/SyntaxHighlighter.css">
+    <script language="javascript" src="./بررسی Globalization و Localization در ASP.Net_files/shCore.js.download"></script>
+    <script language="javascript" src="./بررسی Globalization و Localization در ASP.Net_files/shBrushCSharp.js.download"></script>
+    <script language="javascript" src="./بررسی Globalization و Localization در ASP.Net_files/shBrushXml.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/shBrushPython.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/shCore.js(1).download"></script>
+    <link href="./بررسی Globalization و Localization در ASP.Net_files/shCore.css" rel="stylesheet">
+
+
+    <script language="javascript">
+        dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+        dp.SyntaxHighlighter.HighlightAll('code');
+        dp.SyntaxHighlighter.HighlightAll('pre');
+    </script>
+
+    <script type="text/javascript" src="./بررسی Globalization و Localization در ASP.Net_files/shCore.js(1).download"></script>
+    <script type="text/javascript" src="./بررسی Globalization و Localization در ASP.Net_files/shBrushJScript.js.download"></script>
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/shBrushCSharp.js(1).download"></script>
+    <link type="text/css" rel="stylesheet" href="./بررسی Globalization و Localization در ASP.Net_files/shCoreDefault.css">
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+
+    </script>
+    
+    <script src="./بررسی Globalization و Localization در ASP.Net_files/jquery.unobtrusive-ajax.min.js.download"></script>
+
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments);
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g;
+        m.parentNode.insertBefore(a, m);
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-43090813-1', 'barnamenevisan.org');
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<div id="sqseobar2" class="sqseobar2-white sqseobar2-horizontal"><div class="sqseobar2-inner"><img src="chrome-extension://akdgnmcogleenhbclghghlkkdndkjdjc/static/svg/seoquake-icon.svg" class="sqseobar2-logo"><a class="sqseobar2-link sqseobar2-reloadButton sqseobar2-item-hidden"><span>Load all parameters</span></a><div class="sqseobar2-parameters"><div class="sqmore-container" style="width: 447px;"><div class="sqseobar2-parameters-container"><div class="sqseobar2-parameterItemInline"><span class="sqicn sqicn-google"></span><span class="sqseobar2-parameterItemInline-title sqseobar2-parameterItemInline-title-full">Google index</span><span class="sqseobar2-parameterItemInline-title">I</span><a href="https://www.google.com/search?hl=en&amp;safe=off&amp;q=site%3Abarnamenevisan.org&amp;btnG=Search&amp;gws_rd=cr" target="_blank" class="seoquake-params-request">48.8K</a></div><div class="sqseobar2-parameterItemInline"><span class="sqicn sqicn-semrush"></span><span class="sqseobar2-parameterItemInline-title sqseobar2-parameterItemInline-title-full">SEMrush backlinks</span><span class="sqseobar2-parameterItemInline-title">L</span><a href="https://www.semrush.com/analytics/backlinks/backlinks/?q=https%3A%2F%2Fbarnamenevisan.org%2FArticles%2FArticle3403.html&amp;searchType=url?utm_source=seoquake&amp;utm_medium=toolbar&amp;utm_campaign=params&amp;ref=174537735" target="_blank" class="seoquake-params-request">0</a></div><div class="sqseobar2-parameterItemInline"><span class="sqicn sqicn-semrush"></span><span class="sqseobar2-parameterItemInline-title sqseobar2-parameterItemInline-title-full">SEMrush subdomain backlinks</span><span class="sqseobar2-parameterItemInline-title">LD</span><a href="https://www.semrush.com/analytics/backlinks/backlinks/barnamenevisan.org:domain?utm_source=seoquake&amp;utm_medium=toolbar&amp;utm_campaign=params&amp;ref=174537735" target="_blank" class="seoquake-params-request">43.7K</a></div><div class="sqseobar2-parameterItemInline"><span class="sqicn sqicn-bing"></span><span class="sqseobar2-parameterItemInline-title sqseobar2-parameterItemInline-title-full">Bing index</span><span class="sqseobar2-parameterItemInline-title">I</span><a href="https://www.bing.com/search?q=site%3Abarnamenevisan.org&amp;FORM=QBRE" target="_blank" class="seoquake-params-request">n/a</a></div></div></div><button class="sqseobar2-button-more" style="visibility: visible;">More data</button></div><div class="sqseobar2-right-container"><div class="sqseobar2-right-container-buttons"><a class="sqseobar2-link sqseobar2-link-pageinfo"><span>Summary report</span></a><a class="sqseobar2-link sqseobar2-link-diagnosis"><span>Diagnosis</span></a><a class="sqseobar2-link sqseobar2-link-density"><span>Density</span></a><a class="sqseobar2-link sqseobar2-link-external"><span>External links</span><span class="sqseobar2-link-value">22</span></a><a class="sqseobar2-link sqseobar2-link-internal"><span>Internal links</span><span class="sqseobar2-link-value">80</span></a><a class="sqseobar2-link sqseobar2-link-siteaudit" href="https://barnamenevisan.org/Articles/Article3403.html#"><span>Site audit</span><span class="sqseobar2-link-value">n/a</span></a></div><button class="sqseobar2-button-close" title="Close panel"></button><button class="sqseobar2-button-configure" title="Configure panel"></button></div></div></div></body></html>

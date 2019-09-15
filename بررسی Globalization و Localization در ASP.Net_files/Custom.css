@@ -1,0 +1,162 @@
+﻿.MouseHand {
+    cursor: pointer !important;
+}
+
+.flotright {
+    float: right !important;
+    display: inline !important;
+}
+.side-text-ads {
+    margin-top: 10px;
+}
+.last-forums {
+      margin-top: 10px;
+}
+.last-videos {
+    margin-top: 0 !important;
+}
+.font11 {
+    font-size: 11px !important;
+}
+
+.BoxBlack {
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: black;
+    padding: 15px 20px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.text-danger {
+    color: red;
+    margin: 5px !important;
+}
+
+.text-danger li {
+    margin-bottom: 8px;
+}
+
+.imgCenter {
+    text-align: center;
+    overflow: hidden;
+}
+
+.imgCenter img {
+    border: 1px solid gainsboro;
+    margin: 15px;
+}
+.Commentinput {
+       border: 1px solid #ccc;
+    color: #505050;
+    float: left;
+    height: 150px;
+    line-height: 22px;
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 100% !important;
+}
+
+.ReplyCommentInput {
+           border: 1px solid #ccc;
+    color: #505050;
+
+    float: right;
+    line-height: 22px;
+    margin-bottom: 15px;
+    padding: 5px;
+    
+}
+.comment-form img {
+    width: 100%;
+}
+
+#CommentForComment {
+    width: 100%;
+}
+
+.Mylink {
+       color: #6e6e6e;
+    padding: 0 5px;
+}
+
+.control-label {
+    margin: 8px;
+}
+
+.btnEdit {
+      border: 1px solid #f0ad4e;
+    margin: -4px;
+    padding: 10px;
+}
+ 
+
+.myForm input[type="text"], .myForm input[type="email"], .myForm input[type="password"], .myForm select, .myForm textarea {
+    width: 100% !important;
+
+
+}
+.blueLink {
+    color: blue !important;
+}
+
+.Messageread {
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+    line-height: 22px;
+    padding: 15px;
+    color: #31708f;
+    margin-top: 10px;
+}
+.text-center {
+    text-align: center;
+}
+
+.FromTitleH1 {
+    font-size: 18px; margin:20px 0; font-weight: bold; color: #646464; position: relative;padding-right: 18px;
+    content: '\e834'; color: #0086DC; font-size: 22px; position: absolute; right: 0; top: 0;font-family: 'icon';
+}
+.text-success {
+    color: green;
+}
+
+.syntaxhighlighter {
+    direction: ltr !important;
+}
+
+#ShowRezoome p {
+    clear: both !important;
+    line-height: 25px !important;
+}
+
+#ShowRezoome ol {
+    clear: both !important;
+    line-height: 30px;
+}
+
+
+#ShowRezoome ul {
+    clear: both !important;
+     line-height: 30px;
+}
+
+.cke_top {
+    text-align: right !important;
+}
+.left-topic-body a {
+    color: blue !important;
+}
+.reportaj p {
+    line-height: 20px !important;
+}
+.reportaj {
+    width: 31% !important;
+    float: right !important;
+    margin: 1% !important;
+    height: 377px !important;
+
+}
+.reportaj h6 a {
+font-size:95% !important;
+}
