@@ -1,0 +1,47 @@
+﻿//$.fn.tosinso.editor.messages = {
+//    draftSaved: 'پیش نویس ذخیره شد.',
+//    editorHasChanges: 'محتویات ویرایشگر تغییر کرده است',
+//    savingDraft: 'در حال ذخیره پیش نویس...',
+//    editorNoChanges: 'ویرایشگر تغییری ندارد',
+//    insertLink: 'درج لینک',
+//    url: 'آدرس',
+//    linkText: 'متن لینک',
+//    upload: 'آپلود',
+//    fromUrl: 'از آدرس وب',
+//    imageDescription: 'توضیحات تصویر را وارد کنید',
+//    insertImage: 'درج تصویر',
+//    urlToDownload: 'آردس وب برای دریافت تصویر را وارد کنید',
+//    download: 'بارگذاری',
+//    minCharacters: 'بیش از 3 کاراکتر وارد کنید',
+//    imageError: 'آدرس یا فایل آپلود شده صحیح نمی باشد',
+//    linkError: 'یک آدرس صحیح را وارد کنید.'
+//};
+
+$.fn.dropdown.settings.message = {
+    addResult: 'افزودن <b>{term}</b>',
+    count: '{count} مورد انتخاب شده است.',
+    maxSelections: 'کل انتخاب ها {maxCount} مورد می باشد',
+    noResults: 'هیچ نتیجه ای یافت نشد.'
+};
+
+$.localization = {
+    requestError: "مشکلی در زمان اجرای درخواست شما پیش آمده است",
+    systemMessage: "پیام سیستم",
+    submitComment: "ارسال نظر",
+    submitPost: "ارسال پست",
+    invalidText: "متن را به صورت کامل و صحیح وارد کنید.",
+    privacy: "حریم خصوصی",
+    privacyError: "افراد مجاز یا غیرمجاز باید مشخص شوند.",
+    uploadFile: "بارگذاری فایل",
+    uploadFileError: "فرمت فایل انتخابی صحیح نبوده یا امکان انجام این عملیات وجود ندارد",
+    changesSuccess: "تغییرات با موفقیت ثبت شدند",
+    like: "پسندیدم",
+    unlike: "نپسندیدم",
+    markAsAnswer: "انتخاب به عنوان جواب",
+    unMarkAsAnswer: "جواب نیست",
+    submitContent: "ارسال مطلب",
+    invalidCommunity: "جزیره مطلب را باید انتخاب کنید.",
+    invalidTitle: "عنوان مطلب صحیح نمی باشد.",
+    reportTitle: "گزارش تخلف",
+    reportText: "با تشکر، گزارش شما دریافت شد و در اولین فرصت به آن رسیدگی می شود"
+};

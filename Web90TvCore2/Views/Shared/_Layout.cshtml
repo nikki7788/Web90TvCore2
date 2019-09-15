@@ -57,8 +57,12 @@
         <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
 
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
         <!--persian number فارسی کردن اعداد -->
-        <script src="~/js/persianNumber/persianumber.min.js"></script>
+        <script src="~/js/persianNumber/persianumber.js"></script>
+        @*<script src="~/js/persianNumber/persianumber.min.js"></script>*@
+
+
         <!--flot chart-->
         <script src="~/node_modules/flot/dist/es5/jquery.flot.js"></script>
         <script src="~/node_modules/flot/source/jquery.flot.pie.js"></script>
@@ -66,6 +70,8 @@
 
         <!--/-->
         <script src="~/js/site.js" asp-append-version="true"></script>
+
+
         <!--loading on button   لودینگ روی دکمه نمایش داده شود-->
         <!--/-->
 
@@ -88,15 +94,19 @@
 
 
     <script>
-        
-            //paste this code under head tag or in a seperate js file.
-            // Wait for window load
-            $(window).on('load', function () {
-                // Animate loader off screen
-                $(".se-pre-con").fadeOut("slow");
-            });
-    </script>
 
+        //paste this code under head tag or in a seperate js file.
+        // Wait for window load
+        $(window).on('load', function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");
+        });
+    </script>
+    <script>
+        ///---------  نمایش اعداد  تاریخ و .. به صورت فارسی ----
+        $('.persianumber').persianumber();
+
+    </script>
     @RenderSection("scripts", required: false)
 
 </body>

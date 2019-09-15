@@ -97,6 +97,7 @@
     @* sweetaalert *@
     <script src="~/node_modules/sweetalert2/dist/sweetalert2.js"></script>
 
+   
     @* ارسال فرم لاگین *@
     <script>
         //$(document).ready(function () {
@@ -223,8 +224,8 @@
 
         ///--------تبدیل آرایه ریافتی از کنترلر به نوعع آبجکت -------------
         //var dataObject = JSON.stringify(data);
-        var dataObject = $.parseJSON(data);
-        //var dataObject = JSON.parse(data);
+        //var dataObject = $.parseJSON(data);
+        var dataObject = JSON.parse(data);
 
         //var dataObject = [
         //    { label: "Pause", data: 150 },
@@ -247,7 +248,11 @@
     </script>
 
 
-
+    <script>
+        $(".pieLabel>div").addClass("persianumber");
+          ///---------  نمایش اعداد  تاریخ و .. به صورت فارسی ----
+        $('.persianumber').persianumber();
+    </script>
 
 
     @* نمایش تب ها *@
