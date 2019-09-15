@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web90TvCore2.Models;
 using Web90TvCore2.Models.UnitOfWork;
@@ -10,7 +11,12 @@ using Web90TvCore2.Models.UnitOfWork;
 
 namespace Web90TvCore2.Areas.AdminPanel.Controllers
 {
+
+    /// <summary>
+    /// تنظیمات سایت
+    /// </summary>
     [Area("AdminPanel")]
+    [Authorize(Roles ="SiteSetting")]
     public class SiteSettingController : Controller
     {
         #region ###################### Dependencies ################################
